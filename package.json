@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "chromiumHeaded": "npx playwright test --headed --project=chromium"
   },
   "devDependencies": {
     "@playwright/test": "^1.17.1",
