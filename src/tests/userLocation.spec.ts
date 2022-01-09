@@ -1,16 +1,18 @@
 import { test, expect } from '@playwright/test';
+import * as assert from 'assert';
 import { Homepage } from '../pageObjects/homepage';
 
 test('Auto detected user location', async ({ page }) => {
     await page.goto('https://www.ozon.ru/');
-    const userLocation = page.locator(Homepage.userLocationButton);
-    await expect(userLocation).toHaveText('Москва');
+    const currentLocation = await Homepage.getCurrentLocation(page);
+    assert.equal(currentLocation, 'Москва');
 });
 
-test('Select user location', async ({ page }) => {
-    await page.goto('https://www.ozon.ru/');
-    const userLocation = page.locator(Homepage.userLocationButton);
-    await userLocation.click();
-    await page.locator('text=Санкт-Петербург').click();
-    await expect(userLocation).toHaveText('Санкт-Петербург');
+test('Change user location', async ({ page }) => {
+    const newLocation = 'Санкт-Петербург';
+
+    await Homepage.open(page);
+    await Homepage.setLocation(page, newLocation);
+    const currentLocation = await Homepage.getCurrentLocation(page);
+    assert.equal(currentLocation, newLocation);
 });
