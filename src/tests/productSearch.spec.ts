@@ -3,6 +3,7 @@ import * as assert from 'assert';
 
 import { Homepage } from '../pageObjects/homepage';
 import { SearchResults } from '../pageObjects/searchResults';
+//TODO: Add filters
 
 test('Search for Iphone 13', async ({ page }) => {
     await Homepage.open(page);
@@ -12,6 +13,7 @@ test('Search for Iphone 13', async ({ page }) => {
     assert.strictEqual(category, "Смартфоны Apple");
 });
 
+//TODO: Choose exact search
 test('Unsuccessful search', async ({ page }) => {
     const searchString = 'grgew';
 
