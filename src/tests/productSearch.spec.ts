@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/test';
+import * as assert from 'assert';
+
 import { Homepage } from '../pageObjects/homepage';
+import { SearchResults } from '../pageObjects/searchResults';
 
 test('Search for Iphone 13', async ({ page }) => {
     await Homepage.open(page);
     await Homepage.searchProduct(page, 'iphone 13');
-    const activeFilter = page.locator('[data-widget="searchResultsFiltersActive"]');
-    await expect(activeFilter).toContainText("Бренды");
-    await expect(activeFilter).toContainText("Apple");
+    await SearchResults.haveActiveFilters(page, ['Бренды: Apple']);
+    const category = await SearchResults.getDetectedCategory(page);
+    assert.strictEqual(category, "Смартфоны Apple");
 });
 
 test('Unsuccessful search', async ({ page }) => {
