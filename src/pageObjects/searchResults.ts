@@ -2,8 +2,9 @@ import { Page } from '@playwright/test';
 import * as assert from 'assert';
 
 export class SearchResults {
-    private static fullTextResults = '//div[@data-widget="fulltextResultsHeader"]';
-    private static activeFilters = '//div[@data-widget="searchResultsFiltersActive"]';
+    static fullTextResults = '//div[@data-widget="fulltextResultsHeader"]';
+    static activeFilters = '//div[@data-widget="searchResultsFiltersActive"]';
+    static searchResultsError = '//div[@data-widget="searchResultsError"]';
 
     static async getDetectedCategory(page: Page): Promise<string> {
         const content = await page.locator(this.fullTextResults + '//div')
@@ -31,5 +32,11 @@ export class SearchResults {
             if (!activeFilters.includes(filter)) missingFilters.push(filter);
         }
         if (missingFilters.length > 0) assert.fail(`Missing filters: ${missingFilters}`);
+    }
+
+    static async addFilter(page: Page, filterName: string, filterOption: string){
+        await page.locator(`//div[contains(text(), "${filterName}")]/parent::div`)
+        .locator(`//span[contains(text(),"${filterOption}")]/parent::div/preceding-sibling::div`)
+        .click();
     }
 }

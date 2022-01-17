@@ -1,7 +1,7 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-    retries: 1,
+    retries: 0,
     testDir: './src/tests',
     projects: [
         {
