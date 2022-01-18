@@ -1,5 +1,7 @@
 import { Page } from '@playwright/test';
 
+
+
 export class Homepage {
     private static homepage = 'https://www.ozon.ru/';
     private static userLocationButton = '(//div[@role="navigation"]//button/span/span)[1]';
@@ -7,6 +9,8 @@ export class Homepage {
     private static productSearchInput = this.searchBarDesktop + '//input[@placeholder="Искать на Ozon"]';
     private static productSearchButton = this.searchBarDesktop + '//button';
     private static locationModal = '//h2[contains(text(), "Выберите город")]/parent::div';
+    
+    static topBar = '//div[@data-widget="topBar"]';
 
     static async open(page: Page) {
         await page.goto(this.homepage);
