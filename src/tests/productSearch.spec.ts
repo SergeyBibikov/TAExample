@@ -1,8 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, devices } from '@playwright/test';
 import * as assert from 'assert';
 
 import { Homepage } from '../pageObjects/homepage';
 import { SearchResults } from '../pageObjects/searchResults';
+import { Header } from '../pageObjects/header';
+
 
 test.describe.parallel('Search suite', () => {
     test('Search for Iphone 13', async ({ page }) => {
@@ -11,6 +13,8 @@ test.describe.parallel('Search suite', () => {
 
         await Homepage.open(page);
         await Homepage.searchProduct(page, 'iphone 13');
+        const foundItemsCount = await SearchResults.getFoundItemsCount(page);
+        assert.equal(foundItemsCount > 400, true);
         const category = await SearchResults.getDetectedCategory(page);
         assert.strictEqual(category, "Смартфоны Apple");
         await SearchResults.addFilter(page, filterCategories[0], filterOptions[0]);
@@ -32,4 +36,13 @@ test.describe.parallel('Search suite', () => {
         await resultsCount.locator('div >> nth=1').click();
         await page.waitForSelector('//div[contains(text(),"Простите, по вашему запросу товаров сейчас нет.")]', { timeout: 5000 });
     });
+
+    test('Add item to cart', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.searchProduct(page, 'Iphone 13 128GB');
+        await SearchResults.addItemToReqularCart(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+        const cartItemsCount = await Header.getCartItemsCount(page);
+        assert.equal(cartItemsCount, 1);
+    });
+
 });
