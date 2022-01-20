@@ -78,13 +78,14 @@ export class SearchResults {
      * a search.
      */
     static async getFoundItemsCount(page: Page) :Promise<number | 0>{
-        const resultSummary =  await page
+        const resultSummary = page
             .locator(this.fullTextResults)
             .locator('div')
-            .first()
-            .textContent();
-        if (resultSummary) {
-            return Number(resultSummary.match(/найдено (\d*) товаров/)?.[1]);
+            .first();
+        await resultSummary.waitFor({state: "visible"});
+        const content = await resultSummary.textContent();
+        if (content) {
+            return Number(content.match(/найдено (\d*) товар/)?.[1]);
         }
         return 0
     }

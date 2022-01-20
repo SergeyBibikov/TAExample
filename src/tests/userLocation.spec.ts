@@ -5,7 +5,7 @@ import { Homepage } from '../pageObjects/homepage';
 test.describe.parallel('Location suite', () => {
     test('Auto detected user location', async ({ page }) => {
         await page.goto('https://www.ozon.ru/');
-        const currentLocation = await Homepage.getCurrentLocation(page);
+        const currentLocation = await Homepage.getCurrentUserLocation(page);
         assert.equal(currentLocation, 'Москва');
     });
 
@@ -13,8 +13,8 @@ test.describe.parallel('Location suite', () => {
         const newLocation = 'Санкт-Петербург';
 
         await Homepage.open(page);
-        await Homepage.setLocation(page, newLocation);
-        const currentLocation = await Homepage.getCurrentLocation(page);
+        await Homepage.setUserLocation(page, newLocation);
+        const currentLocation = await Homepage.getCurrentUserLocation(page);
         assert.equal(currentLocation, newLocation);
     });
 });

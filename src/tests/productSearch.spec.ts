@@ -14,7 +14,7 @@ test.describe.parallel('Search suite', () => {
         await Homepage.open(page);
         await Homepage.searchProduct(page, 'iphone 13');
         const foundItemsCount = await SearchResults.getFoundItemsCount(page);
-        assert.equal(foundItemsCount > 400, true);
+        assert.equal(foundItemsCount > 400, true, `Found items count = ${foundItemsCount}`);
         const category = await SearchResults.getDetectedCategory(page);
         assert.strictEqual(category, "Смартфоны Apple");
         await SearchResults.addFilter(page, filterCategories[0], filterOptions[0]);

@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import test, { expect, Page } from '@playwright/test';
 
 
 
@@ -9,7 +9,7 @@ export class Homepage {
     private static productSearchInput = this.searchBarDesktop + '//input[@placeholder="Искать на Ozon"]';
     private static productSearchButton = this.searchBarDesktop + '//button';
     private static locationModal = '//h2[contains(text(), "Выберите город")]/parent::div';
-    
+
     static topBar = '//div[@data-widget="topBar"]';
 
     static async open(page: Page) {
@@ -19,12 +19,18 @@ export class Homepage {
         await page.locator(Homepage.productSearchInput).fill(searchItem);
         await page.locator(Homepage.productSearchButton).click();
     }
-    static async getCurrentLocation(page: Page): Promise<string | null> {
+    static async getCurrentUserLocation(page: Page): Promise<string | null> {
         return await page.locator(this.userLocationButton).textContent();
     }
-    static async setLocation(page: Page, location: string) {
+    static async setUserLocation(page: Page, location: string) {
         await page.locator(this.userLocationButton).click();
         await page.locator(this.locationModal).locator(`text=${location}`).click();
-        await page.waitForSelector(this.locationModal, {state:'hidden'});
+        await page.waitForSelector(this.locationModal, { state: 'hidden' });
+    }
+
+    static async getTopBarLinks(page: Page): Promise<string[]> {
+        const links = page.locator(this.topBar).locator('//ul/li');
+        await links.first().waitFor({ state: "visible" });
+        return (await links.allTextContents()).map(x => x.trim());
     }
 }
