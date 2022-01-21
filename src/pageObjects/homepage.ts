@@ -1,5 +1,5 @@
-import test, { expect, Page } from '@playwright/test';
-
+import { Page } from '@playwright/test';
+import { Header } from './header';
 
 
 export class Homepage {
@@ -15,12 +15,20 @@ export class Homepage {
     static async open(page: Page) {
         await page.goto(this.homepage);
     }
-    static async searchProduct(page: Page, searchItem: string) {
-        await page.locator(Homepage.productSearchInput).fill(searchItem);
-        await page.locator(Homepage.productSearchButton).click();
+    static async goToCart(page: Page) {
+        await page.locator(Header.CART_LINK).click();
     }
     static async getCurrentUserLocation(page: Page): Promise<string | null> {
         return await page.locator(this.userLocationButton).textContent();
+    }
+    static async getTopBarLinks(page: Page): Promise<string[]> {
+        const links = page.locator(this.topBar).locator('//ul/li');
+        await links.first().waitFor({ state: "visible" });
+        return (await links.allTextContents()).map(x => x.trim());
+    }
+    static async searchProduct(page: Page, searchItem: string) {
+        await page.locator(Homepage.productSearchInput).fill(searchItem);
+        await page.locator(Homepage.productSearchButton).click();
     }
     static async setUserLocation(page: Page, location: string) {
         await page.locator(this.userLocationButton).click();
@@ -28,9 +36,5 @@ export class Homepage {
         await page.waitForSelector(this.locationModal, { state: 'hidden' });
     }
 
-    static async getTopBarLinks(page: Page): Promise<string[]> {
-        const links = page.locator(this.topBar).locator('//ul/li');
-        await links.first().waitFor({ state: "visible" });
-        return (await links.allTextContents()).map(x => x.trim());
-    }
+
 }
