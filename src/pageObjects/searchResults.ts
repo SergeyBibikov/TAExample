@@ -40,6 +40,7 @@ export class SearchResults {
      * Checks if all search filters are present
      */
     static async haveActiveFilters(page: Page, expectedFilters: string[]) {
+        await page.evaluate(() => window.scrollTo(0, 0));
         const activeFilters = await this.getActiveFilters(page);
         const missingFilters: string[] = [];
         for (const filter of expectedFilters) {

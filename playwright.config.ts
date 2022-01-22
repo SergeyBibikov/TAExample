@@ -2,9 +2,12 @@ import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
     retries: 0,
-    workers: 2,
+    workers: 1,
     timeout: 1000*60*2,
     testDir: './src/tests',
+    use: {
+        screenshot: 'only-on-failure'
+    },
     projects: [
         {
             name: 'chromium',

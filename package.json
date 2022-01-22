@@ -2,7 +2,8 @@
   "scripts": {
     "test": "npx playwright test --reporter=html",
     "report": "npx playwright show-report",
-    "ch": "npx playwright test --headed --project=chromium"
+    "ch": "npx playwright test --headed --project=chromium",
+    "fh": "npx playwright test --headed --project=firefox"
   },
   "devDependencies": {
     "@playwright/test": "^1.17.1",
