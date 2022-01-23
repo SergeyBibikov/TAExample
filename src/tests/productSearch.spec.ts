@@ -24,6 +24,15 @@ test('Search for Iphone 13', async ({ page }) => {
         `${filterCategories[1]}: ${filterOptions[1]}`]);
 });
 
+test('Pagination', async ({ page }) => {
+    await Homepage.open(page);
+    await Homepage.searchProduct(page, 'iphone 13');
+    const initialTopResult = await SearchResults.getFirstItemName(page);
+    await SearchResults.goToPaginationPage(page, 2);
+    const currentTopResult = await SearchResults.getFirstItemName(page);
+    assert.notDeepEqual(currentTopResult, initialTopResult);
+});
+
 test('Unsuccessful search', async ({ page }) => {
     const searchString = 'grgew';
     await Homepage.open(page);

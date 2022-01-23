@@ -20,5 +20,11 @@
 		"body": [
 			"test('$1', async ({ page }) => {\n\t\n});",
 		]
+	},
+	"Add a static async method":{
+		"prefix": "sam",
+		"body": [
+			"\nstatic async $1(page: Page){\n\t\n}"
+		]
 	}
 }

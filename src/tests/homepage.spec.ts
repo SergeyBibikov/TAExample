@@ -57,5 +57,6 @@ test('Add item to cart and delete it', async ({ page }) => {
     await Cart.deleteSelectedItems(page);
     expect(page.locator(Cart.CONFIRM_DELETION_POPUP)).toContainText('Вы точно хотите удалить выбранные товары?');
     await Cart.confirmItemsDeletion(page);
+    await expect(page.locator('body')).toContainText("Корзина пуста")
 });
 

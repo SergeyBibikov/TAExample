@@ -11,7 +11,7 @@ export class SearchResults {
     static activeFilters = '//div[@data-widget="searchResultsFiltersActive"]';
     static searchResultsError = '//div[@data-widget="searchResultsError"]';
     static foundItemsList = '//div[@data-widget="searchResultsV2"]/div';
-
+    static readonly pagination = '//div[@data-widget="megaPaginator"]';
     static buttons = {
         TO_CART_REGULAR: regularCart + toCart,
         TO_CART_EXPRESS: expressCart + toCart,
@@ -34,6 +34,34 @@ export class SearchResults {
             filters.push((await el?.textContent()) || "");
         }
         return filters;
+    }
+
+    /**
+     * Returns the name of first item in the list of found items.
+     * When there are not items found, returns an empty string
+     */
+    static async getFirstItemName(page: Page):Promise<string>{
+        return (await page
+        .locator(this.foundItemsList)
+        .locator('xpath=/div')
+        .first()//first item card
+        .locator('xpath=/div')
+        .nth(1)//card's section with name
+        .locator('//a//span')
+        .first()//item's name
+        .locator('xpath=/span')
+        .textContent()) || "";
+    }
+
+    /**
+     * Go to different page of search results
+     */
+    static async goToPaginationPage(page: Page, pageNum: number) {
+        await page
+                .locator(this.pagination)
+                .locator(`//a[text()=${pageNum}]`)
+                .click();
+        await page.waitForResponse("https://www.ozon.ru/api/composer-api.bx/widget/json/v2");
     }
 
     /**
