@@ -38,7 +38,7 @@ test('Unsuccessful search', async ({ page }) => {
     await Homepage.open(page);
     await Homepage.searchProduct(page, searchString);
     const resultsCount = page.locator(SearchResults.fullTextResults);
-    await expect(resultsCount).toContainText('По запросу grew найдено');
+    await expect(resultsCount).toContainText('По запросу grow найден');
     await expect(resultsCount).toContainText(`Вы искали ${searchString}?`);
     await resultsCount.locator('div >> nth=1').click();
     await page.waitForSelector('//div[contains(text(),"Простите, по вашему запросу товаров сейчас нет.")]', { timeout: 5000 });

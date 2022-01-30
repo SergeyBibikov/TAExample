@@ -1,6 +1,7 @@
 import { expect, test} from '@playwright/test';
 import * as assert from 'assert';
 
+import * as compare from "../helpers/comparison";
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { Cart } from '../pageObjects/cart';
@@ -19,7 +20,10 @@ test("Top bar links list", async ({ page }) => {
     
     await Homepage.open(page);
     const presentLinks = await Homepage.getTopBarLinks(page);
-    assert.deepStrictEqual(presentLinks.sort(), expectedLinks.sort());
+    const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
+    if (diff) {
+        assert.fail(`The following links are missing: ${diff}`);
+    }
 });
 
 test('Header navigation links list', async ({ page }) => {
@@ -27,7 +31,7 @@ test('Header navigation links list', async ({ page }) => {
         'TOP Fashion',    'Premium',
         'Ozon Travel',    'Ozon Express',
         'Ozon Счёт',      'LIVE',
-        'Акции',          'Бренды',
+        'Бренды',
         'Магазины',       'Электроника',
         'Одежда и обувь', 'Детские товары',
         'Дом и сад',      'Зона лучших цен'
@@ -35,7 +39,10 @@ test('Header navigation links list', async ({ page }) => {
 
     await Homepage.open(page);
     const presentLinks = await Header.getNavBarLinks(page);
-    assert.deepStrictEqual(presentLinks.sort(), expectedLinks.sort());
+    const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
+    if (diff) {
+        assert.fail(`The following links are missing: ${diff}`);
+    }
 });
 
 test('Empty cart. B2B ad popup', async ({ page }) => {
