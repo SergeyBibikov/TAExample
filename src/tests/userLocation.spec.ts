@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import * as assert from 'assert';
 import { Homepage } from '../pageObjects/homepage';
 

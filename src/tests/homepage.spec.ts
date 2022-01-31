@@ -1,4 +1,4 @@
-import { expect, test} from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import * as assert from 'assert';
 
 import * as compare from "../helpers/comparison";
@@ -17,7 +17,7 @@ test("Top bar links list", async ({ page }) => {
         'Помощь',
         'Пункты выдачи'
     ];
-    
+
     await Homepage.open(page);
     const presentLinks = await Homepage.getTopBarLinks(page);
     const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
@@ -26,16 +26,34 @@ test("Top bar links list", async ({ page }) => {
     }
 });
 
+test('B2B top bar link', async ({ page }) => {
+    await Homepage.open(page);
+    await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
+    await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
+});
+
+test('Mobile app top bar link', async ({ page }) => {
+    await Homepage.open(page);
+    await Homepage.clickTopBarLink(page, 'Мобильное приложение');
+    await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
+});
+
+test('Top bar referral program link', async ({ page }) => {
+    await Homepage.open(page);
+    await Homepage.clickTopBarLink(page, 'Реферальная программа');
+    await expect(page.locator('body')).toContainText('получить 300 баллов на первый заказ или доступ к закрытым предложениям');
+});
+
 test('Header navigation links list', async ({ page }) => {
     const expectedLinks = [
-        'TOP Fashion',    'Premium',
-        'Ozon Travel',    'Ozon Express',
-        'Ozon Счёт',      'LIVE',
+        'TOP Fashion', 'Premium',
+        'Ozon Travel', 'Ozon Express',
+        'Ozon Счёт', 'LIVE',
         'Бренды',
-        'Магазины',       'Электроника',
+        'Магазины', 'Электроника',
         'Одежда и обувь', 'Детские товары',
-        'Дом и сад',      'Зона лучших цен'
-      ]
+        'Дом и сад', 'Зона лучших цен'
+    ]
 
     await Homepage.open(page);
     const presentLinks = await Header.getNavBarLinks(page);

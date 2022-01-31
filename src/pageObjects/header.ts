@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test';
 
 export class Header {
+
     static ROOT = '//header[@data-widget="header"]';
     static CART_LINK = this.ROOT + '//a[@data-widget="headerIcon"]';
     static horizontalMenu = this.ROOT + '//ul[@data-widget="horizontalMenu"]'
@@ -20,5 +21,4 @@ export class Header {
         await links.first().waitFor({ state: "visible" });
         return (await links.allTextContents()).map(x => x.trim());
     }
-
 }

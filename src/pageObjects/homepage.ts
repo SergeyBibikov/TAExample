@@ -15,6 +15,14 @@ export class Homepage {
     static async open(page: Page) {
         await page.goto(this.homepage);
     }
+
+    static async clickTopBarLink(page: Page, link: string){
+        await page
+            .locator(this.topBar)
+            .locator(`//span[text()="${link}"]`)
+            .click();
+    }
+
     static async goToCart(page: Page) {
         await page.locator(Header.CART_LINK).click();
     }
@@ -35,6 +43,4 @@ export class Homepage {
         await page.locator(this.locationModal).locator(`text=${location}`).click();
         await page.waitForSelector(this.locationModal, { state: 'hidden' });
     }
-
-
 }
