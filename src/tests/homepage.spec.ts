@@ -7,42 +7,80 @@ import { Homepage } from '../pageObjects/homepage';
 import { Cart } from '../pageObjects/cart';
 import { SearchResults } from '../pageObjects/searchResults';
 
-test("Top bar links list", async ({ page }) => {
-    const expectedLinks = [
-        'Ozon для бизнеса',
-        'Мобильное приложение',
-        'Подарочные сертификаты',
-        'Реферальная программа',
-        'Зарабатывай с Ozon',
-        'Помощь',
-        'Пункты выдачи'
-    ];
 
-    await Homepage.open(page);
-    const presentLinks = await Homepage.getTopBarLinks(page);
-    const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
-    if (diff) {
-        assert.fail(`The following links are missing: ${diff}`);
-    }
+test.describe('Top bar links', () =>{
+
+    test("Links list", async ({ page }) => {
+        const expectedLinks = [
+            'Ozon для бизнеса',
+            'Мобильное приложение',
+            'Подарочные сертификаты',
+            'Реферальная программа',
+            'Зарабатывай с Ozon',
+            'Помощь',
+            'Пункты выдачи'
+        ];
+    
+        await Homepage.open(page);
+        const presentLinks = await Homepage.getTopBarLinks(page);
+        const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
+        if (diff) {
+            assert.fail(`The following links are missing: ${diff}`);
+        }
+    });
+    
+    test('Ozon for business', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
+        await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
+    });
+    
+    test('Mobile app', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Мобильное приложение');
+        await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
+    });
+    
+    test('Referral program', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Реферальная программа');
+        await expect(page.locator('body')).toContainText('получить 300 баллов на первый заказ или доступ к закрытым предложениям');
+    });
+    
+    test('Earn with Ozon', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Зарабатывай с Ozon');
+        await expect(page.locator('//a[text()="Хочу зарабатывать"]')).toHaveCount(1);
+    });
+
+    test('Gift certificate', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Подарочные сертификаты');
+        await expect(page.locator('//div[@data-widget="webProductHeading"]')).toContainText('Электронный подарочный сертификат');
+    });
+    test('Help', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Помощь');
+        await expect(page.locator('//h3')).toHaveCount(8);
+        const mainContent = page.locator('div.book-columns');
+        await expect(mainContent).toContainText("Мой заказ");
+        await expect(mainContent).toContainText("Отмена и возврат");
+        await expect(mainContent).toContainText("Доставка");
+        await expect(mainContent).toContainText("Оплата");
+        await expect(mainContent).toContainText("Товары");
+        await expect(mainContent).toContainText("Акции и бонусы");
+        await expect(mainContent).toContainText("Безопасность");
+        await expect(mainContent).toContainText("Вопросы по билетам");
+    });
+
+    test('Pick points', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.clickTopBarLink(page, 'Пункты выдачи');
+        await expect(page.locator('body')).toContainText("Выбор пункта выдачи");
+    });
+
 });
 
-test('B2B top bar link', async ({ page }) => {
-    await Homepage.open(page);
-    await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
-    await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
-});
-
-test('Mobile app top bar link', async ({ page }) => {
-    await Homepage.open(page);
-    await Homepage.clickTopBarLink(page, 'Мобильное приложение');
-    await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
-});
-
-test('Top bar referral program link', async ({ page }) => {
-    await Homepage.open(page);
-    await Homepage.clickTopBarLink(page, 'Реферальная программа');
-    await expect(page.locator('body')).toContainText('получить 300 баллов на первый заказ или доступ к закрытым предложениям');
-});
 
 test('Header navigation links list', async ({ page }) => {
     const expectedLinks = [
