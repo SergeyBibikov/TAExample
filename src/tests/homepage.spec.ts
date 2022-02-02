@@ -3,6 +3,7 @@ import * as assert from 'assert';
 
 import * as compare from "../helpers/comparison";
 import { Header } from '../pageObjects/header';
+import { Footer } from '../pageObjects/footer';
 import { Homepage } from '../pageObjects/homepage';
 import { Cart } from '../pageObjects/cart';
 import { SearchResults } from '../pageObjects/searchResults';
@@ -81,7 +82,6 @@ test.describe('Top bar links', () =>{
 
 });
 
-
 test('Header navigation links list', async ({ page }) => {
     const expectedLinks = [
         'TOP Fashion', 'Premium',
@@ -99,6 +99,11 @@ test('Header navigation links list', async ({ page }) => {
     if (diff) {
         assert.fail(`The following links are missing: ${diff}`);
     }
+});
+
+test('Footer accessibility button', async ({ page }) => {
+    await Homepage.open(page);
+    await expect(page.locator(Footer.locators.VER_FOR_VIS_IMPARED)).toHaveCount(1);
 });
 
 test('Empty cart. B2B ad popup', async ({ page }) => {
@@ -122,4 +127,5 @@ test('Add item to cart and delete it', async ({ page }) => {
     await Cart.confirmItemsDeletion(page);
     await expect(page.locator('body')).toContainText("Корзина пуста")
 });
+
 
