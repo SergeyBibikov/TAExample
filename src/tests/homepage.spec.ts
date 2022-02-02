@@ -101,10 +101,23 @@ test('Header navigation links list', async ({ page }) => {
     }
 });
 
-test('Footer accessibility button', async ({ page }) => {
-    await Homepage.open(page);
-    await expect(page.locator(Footer.locators.VER_FOR_VIS_IMPARED)).toHaveCount(1);
+test.describe('Footer', ()=>{
+    test('Accessibility version button', async ({ page }) => {
+        await Homepage.open(page);
+        await expect(page.locator(Footer.locators.VER_FOR_VIS_IMPARED)).toHaveCount(1);
+    });
+    test('Ozon ecosystem links', async ({ page }) => {
+        await Homepage.open(page);
+        const ecoSection = page.locator(Footer.locators.ECOSYSTEM_SECTION);
+        await expect(ecoSection.locator('a')).toHaveCount(5);
+        await expect(ecoSection).toContainText('Интернет-магазин');
+        await expect(ecoSection).toContainText('Работа в Ozon');
+        await expect(ecoSection).toContainText('Авиабилеты');
+        await expect(ecoSection).toContainText('Бесплатные IT курсы');
+        await expect(ecoSection).toContainText('Электронные книги');
+    });
 });
+
 
 test('Empty cart. B2B ad popup', async ({ page }) => {
     await Homepage.open(page);

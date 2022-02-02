@@ -26,5 +26,11 @@
 		"body": [
 			"\nstatic async $1(page: Page){\n\t\n}"
 		]
+	},
+	"Add an expect function":{
+		"prefix": "exp",
+		"body": [
+			"await expect($1);"
+		]
 	}
 }

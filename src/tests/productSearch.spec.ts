@@ -34,11 +34,11 @@ test('Pagination', async ({ page }) => {
 });
 
 test('Unsuccessful search', async ({ page }) => {
-    const searchString = 'grgew';
+    const searchString = 'gjdsf';
     await Homepage.open(page);
     await Homepage.searchProduct(page, searchString);
     const resultsCount = page.locator(SearchResults.fullTextResults);
-    await expect(resultsCount).toContainText('По запросу grow найден');
+    await expect(resultsCount).toContainText('По запросу пова найден');
     await expect(resultsCount).toContainText(`Вы искали ${searchString}?`);
     await resultsCount.locator('div >> nth=1').click();
     await page.waitForSelector('//div[contains(text(),"Простите, по вашему запросу товаров сейчас нет.")]', { timeout: 5000 });
