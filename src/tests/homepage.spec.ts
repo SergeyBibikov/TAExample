@@ -106,6 +106,17 @@ test.describe('Footer', ()=>{
         await Homepage.open(page);
         await expect(page.locator(Footer.locators.VER_FOR_VIS_IMPARED)).toHaveCount(1);
     });
+    
+    test('Misc info links', async ({ page }) => {
+        await Homepage.open(page);
+        const infoLinksSection = page.locator(Footer.locators.INFO_LINKS_SECTION);
+        await expect(infoLinksSection.locator('xpath=/div')).toHaveCount(5);
+        await expect(infoLinksSection.locator('xpath=/div[1]/span')).toHaveText('Зарабатывайте с Ozon');
+        await expect(infoLinksSection.locator('xpath=/div[2]/span')).toHaveText('О компании');
+        await expect(infoLinksSection.locator('xpath=/div[3]/span')).toHaveText('Помощь');
+        await expect(infoLinksSection.locator('xpath=/div[4]/span')).toHaveText('Ozon для бизнеса');
+    });
+
     test('Ozon ecosystem links', async ({ page }) => {
         await Homepage.open(page);
         const ecoSection = page.locator(Footer.locators.ECOSYSTEM_SECTION);
