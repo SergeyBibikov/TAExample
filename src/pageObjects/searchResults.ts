@@ -1,6 +1,5 @@
 import { Page } from '@playwright/test';
 import * as assert from 'assert';
-import { Header } from './header';
 
 const toCart = '//*[contains(text(),"В корзину")]/ancestor::button';
 const regularCart = '//*[contains(text(),"Завтра")]/ancestor::span/preceding-sibling::div';

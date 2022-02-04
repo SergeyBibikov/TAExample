@@ -6,8 +6,8 @@ import { SearchResults } from '../pageObjects/searchResults';
 
 
 test('Search for Iphone 13', async ({ page }) => {
-    const filterCategories = ['Линейка', 'Оперативная память'];
-    const filterOptions = ['Apple iPhone 12', '4-8 ГБ'];
+    const filterCategories = ['Оперативная память', 'Линейка'];
+    const filterOptions = ['4-8 ГБ', 'Apple iPhone 13' ];
 
     await Homepage.open(page);
     await Homepage.searchProduct(page, 'iphone 13');
@@ -15,6 +15,7 @@ test('Search for Iphone 13', async ({ page }) => {
     assert.equal(foundItemsCount > 400, true, `Found items count = ${foundItemsCount}`);
     const category = await SearchResults.getDetectedCategory(page);
     assert.strictEqual(category, "Смартфоны Apple");
+    await page.pause();
     await SearchResults.addFilter(page, filterCategories[0], filterOptions[0]);
     await SearchResults.addFilter(page, filterCategories[1], filterOptions[1]);
     await page.waitForSelector('text=Очистить всё');
