@@ -30,7 +30,7 @@
 	"Add an expect function":{
 		"prefix": "exp",
 		"body": [
-			"await expect($1);"
+			"await expect(page.locator($1));"
 		]
 	}
 }

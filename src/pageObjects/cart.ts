@@ -6,11 +6,18 @@ export class Cart{
     static readonly CONFIRM_DELETION_POPUP='//div[contains(text(), "Удаление товаров")]/../..';
 
     static async closeB2BPopup(page: Page) {
-       await page
-            .locator(this.B2B_POPUP)
-            .locator('button')
-            .nth(1)
-            .click();
+        await page
+        .locator(this.B2B_POPUP)
+        .locator('button')
+        .nth(1)
+        .click();
+    }
+    
+    static async confirmItemsDeletion(page: Page) {
+        await page
+                .locator(this.CONFIRM_DELETION_POPUP)
+                .locator('//button[contains(., "Удалить")]')
+                .click();
     }
 
     static async deleteSelectedItems(page: Page) {
@@ -18,10 +25,12 @@ export class Cart{
                 .locator('text=Удалить выбранные')
                 .click();
     }
-    static async confirmItemsDeletion(page: Page) {
+
+    
+    static async goToCheckout(page: Page){
         await page
-                .locator(this.CONFIRM_DELETION_POPUP)
-                .locator('//button[contains(., "Удалить")]')
+                .locator('text=Перейти к оформлению')
+                .first()
                 .click();
     }
 }

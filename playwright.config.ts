@@ -2,7 +2,7 @@ import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
     retries: 0,
-    workers: 1,
+    workers: 2,
     timeout: 1000*60*2,
     testDir: './src/tests',
     use: {

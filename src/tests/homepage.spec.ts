@@ -5,9 +5,6 @@ import * as compare from "../helpers/comparison";
 import { Header } from '../pageObjects/header';
 import { Footer } from '../pageObjects/footer';
 import { Homepage } from '../pageObjects/homepage';
-import { Cart } from '../pageObjects/cart';
-import { SearchResults } from '../pageObjects/searchResults';
-
 
 test.describe('Top bar links', () =>{
 
@@ -128,28 +125,3 @@ test.describe('Footer', ()=>{
         await expect(ecoSection).toContainText('Электронные книги');
     });
 });
-
-
-test('Empty cart. B2B ad popup', async ({ page }) => {
-    await Homepage.open(page);
-    await Homepage.goToCart(page);
-    await expect(page.locator(Cart.B2B_POPUP)).toContainText('Подробнее о покупках для юридических лиц');
-    await Cart.closeB2BPopup(page);
-    await expect(page.locator('//html')).toContainText('Корзина пуста');
-});
-
-test('Add item to cart and delete it', async ({ page }) => {
-    await Homepage.open(page);
-    await Homepage.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.addItemToReqularCart(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
-    const cartItemsCount = await Header.getCartItemsCount(page);
-    assert.equal(cartItemsCount, 1);
-    await Homepage.goToCart(page);
-    await Cart.closeB2BPopup(page);
-    await Cart.deleteSelectedItems(page);
-    expect(page.locator(Cart.CONFIRM_DELETION_POPUP)).toContainText('Вы точно хотите удалить выбранные товары?');
-    await Cart.confirmItemsDeletion(page);
-    await expect(page.locator('body')).toContainText("Корзина пуста")
-});
-
-
