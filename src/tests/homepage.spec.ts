@@ -79,6 +79,23 @@ test.describe('Top bar links', () =>{
 
 });
 
+test('Promo code', async ({ page }) => {
+    await Homepage.open(page);
+    const promo = page.locator('[data-widget="promoNavigation"]'); 
+    await expect(promo).toContainText('Есть промокод?');
+    await expect(promo.locator('input[type="text"]')).toHaveCount(1);
+    await expect(promo.locator('button')).toHaveCount(1);
+});
+
+test('Sign in or register button', async ({ page }) => {
+    await Homepage.open(page);
+    const auth = page.locator('[data-widget="authorization"]');
+    await expect(auth).toContainText('Вход');
+    await expect(auth.locator('//button[contains(.,"Вход или регистрация")]'))
+        .toHaveCount(1);
+
+});
+
 test('Header navigation links list', async ({ page }) => {
     const expectedLinks = [
         'TOP Fashion', 'Premium',
