@@ -3,7 +3,8 @@ import { Page } from '@playwright/test';
 export class Header {
 
     static ROOT = '//header[@data-widget="header"]';
-    static CART_LINK = this.ROOT + '//a[@data-widget="headerIcon"]';
+    static SIGN_IN = this.ROOT + '//div[@data-widget="profileMenuAnonymous"]';
+    static CART = this.ROOT + '//a[@data-widget="headerIcon"]';
     static horizontalMenu = this.ROOT + '//ul[@data-widget="horizontalMenu"]';
     static CATALOGUE_ROOT = '//div[@data-widget="catalogMenu"]';
     static CATALOGUE_CATEGORIES = this.CATALOGUE_ROOT +'/div[2]/div/div[1]';
@@ -11,7 +12,7 @@ export class Header {
 
     static async getCartItemsCount(page: Page): Promise<number> {
         const counter = page
-            .locator(this.CART_LINK)
+            .locator(this.CART)
             .locator('span')
             .first();
         await counter.waitFor({ state: "visible" });

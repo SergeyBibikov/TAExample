@@ -115,6 +115,13 @@ test('Header navigation links list', async ({ page }) => {
     }
 });
 
+test('Header sign in', async ({ page }) => {
+    await Homepage.open(page);
+    await page.hover(Header.SIGN_IN);
+    await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
+    await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
+});
+
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
     await Header.openCatalogue(page);

@@ -24,7 +24,7 @@ export class Homepage {
     }
 
     static async goToCart(page: Page) {
-        await page.locator(Header.CART_LINK).click();
+        await page.locator(Header.CART).click();
     }
     static async getCurrentUserLocation(page: Page): Promise<string | null> {
         return await page.locator(this.userLocationButton).textContent();
