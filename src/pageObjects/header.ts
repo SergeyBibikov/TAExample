@@ -5,6 +5,7 @@ export class Header {
     static ROOT = '//header[@data-widget="header"]';
     static SIGN_IN = this.ROOT + '//div[@data-widget="profileMenuAnonymous"]';
     static CART = this.ROOT + '//a[@data-widget="headerIcon"]';
+    static ORDERS = this.ROOT + '//div[@data-widget="orderInfo"]';
     static horizontalMenu = this.ROOT + '//ul[@data-widget="horizontalMenu"]';
     static CATALOGUE_ROOT = '//div[@data-widget="catalogMenu"]';
     static CATALOGUE_CATEGORIES = this.CATALOGUE_ROOT +'/div[2]/div/div[1]';

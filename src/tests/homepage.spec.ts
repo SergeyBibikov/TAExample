@@ -96,31 +96,41 @@ test('Sign in or register button', async ({ page }) => {
 
 });
 
-test('Header navigation links list', async ({ page }) => {
-    const expectedLinks = [
-        'TOP Fashion', 'Premium',
-        'Ozon Travel', 'Ozon Express',
-        'Ozon Счёт', 'LIVE',
-        'Бренды',
-        'Магазины', 'Электроника',
-        'Одежда и обувь', 'Детские товары',
-        'Дом и сад', 'Зона лучших цен'
-    ]
+test.describe('Header', ()=>{
+    test('Navigation links list', async ({ page }) => {
+        const expectedLinks = [
+            'TOP Fashion', 'Premium',
+            'Ozon Travel', 'Ozon Express',
+            'Ozon Счёт', 'LIVE',
+            'Бренды',
+            'Магазины', 'Электроника',
+            'Одежда и обувь', 'Детские товары',
+            'Дом и сад', 'Зона лучших цен'
+        ]
+    
+        await Homepage.open(page);
+        const presentLinks = await Header.getNavBarLinks(page);
+        const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
+        if (diff) {
+            assert.fail(`The following links are missing: ${diff}`);
+        }
+    });
+    
+    test('Sign in popup on hover', async ({ page }) => {
+        await Homepage.open(page);
+        await page.hover(Header.SIGN_IN);
+        await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
+        await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
+    });
 
-    await Homepage.open(page);
-    const presentLinks = await Header.getNavBarLinks(page);
-    const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
-    if (diff) {
-        assert.fail(`The following links are missing: ${diff}`);
-    }
+    test('Go to orders while not being signed in', async ({ page }) => {
+        await Homepage.open(page);
+        await Homepage.goToOrders(page);
+        await expect(page.locator('//div[contains(text(), "Вы не авторизованы")]')).toHaveCount(1);
+        await expect(page.locator('//*[@data-widget="loginButton"]')).toHaveCount(1);
+    });
 });
 
-test('Header sign in', async ({ page }) => {
-    await Homepage.open(page);
-    await page.hover(Header.SIGN_IN);
-    await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
-    await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
-});
 
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
