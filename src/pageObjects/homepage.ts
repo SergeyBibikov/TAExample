@@ -31,6 +31,10 @@ export class Homepage {
         await page.locator(Header.ORDERS).click();
     }
 
+    static async goToFavourites(page: Page) {
+        await page.locator(Header.FAVOURITES).click();
+    }
+
     static async getCurrentUserLocation(page: Page): Promise<string | null> {
         return await page.locator(this.userLocationButton).textContent();
     }
