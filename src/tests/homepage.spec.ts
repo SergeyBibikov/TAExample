@@ -116,11 +116,23 @@ test.describe('Header', ()=>{
         }
     });
     
-    test('Sign in popup on hover', async ({ page }) => {
+    test('Sign in on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
         await page.hover(Header.SIGN_IN);
         await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
         await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
+    });
+
+    test('Sign in on click. Ozonid card', async ({ page }) => {
+        await Homepage.open(page);
+        await page.locator(Header.SIGN_IN).click();
+        const ozonId = page.locator('[data-widget="ozonIdIframe"]');
+        await expect(ozonId).toHaveCount(1);
+        const ozonIdIframe = ozonId.frameLocator('iframe');
+        await expect(ozonIdIframe.locator('body')).toContainText('Войдите или зарегистрируйтесь, чтобы продолжить');
+        await expect(ozonIdIframe.locator('input[name="phone"]')).toHaveCount(1);
+        await expect(ozonIdIframe.locator('//button[contains(., "Получить код")]')).toHaveCount(1);
+        await expect(ozonIdIframe.locator('//a[text()="Войти по почте"]')).toHaveCount(1);
     });
 
     test('Go to orders while not being signed in', async ({ page }) => {
