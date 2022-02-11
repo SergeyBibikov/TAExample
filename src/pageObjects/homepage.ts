@@ -5,9 +5,8 @@ import { Header } from './header';
 export class Homepage {
     private static homepage = 'https://www.ozon.ru/';
     private static userLocationButton = '(//div[@role="navigation"]//button/span/span)[1]';
-    private static searchBarDesktop = '//div[@data-widget="searchBarDesktop"]';
-    private static productSearchInput = this.searchBarDesktop + '//input[@placeholder="Искать на Ozon"]';
-    private static productSearchButton = this.searchBarDesktop + '//button';
+    private static productSearchInput = Header.SEARCH_BAR + '//input[@placeholder="Искать на Ozon"]';
+    private static productSearchButton = Header.SEARCH_BAR + '//button';
     private static locationModal = '//h2[contains(text(), "Выберите город")]/parent::div';
 
     static topBar = '//div[@data-widget="topBar"]';

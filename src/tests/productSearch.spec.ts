@@ -3,7 +3,20 @@ import * as assert from 'assert';
 
 import { Homepage } from '../pageObjects/homepage';
 import { SearchResults } from '../pageObjects/searchResults';
+import { Header } from '../pageObjects/header';
 
+test('Category select and delete', async ({ page }) => {
+    await Homepage.open(page);
+    const catLoc = page.locator(Header.SEARCH_CATEGORY);
+    await expect(catLoc).toContainText('Везде');
+    await catLoc.click();
+    const popUp = page.locator('[data-widget="searchContextPopup"]'); 
+    await expect(popUp).toHaveCount(1);
+    await popUp.locator('text=Одежда').click();
+    await expect(catLoc).toContainText('Одежда');
+    await catLoc.locator('span').nth(1).click();
+    await expect(catLoc).toContainText('Везде');
+});
 
 test('Search for Iphone 13', async ({ page }) => {
     const filterCategories = ['Оперативная память', 'Линейка'];

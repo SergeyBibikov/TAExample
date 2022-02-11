@@ -1,8 +1,9 @@
 import { Page } from '@playwright/test';
 
 export class Header {
-
     static ROOT = '//header[@data-widget="header"]';
+    static readonly SEARCH_BAR = '//div[@data-widget="searchBarDesktop"]';
+    static readonly SEARCH_CATEGORY = this.SEARCH_BAR + '/form/div[1]';
     static SIGN_IN = this.ROOT + '//div[@data-widget="profileMenuAnonymous"]';
     static CART = this.ROOT + '//a[@data-widget="headerIcon"]';
     static ORDERS = this.ROOT + '//div[@data-widget="orderInfo"]';
