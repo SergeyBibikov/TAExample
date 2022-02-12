@@ -9,7 +9,7 @@ export class SearchResults {
     static fullTextResults = '//div[@data-widget="fulltextResultsHeader"]';
     static activeFilters = '//div[@data-widget="searchResultsFiltersActive"]';
     static searchResultsError = '//div[@data-widget="searchResultsError"]';
-    static foundItemsList = '//div[@data-widget="searchResultsV2"]/div';
+    static FOUND_ITEMS_LIST = '//div[@data-widget="searchResultsV2"]/div';
     static readonly pagination = '//div[@data-widget="megaPaginator"]';
     static buttons = {
         TO_CART_REGULAR: regularCart + toCart,
@@ -41,7 +41,7 @@ export class SearchResults {
      */
     static async getFirstItemName(page: Page):Promise<string>{
         return (await page
-        .locator(this.foundItemsList)
+        .locator(this.FOUND_ITEMS_LIST)
         .locator('xpath=/div')
         .first()//first item card
         .locator('xpath=/div')
@@ -89,7 +89,7 @@ export class SearchResults {
      */
     static async addItemToReqularCart(page: Page, itemName: string) {
         const itemDataDiv = page
-            .locator(this.foundItemsList)
+            .locator(this.FOUND_ITEMS_LIST)
             .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
         await itemDataDiv
             .locator('xpath=/following-sibling::div[1]')

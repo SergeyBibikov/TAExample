@@ -137,13 +137,13 @@ test.describe('Header', ()=>{
 
     test('Go to orders while not being signed in', async ({ page }) => {
         await Homepage.open(page);
-        await Homepage.goToOrders(page);
+        await Header.goToOrders(page);
         await expect(page.locator('//div[contains(text(), "Вы не авторизованы")]')).toHaveCount(1);
         await expect(page.locator('//*[@data-widget="loginButton"]')).toHaveCount(1);
     });
     test('Go to Favourites when there are no items ', async ({ page }) => {
         await Homepage.open(page);
-        await Homepage.goToFavourites(page);
+        await Header.goToFavourites(page);
         await expect(page.locator('//div[contains(text(),"Избранное")]')).toHaveCount(1);
         await expect(page.locator('//span[text()="В Избранном пока ничего нет"]')).toHaveCount(1);
         await expect(page.locator('//span[contains(text(),"Сравнение товаров")]')).toHaveCount(1);
