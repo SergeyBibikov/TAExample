@@ -39,7 +39,16 @@ test('Search for Iphone 13', async ({ page }) => {
 test('"Didn\'t find what you need?" button', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'iphone 13');
-    await page.waitForSelector('//div[contains(.,"Не нашли, что искали?")]');
+    const didntFindButton = "xpath=//div[contains(text(),'Не нашли, что искали?')]";
+    await page.waitForSelector(didntFindButton);
+    await page.locator(didntFindButton).click();
+    const didntFindForm = '//form[contains(.,"Не нашли, что искали?")]';
+    await expect(page.locator(didntFindForm)).toHaveCount(1);
+    await expect(page.locator(didntFindForm).locator('//fieldset//div[contains(text(),"Товар")]')).toHaveCount(1);
+    await expect(page.locator(didntFindForm).locator('//fieldset//div[contains(text(),"Бренд")]')).toHaveCount(1);
+    const inpLoc = '//p[contains(text(),"Ссылка на товар")]/preceding-sibling::input';
+    await expect(page.locator(didntFindForm).locator(inpLoc)).toHaveCount(1);
+    await expect(page.locator(didntFindForm).locator('//button//span[contains(text(),"Отправить")]')).toHaveCount(1);
 });
 test('Pagination', async ({ page }) => {
     await Homepage.open(page);
