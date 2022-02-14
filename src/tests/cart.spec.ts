@@ -28,6 +28,15 @@ test('Add item to cart and delete it', async ({ page }) => {
     await expect(page.locator('body')).toContainText("Корзина пуста")
 });
 
+test('Add item to express cart', async ({ page }) => {
+    await Homepage.open(page);
+    await Header.searchProduct(page, 'Iphone 13 128GB');
+    await SearchResults.addItemToExpressCart(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    const addressPopup = page.locator('[data-widget="addressPopup"]');
+    await expect(addressPopup).toHaveCount(1);
+    await expect(addressPopup).toContainText("Уточнение адреса");
+});
+
 test('Unauthorized user. Proceed to checkout', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'Iphone 13 128GB');

@@ -100,7 +100,15 @@ export class SearchResults {
             .locator(this.buttons.TO_CART_REGULAR)
             .waitFor({state: "hidden"});
     }
-
+    static async addItemToExpressCart(page: Page, itemName: string) {
+        const itemDataDiv = page
+            .locator(this.FOUND_ITEMS_LIST)
+            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+        await itemDataDiv
+            .locator('xpath=/following-sibling::div[1]')
+            .locator(this.buttons.TO_CART_EXPRESS)
+            .click();
+    }
     /**
      * Returns the number of items found by
      * a search.
