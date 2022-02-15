@@ -25,6 +25,16 @@ export class Header {
         return Number(await counter.textContent());
     }
 
+    static async getFavouriteItemsCount(page: Page): Promise<number> {
+        const counter = page
+            .locator(this.FAVOURITES)
+            .locator('span')
+            .first();
+        await counter.waitFor({ state: "visible" });
+
+        return Number(await counter.textContent());
+    }
+
     static async getNavBarLinks(page: Page): Promise<string[]> {
         const links = page.locator(this.horizontalMenu+'/li');
         await links.first().waitFor({ state: "visible" });

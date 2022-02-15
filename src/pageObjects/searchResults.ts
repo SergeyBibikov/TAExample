@@ -109,6 +109,14 @@ export class SearchResults {
             .locator(this.buttons.TO_CART_EXPRESS)
             .click();
     }
+    static async addItemToFavourites(page: Page, itemName: string) {
+        const itemDataDiv = page
+            .locator(this.FOUND_ITEMS_LIST)
+            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+        await itemDataDiv
+            .locator('xpath=/following-sibling::div[2]/div[1]')
+            .click();
+    }
     /**
      * Returns the number of items found by
      * a search.

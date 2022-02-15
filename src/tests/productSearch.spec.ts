@@ -58,6 +58,12 @@ test('Pagination', async ({ page }) => {
     const currentTopResult = await SearchResults.getFirstItemName(page);
     assert.notDeepEqual(currentTopResult, initialTopResult);
 });
+test('Add item to favourites', async ({ page }) => {
+    await Homepage.open(page);
+    await Header.searchProduct(page, 'Iphone 13 128GB');
+    await SearchResults.addItemToFavourites(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    assert.equal((await Header.getFavouriteItemsCount(page)), 1);
+});
 
 test('Unsuccessful search', async ({ page }) => {
     const searchString = 'gjdsf';
