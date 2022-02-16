@@ -52,6 +52,13 @@ export class SearchResults {
         .textContent()) || "";
     }
 
+    
+    static getFoundItemDiv(page: Page, itemName: string){
+        return page
+            .locator(this.FOUND_ITEMS_LIST)
+            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+    }
+
     /**
      * Go to different page of search results
      */
@@ -88,9 +95,7 @@ export class SearchResults {
      * Adds an item to a regular cart, not the express one
      */
     static async addItemToReqularCart(page: Page, itemName: string) {
-        const itemDataDiv = page
-            .locator(this.FOUND_ITEMS_LIST)
-            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+        const itemDataDiv = this.getFoundItemDiv(page, itemName);
         await itemDataDiv
             .locator('xpath=/following-sibling::div[1]')
             .locator(this.buttons.TO_CART_REGULAR)
@@ -101,21 +106,27 @@ export class SearchResults {
             .waitFor({state: "hidden"});
     }
     static async addItemToExpressCart(page: Page, itemName: string) {
-        const itemDataDiv = page
-            .locator(this.FOUND_ITEMS_LIST)
-            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+        const itemDataDiv = this.getFoundItemDiv(page, itemName);
         await itemDataDiv
             .locator('xpath=/following-sibling::div[1]')
             .locator(this.buttons.TO_CART_EXPRESS)
             .click();
     }
     static async addItemToFavourites(page: Page, itemName: string) {
-        const itemDataDiv = page
-            .locator(this.FOUND_ITEMS_LIST)
-            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+        const itemDataDiv = this.getFoundItemDiv(page, itemName);
         await itemDataDiv
             .locator('xpath=/following-sibling::div[2]/div[1]')
             .click();
+    }
+    
+    static async clickMoreOnItemCard(page: Page, itemName: string){
+        const itemDataDiv = this.getFoundItemDiv(page, itemName);
+        await itemDataDiv
+            .locator('xpath=/following-sibling::div[2]/div[2]')
+            .click();
+    }
+    static async showSimilarProducts(page: Page, itemName: string){
+        await this.clickMoreOnItemCard(page, itemName);
     }
     /**
      * Returns the number of items found by

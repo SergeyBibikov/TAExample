@@ -65,6 +65,14 @@ test('Add item to favourites', async ({ page }) => {
     assert.equal((await Header.getFavouriteItemsCount(page)), 1);
 });
 
+test('Found item. Show more', async ({ page }) => {
+    await Homepage.open(page);
+    await Header.searchProduct(page, 'Iphone 13 128GB');
+    await SearchResults.clickMoreOnItemCard(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    await expect(page.locator('//div[contains(text(),"Похожие товары")]')).toHaveCount(1);
+    await expect(page.locator('//div[contains(text(),"Добавить в сравнение")]')).toHaveCount(1);
+});
+
 test('Unsuccessful search', async ({ page }) => {
     const searchString = 'gjdsf';
     await Homepage.open(page);
