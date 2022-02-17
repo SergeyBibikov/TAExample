@@ -65,12 +65,21 @@ test('Add item to favourites', async ({ page }) => {
     assert.equal((await Header.getFavouriteItemsCount(page)), 1);
 });
 
-test('Found item. Show more', async ({ page }) => {
+test('Add item to comparison', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'Iphone 13 128GB');
     await SearchResults.clickMoreOnItemCard(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
-    await expect(page.locator('//div[contains(text(),"Похожие товары")]')).toHaveCount(1);
-    await expect(page.locator('//div[contains(text(),"Добавить в сравнение")]')).toHaveCount(1);
+    const similarProducts = page.locator('//div[contains(text(),"Похожие товары")]');
+    await expect(similarProducts).toHaveCount(1);
+    const addToComparison = page.locator('//div[contains(text(),"Добавить в сравнение")]');
+    await expect(addToComparison).toHaveCount(1);
+    await addToComparison.click();
+    await expect(page.locator('//div[contains(text(), "Товар добавлен")]')).toHaveCount(1);
+    await SearchResults.clickMoreOnItemCard(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    const deleteFromComparison = page.locator('//div[contains(text(),"Удалить из сравнения")]');
+    await expect(deleteFromComparison).toHaveCount(1);
+    await deleteFromComparison.click();
+    await expect(page.locator('//div[contains(text(), "Товар удален")]')).toHaveCount(1);
 });
 
 test('Unsuccessful search', async ({ page }) => {
