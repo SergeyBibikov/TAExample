@@ -124,15 +124,23 @@ test.describe('Header', ()=>{
     });
 
     test('Sign in on click. Ozonid card', async ({ page }) => {
+        const ozonId = page.locator('[data-widget="ozonIdIframe"]');
+        const ozonIdIframe = ozonId.frameLocator('iframe');
+        const frameBody = ozonIdIframe.locator('body');
+        const getCodeButton = ozonIdIframe.locator('//button[contains(., "Получить код")]');
+        const phoneInput = ozonIdIframe.locator('input[name="phone"]');
+
+
         await Homepage.open(page);
         await page.locator(Header.SIGN_IN).click();
-        const ozonId = page.locator('[data-widget="ozonIdIframe"]');
         await expect(ozonId).toHaveCount(1);
-        const ozonIdIframe = ozonId.frameLocator('iframe');
-        await expect(ozonIdIframe.locator('body')).toContainText('Войдите или зарегистрируйтесь, чтобы продолжить');
-        await expect(ozonIdIframe.locator('input[name="phone"]')).toHaveCount(1);
-        await expect(ozonIdIframe.locator('//button[contains(., "Получить код")]')).toHaveCount(1);
+        await expect(frameBody).toContainText('Войдите или зарегистрируйтесь, чтобы продолжить');
+        await expect(phoneInput).toHaveCount(1);
+        await expect(getCodeButton).toHaveCount(1);
         await expect(ozonIdIframe.locator('//a[text()="Войти по почте"]')).toHaveCount(1);
+        await phoneInput.fill("33");
+        await getCodeButton.click();
+        await expect(frameBody).toContainText("Некорректный формат телефона");
     });
 
     test('Go to orders while not being signed in', async ({ page }) => {
