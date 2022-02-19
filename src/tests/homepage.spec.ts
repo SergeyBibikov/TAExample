@@ -6,7 +6,7 @@ import { Header } from '../pageObjects/header';
 import { Footer } from '../pageObjects/footer';
 import { Homepage } from '../pageObjects/homepage';
 
-test.describe('Top bar links', () =>{
+test.describe('Top bar links', () => {
 
     test("Links list", async ({ page }) => {
         const expectedLinks = [
@@ -18,7 +18,7 @@ test.describe('Top bar links', () =>{
             'Помощь',
             'Пункты выдачи'
         ];
-    
+
         await Homepage.open(page);
         const presentLinks = await Homepage.getTopBarLinks(page);
         const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
@@ -26,25 +26,25 @@ test.describe('Top bar links', () =>{
             assert.fail(`The following links are missing: ${diff}`);
         }
     });
-    
+
     test('Ozon for business', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
         await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
     });
-    
+
     test('Mobile app', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Мобильное приложение');
         await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
     });
-    
+
     test('Referral program', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Реферальная программа');
         await expect(page.locator('body')).toContainText('получить 300 баллов на первый заказ или доступ к закрытым предложениям');
     });
-    
+
     test('Earn with Ozon', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Зарабатывай с Ozon');
@@ -80,11 +80,28 @@ test.describe('Top bar links', () =>{
 });
 
 test('Promo code', async ({ page }) => {
+    const expectedColor = 'rgb(249, 17, 85)';
+    const getBorderColor = async () => {
+        return await page.evaluate(() => {
+            const di = document.querySelector("[data-widget='promoNavigation']>div>div");
+            if (di) {
+                return document.defaultView?.getComputedStyle(di).borderColor || "";
+            } else {
+                return "Not found"
+            }
+        });
+    }
+
     await Homepage.open(page);
-    const promo = page.locator('[data-widget="promoNavigation"]'); 
+    const promo = page.locator('[data-widget="promoNavigation"]');
     await expect(promo).toContainText('Есть промокод?');
     await expect(promo.locator('input[type="text"]')).toHaveCount(1);
-    await expect(promo.locator('button')).toHaveCount(1);
+    const promoButton = promo.locator('button');
+    await expect(promoButton).toHaveCount(1);
+    await promoButton.click();
+    await page.waitForTimeout(1000);
+    const color = await getBorderColor();
+    assert.equal(color, expectedColor);
 });
 
 test('Sign in or register button', async ({ page }) => {
@@ -96,7 +113,7 @@ test('Sign in or register button', async ({ page }) => {
 
 });
 
-test.describe('Header', ()=>{
+test.describe('Header', () => {
     test('Navigation links list', async ({ page }) => {
         const expectedLinks = [
             'TOP Fashion', 'Premium',
@@ -107,7 +124,7 @@ test.describe('Header', ()=>{
             'Одежда и обувь', 'Детские товары',
             'Дом и сад', 'Зона лучших цен'
         ]
-    
+
         await Homepage.open(page);
         const presentLinks = await Header.getNavBarLinks(page);
         const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
@@ -115,7 +132,7 @@ test.describe('Header', ()=>{
             assert.fail(`The following links are missing: ${diff}`);
         }
     });
-    
+
     test('Sign in on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
         await page.hover(Header.SIGN_IN);
@@ -170,12 +187,12 @@ test('Catalogue. Filters change on hover', async ({ page }) => {
     await expect(page.locator(Header.CATALOGUE_FILTERS)).toContainText('Моноблоки');
 });
 
-test.describe('Footer', ()=>{
+test.describe('Footer', () => {
     test('Accessibility version button', async ({ page }) => {
         await Homepage.open(page);
         await expect(page.locator(Footer.locators.VER_FOR_VIS_IMPARED)).toHaveCount(1);
     });
-    
+
     test('Misc info links', async ({ page }) => {
         await Homepage.open(page);
         const infoLinksSection = page.locator(Footer.locators.INFO_LINKS_SECTION);
