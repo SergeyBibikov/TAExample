@@ -112,9 +112,13 @@ test('Sign in or register button', async ({ page }) => {
     await Homepage.open(page);
     const auth = page.locator('[data-widget="authorization"]');
     await expect(auth).toContainText('Вход');
-    await expect(auth.locator('//button[contains(.,"Вход или регистрация")]'))
-        .toHaveCount(1);
-
+    const signInButton = auth.locator('//button[contains(.,"Вход или регистрация")]');
+    await expect(signInButton).toHaveCount(1);
+    await signInButton.click();
+    const ozonIdIframe = page.locator('[data-widget="ozonIdIframe"]').frameLocator('iframe');
+    await ozonIdIframe.locator('text=Войти по почте').click();
+    await expect(ozonIdIframe.locator('body')).toContainText("Войдите по почте");
+    await expect(ozonIdIframe.locator('body')).toContainText("Только для зарегистрированных пользователей");
 });
 
 test.describe('Header', () => {
