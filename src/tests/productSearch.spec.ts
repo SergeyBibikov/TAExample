@@ -63,6 +63,8 @@ test('Add item to favourites', async ({ page }) => {
     await Header.searchProduct(page, 'Iphone 13 128GB');
     await SearchResults.addItemToFavourites(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
     assert.equal((await Header.getFavouriteItemsCount(page)), 1);
+    await Header.goToFavourites(page);
+    await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText("Смартфон Apple iPhone 13 128GB, темная ночь");
 });
 
 test('Add item to comparison', async ({ page }) => {
