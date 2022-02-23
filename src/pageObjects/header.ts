@@ -6,6 +6,7 @@ export class Header {
     static readonly SEARCH_INPUT = this.SEARCH_BAR + '//input[@placeholder="Искать на Ozon"]';
     static readonly SEARCH_BUTTON = this.SEARCH_BAR + '//button';
     static readonly SEARCH_CATEGORY = this.SEARCH_BAR + '/form/div[1]';
+    static readonly SEARCH_HISTORY = this.SEARCH_BAR + '//*[@data-widget="searchHistory"]';
     static SIGN_IN = this.ROOT + '//div[@data-widget="profileMenuAnonymous"]';
     static CART = this.ROOT + '//a[@data-widget="headerIcon"]';
     static ORDERS = this.ROOT + '//div[@data-widget="orderInfo"]';
@@ -59,5 +60,14 @@ export class Header {
     static async searchProduct(page: Page, searchItem: string) {
         await page.locator(this.SEARCH_INPUT).fill(searchItem);
         await page.locator(this.SEARCH_BUTTON).click();
+    }
+    
+    static async clearSearch(page: Page){
+        await page.locator(this.SEARCH_INPUT + '/following-sibling::div').click();
+    }
+    
+    static async clearHistory(page: Page){
+        await page.locator(this.SEARCH_HISTORY)
+            .locator('text=Очистить').click();
     }
 }

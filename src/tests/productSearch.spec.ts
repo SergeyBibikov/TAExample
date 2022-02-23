@@ -36,6 +36,14 @@ test('Search for Iphone 13', async ({ page }) => {
         `${filterCategories[0]}: ${filterOptions[0]}`,
         `${filterCategories[1]}: ${filterOptions[1]}`]);
 });
+test('Search history', async ({ page }) => {
+    await Homepage.open(page);
+    await Header.searchProduct(page, 'iphone 13');
+    await Header.clearSearch(page);
+    await expect(page.locator(Header.SEARCH_HISTORY)).toHaveCount(1);
+    await Header.clearHistory(page);
+    await expect(page.locator(Header.SEARCH_HISTORY)).toHaveCount(0);
+});
 test('"Didn\'t find what you need?" button', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'iphone 13');
@@ -66,7 +74,6 @@ test('Add item to favourites', async ({ page }) => {
     await Header.goToFavourites(page);
     await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText("Смартфон Apple iPhone 13 128GB, темная ночь");
 });
-
 test('Add item to comparison', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'Iphone 13 128GB');
@@ -83,7 +90,6 @@ test('Add item to comparison', async ({ page }) => {
     await deleteFromComparison.click();
     await expect(page.locator('//div[contains(text(), "Товар удален")]')).toHaveCount(1);
 });
-
 test('Unsuccessful search', async ({ page }) => {
     const searchString = 'gjdsf';
     await Homepage.open(page);
