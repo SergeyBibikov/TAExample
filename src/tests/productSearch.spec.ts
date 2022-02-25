@@ -74,13 +74,6 @@ test('Add item to favourites', async ({ page }) => {
     await Header.goToFavourites(page);
     await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText("Смартфон Apple iPhone 13 128GB, темная ночь");
 });
-test('Empty comparison', async ({ page }) => {
-    await Homepage.open(page);
-    await Header.goToFavourites(page);
-    await page.locator('text=Сравнение товаров').click();
-    await expect(page.locator('div[data-widget="container"]')).toContainText('В сравнении пока ничего нет');
-    await expect(page.locator('//a[contains(text(),"Перейдите к каталогу товаров")]')).toHaveCount(1);
-});
 test('Add item to comparison', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'Iphone 13 128GB');

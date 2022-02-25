@@ -185,6 +185,27 @@ test.describe('Header', () => {
     });
 });
 
+test.describe('Favourites',() => {
+    test('Empty comparison', async ({ page }) => {
+        await Homepage.open(page);
+        await Header.goToFavourites(page);
+        await page.locator('text=Сравнение товаров').click();
+        await expect(page.locator('div[data-widget="container"]')).toContainText('В сравнении пока ничего нет');
+        await expect(page.locator('//a[contains(text(),"Перейдите к каталогу товаров")]')).toHaveCount(1);
+    });
+    test('Favourite shops', async ({ page }) => {
+        await Homepage.open(page);
+        await Header.goToFavourites(page);
+        await page.locator('text=Избранные магазины').click();
+        await expect(page.locator('div[data-widget="myGuest"]')).toContainText('Вы не авторизованы');
+    });
+    test('My collection', async ({ page }) => {
+        await Homepage.open(page);
+        await Header.goToFavourites(page);
+        await page.locator('text=Моя коллекция').click();
+        await expect(page.locator('section[data-widget="emptyState"]')).toContainText('Коллекция пуста');
+    });
+});
 
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
