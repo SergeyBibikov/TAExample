@@ -118,7 +118,11 @@ export class SearchResults {
             .locator('xpath=/following-sibling::div[2]/div[1]')
             .click();
     }
-    
+    static async addItemToComparison(page: Page, itemName: string) {
+        this.clickMoreOnItemCard(page, itemName);
+        await page.locator('//div[contains(text(),"Добавить в сравнение")]')
+            .click();
+    }
     static async clickMoreOnItemCard(page: Page, itemName: string){
         const itemDataDiv = this.getFoundItemDiv(page, itemName);
         await itemDataDiv
