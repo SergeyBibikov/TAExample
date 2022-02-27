@@ -104,6 +104,22 @@ test('Add two items to comparison and go to compare page', async ({ page }) => {
     await page.locator('text=Сравнение товаров').click();
     await expect(comparisonContainer).toContainText(firstItem);
     await expect(comparisonContainer).toContainText(secondItem);
+    const categoryTabs = page.locator('//div[@data-widget="webCompare"]/div[2]');
+    await expect(categoryTabs).toContainText('Смартфоны');
+    await expect(categoryTabs).toContainText('Все товары');
+});
+test('Clear comparison', async ({ page }) => {
+    await Homepage.open(page);
+    await Header.searchProduct(page, 'Iphone 13 128GB');
+    await SearchResults.addItemToComparison(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    await Header.goToFavourites(page);
+    await page.locator('text=Сравнение товаров').click();
+    await page.locator('text=Очистить все сравнение').click();
+    const confirmationPopup = page.locator('//div[h3[text()="Удаление списка"]]');
+    await expect(confirmationPopup).toHaveCount(1);
+    await expect(confirmationPopup).toContainText('Вы хотите удалить все товары из сравнения? Отменить действие будет невозможно.');
+    await confirmationPopup.locator('text=Очистить список').click();
+    await expect(page.locator('body')).toContainText('В сравнении пока ничего нет');
 });
 test('Unsuccessful search', async ({ page }) => {
     const searchString = 'gjdsf';
