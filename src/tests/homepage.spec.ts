@@ -56,7 +56,13 @@ test.describe('Top bar links', () => {
         await Homepage.clickTopBarLink(page, 'Подарочные сертификаты');
         await expect(page.locator('//div[@data-widget="webProductHeading"]')).toContainText('Электронный подарочный сертификат');
     });
-    test('Help', async ({ page }) => {
+    test('Help on hover', async ({ page }) => {
+        await Homepage.open(page);
+        await page.hover('text=Помощь');
+        const helpPopup = page.locator('//*[text()="Статус заказа"]/../..');
+        await expect(helpPopup.locator('a')).toHaveCount(9);
+    });
+    test('Help link', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Помощь');
         await expect(page.locator('//h3')).toHaveCount(8);
