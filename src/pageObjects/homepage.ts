@@ -6,7 +6,8 @@ export class Homepage {
     private static locationModal = '//h2[contains(text(), "Выберите город")]/parent::div';
 
     static topBar = '//div[@data-widget="topBar"]';
-
+    static DELIVERY_ADDRESS = this.topBar + '//button[span[span[text()="Укажите адрес доставки"]]]';
+    
     static async open(page: Page) {
         await page.goto(this.homepage);
     }
