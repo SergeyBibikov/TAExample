@@ -48,7 +48,10 @@ export class Header {
     static async goToOrders(page: Page) {
         await page.locator(this.ORDERS).click();
     }
-
+    
+    static async goToNavbarLink(page: Page, link: string){
+        await page.locator(this.horizontalMenu + `//li[contains(., "${link}")]`).click();
+    }
     static async goToFavourites(page: Page) {
         await page.locator(this.FAVOURITES).click();
     }
