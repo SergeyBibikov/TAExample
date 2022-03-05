@@ -1,6 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
+import { OzonTravel } from '../pageObjects/ozonTravel';
 
 const goToTravel = async (page: Page) =>{
     await Homepage.open(page);
@@ -22,4 +23,21 @@ test('Reserve as a juridical face', async ({ page }) => {
     await page.locator('text=Бронируйте как юрлицо').click();
     await expect(page.locator('body')).toContainText('OZON Командировки');
     await expect(page.locator('body')).toContainText('Уникальный сервис для оформления деловых поездок');
+});
+test('Destination network calls', async ({ page }) => {
+
+    const fromLoc = page.locator(OzonTravel.FROM);
+    const toLoc = page.locator(OzonTravel.TO);
+
+    await goToTravel(page);
+    await page.waitForTimeout(1000);
+    await toLoc.click();
+    await fromLoc.click();
+    await page.locator('text=MOW').first().click();
+    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
+    await toLoc.click();
+    await page.locator('text=LED').first().click();
+    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
+    await page.locator(OzonTravel.DESTINATION_SWITCH).click();
+    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelAutocompleteLocation');
 });
