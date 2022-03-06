@@ -24,7 +24,7 @@ test('Reserve as a juridical face', async ({ page }) => {
     await expect(page.locator('body')).toContainText('OZON Командировки');
     await expect(page.locator('body')).toContainText('Уникальный сервис для оформления деловых поездок');
 });
-test('Destination network calls', async ({ page }) => {
+test('Destination switch network calls', async ({ page }) => {
 
     const fromLoc = page.locator(OzonTravel.FROM);
     const toLoc = page.locator(OzonTravel.TO);
