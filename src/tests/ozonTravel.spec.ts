@@ -2,6 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { OzonTravel } from '../pageObjects/ozonTravel';
+import * as assert from 'assert';
 
 const goToTravel = async (page: Page) =>{
     await Homepage.open(page);
@@ -40,4 +41,15 @@ test('Destination switch network calls', async ({ page }) => {
     await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
     await page.locator(OzonTravel.DESTINATION_SWITCH).click();
     await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelAutocompleteLocation');
+});
+test('Validation of empty to/from fields', async ({ page }) => {
+    const findTickets = page.locator('//button[contains(.,"Найти билеты")]');
+
+    await goToTravel(page);
+    await findTickets.click();
+    await page.waitForResponse('https://xapi.ozon.ru/api/frontend-perf.bx/v2/events');
+    await findTickets.click();
+    await findTickets.click();
+    await page.waitForSelector('input[name="travelSearchFrom"][errors="Введите город вылета"]')
+    await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
 });
