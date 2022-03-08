@@ -42,7 +42,7 @@ test('Destination switch network calls', async ({ page }) => {
     await page.locator(OzonTravel.DESTINATION_SWITCH).click();
     await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelAutocompleteLocation');
 });
-test('Validation of empty to/from fields', async ({ page }) => {
+test('Validation of empty fields', async ({ page }) => {
     const findTickets = page.locator('//button[contains(.,"Найти билеты")]');
 
     await goToTravel(page);
@@ -52,4 +52,5 @@ test('Validation of empty to/from fields', async ({ page }) => {
     await findTickets.click();
     await page.waitForSelector('input[name="travelSearchFrom"][errors="Введите город вылета"]')
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
+    await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
