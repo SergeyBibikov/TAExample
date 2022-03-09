@@ -54,3 +54,9 @@ test('Validation of empty fields', async ({ page }) => {
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
     await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
+test('Hotels select', async ({ page }) => {
+    await goToTravel(page);
+    await page.locator('text=Отели').click();
+    await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
+    await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');
+});
