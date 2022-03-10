@@ -2,11 +2,11 @@ import { test, expect, Page } from '@playwright/test';
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { OzonTravel } from '../pageObjects/ozonTravel';
-import * as assert from 'assert';
 
 const goToTravel = async (page: Page) =>{
     await Homepage.open(page);
     await Header.goToNavbarLink(page, 'Ozon Travel');
+    await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
 }
 
 test('Header Link', async ({ page }) => {
@@ -54,9 +54,16 @@ test('Validation of empty fields', async ({ page }) => {
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
     await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
-test('Hotels select', async ({ page }) => {
+
+test('Hotels section', async ({ page }) => {
     await goToTravel(page);
-    await page.locator('text=Отели').click();
-    await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
+    await OzonTravel.selectHotelTab(page);
     await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');
+});
+
+test('Hotel. Find', async ({ page }) => {
+    await goToTravel(page);
+    await OzonTravel.selectHotelTab(page);
+    await OzonTravel.findHotel(page, "Москва", "24.05.2022", "03.06.2022");
+    await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
 });
