@@ -3,24 +3,20 @@ import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { OzonTravel } from '../pageObjects/ozonTravel';
 
-const goToTravel = async (page: Page) =>{
+test.beforeEach(async ({ page }) => {
     await Homepage.open(page);
     await Header.goToNavbarLink(page, 'Ozon Travel');
     await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
-}
-
+});
 test('Header Link', async ({ page }) => {
-    await goToTravel(page);
     await expect(page.locator('body')).toContainText('Покупать билеты на Ozon выгодно');
 });
 test('Avia-Railway tickets toggle ', async ({ page }) => {
-    await goToTravel(page);
     await expect(page.locator('body')).toContainText('Поиск дешёвых авиабилетов');
     await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
     await expect(page.locator('body')).toContainText('Жд билеты на поезд');
 });
 test('Reserve as a juridical face', async ({ page }) => {
-    await goToTravel(page);
     await page.locator('text=Бронируйте как юрлицо').click();
     await expect(page.locator('body')).toContainText('OZON Командировки');
     await expect(page.locator('body')).toContainText('Уникальный сервис для оформления деловых поездок');
@@ -30,7 +26,6 @@ test('Destination switch network calls', async ({ page }) => {
     const fromLoc = page.locator(OzonTravel.FROM);
     const toLoc = page.locator(OzonTravel.TO);
 
-    await goToTravel(page);
     await page.waitForTimeout(1000);
     await toLoc.click();
     await fromLoc.click();
@@ -45,7 +40,6 @@ test('Destination switch network calls', async ({ page }) => {
 test('Validation of empty fields', async ({ page }) => {
     const findTickets = page.locator('//button[contains(.,"Найти билеты")]');
 
-    await goToTravel(page);
     await findTickets.click();
     await page.waitForResponse('https://xapi.ozon.ru/api/frontend-perf.bx/v2/events');
     await findTickets.click();
@@ -56,14 +50,12 @@ test('Validation of empty fields', async ({ page }) => {
 });
 
 test('Hotels section', async ({ page }) => {
-    await goToTravel(page);
     await OzonTravel.selectHotelTab(page);
     await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');
 });
 
 test('Hotel. Find', async ({ page }) => {
-    await goToTravel(page);
     await OzonTravel.selectHotelTab(page);
-    await OzonTravel.findHotel(page, "Москва", "24.05.2022", "03.06.2022");
+    await OzonTravel.findHotel(page, 'city', "Москва", "24.05.2022", "03.06.2022");
     await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
 });
