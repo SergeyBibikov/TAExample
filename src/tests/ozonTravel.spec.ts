@@ -10,8 +10,8 @@ test.beforeEach(async ({ page }) => {
     await Header.goToNavbarLink(page, 'Ozon Travel');
     await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
 });
-test('Header Link', async ({ page }) => {
-    await expect(page.locator('body')).toContainText('Покупать билеты на Ozon выгодно');
+test('Smoke. Successful page load', async ({ page }) => {
+    await expect(page.locator('body')).toContainText('Покупать авиа- и ж/д билеты на Ozon удобно!');
 });
 test('Avia-Railway tickets toggle ', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Поиск дешёвых авиабилетов');
