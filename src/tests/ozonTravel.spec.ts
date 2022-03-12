@@ -1,7 +1,9 @@
 import { test, expect, Page } from '@playwright/test';
+import { todayPlus, todayPlusAsStr } from '../helpers/dates';
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { OzonTravel } from '../pageObjects/ozonTravel';
+
 
 test.beforeEach(async ({ page }) => {
     await Homepage.open(page);
@@ -54,8 +56,19 @@ test('Hotels section', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');
 });
 
-test('Hotel. Find', async ({ page }) => {
+test('Hotel. Find by city', async ({ page }) => {
     await OzonTravel.selectHotelTab(page);
-    await OzonTravel.findHotel(page, 'city', "Москва", "24.05.2022", "03.06.2022");
+    await OzonTravel.findHotel(page, 'city', "Москва", todayPlusAsStr(3), todayPlusAsStr(20));
+    await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
+});
+test('Hotel. Find by hotel', async ({ page }) => {
+    await OzonTravel.selectHotelTab(page);
+    await OzonTravel.findHotel(page, 'hotel', "SK ROYAL Москва 4", todayPlusAsStr(10), todayPlusAsStr(16));
+    await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
+});
+test('Hotel. Find by airport', async ({ page }) => {
+    
+    await OzonTravel.selectHotelTab(page);
+    await OzonTravel.findHotel(page, 'airport', "Аэропорт Москвы Домодедово", todayPlusAsStr(3), todayPlusAsStr(10));
     await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
 });
