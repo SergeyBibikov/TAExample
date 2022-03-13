@@ -51,10 +51,10 @@ test('Validation of empty fields', async ({ page }) => {
     await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
 test.describe('Railway tikets',() => {
-    test('etSearch', async ({ page }) => {
+    test('Search', async ({ page }) => {
         await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
         await OzonTravel.findTicket(page, 'Москва', 'Санкт-Петербург', todayPlus(10));
-        await expect(page.locator('div[text="По времени отправления"]')).toHaveCount(1);
+        await page.waitForSelector('div[text="По времени отправления"]');
     });
 })
 test.describe('Hotels', () => {
