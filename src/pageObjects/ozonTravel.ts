@@ -33,6 +33,7 @@ async function fillPlaceField(page: Page, placeType: Place, placeName: string) {
 export class OzonTravel {
     static FROM = '//p[text()="Откуда"]/preceding-sibling::input';
     static TO = '//p[text()="Куда"]/preceding-sibling::input';
+    static DATE = '//p[text()="Когда"]/..';
     static DATE_TO = '//p[text()="Туда"]/..';
     static DESTINATION_SWITCH = searchForm + '/div/div[2]/button';
     static hotelLocators = hotel;
@@ -55,5 +56,32 @@ export class OzonTravel {
         await page.locator(this.hotelLocators.arrival).fill(arrivalDate);
         await page.locator(this.hotelLocators.departure).fill(departureDate);
         await page.locator(this.hotelLocators.findHotel).click();
+    }
+    
+    static async findTicket(page: Page, from: string, to: string, date: Date){
+        const pickCity = async (city: string) => {
+            await page.locator(`//div[@class="vue-portal-target"]//span[text()="${city}"]`).click();
+        }
+        const waitForField = async () => {
+            await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
+        }
+        const fromLoc = page.locator(this.FROM);
+        const toLoc = page.locator(this.TO);
+        const dateLoc = page.locator(this.DATE);
+        const dayLoc =  page.locator(`//td//div[contains(text(),"${date.getDate()}")]`).first();
+
+        await toLoc.click();
+        await fromLoc.click();
+        await pickCity(from);
+        await waitForField();       
+
+        await toLoc.click();
+        await pickCity(to);
+        await waitForField();
+
+        await dateLoc.click();
+        await dayLoc.click();
+
+        await page.locator('text=Найти билеты').click();
     }
 }

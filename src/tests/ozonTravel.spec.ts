@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { todayPlus, todayPlusAsStr } from '../helpers/dates';
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
     await Header.goToNavbarLink(page, 'Ozon Travel');
     await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
 });
-test('Smoke. Successful page load', async ({ page }) => {
+test('Successful page load', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Покупать авиа- и ж/д билеты на Ozon удобно!');
 });
 test('Avia-Railway tickets toggle ', async ({ page }) => {
@@ -50,25 +50,33 @@ test('Validation of empty fields', async ({ page }) => {
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
     await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
-
-test('Hotels section', async ({ page }) => {
-    await OzonTravel.selectHotelTab(page);
-    await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');
-});
-
-test('Hotel. Find by city', async ({ page }) => {
-    await OzonTravel.selectHotelTab(page);
-    await OzonTravel.findHotel(page, 'city', "Москва", todayPlusAsStr(3), todayPlusAsStr(20));
-    await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
-});
-test('Hotel. Find by hotel', async ({ page }) => {
-    await OzonTravel.selectHotelTab(page);
-    await OzonTravel.findHotel(page, 'hotel', "SK ROYAL Москва 4", todayPlusAsStr(10), todayPlusAsStr(16));
-    await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
-});
-test('Hotel. Find by airport', async ({ page }) => {
-    
-    await OzonTravel.selectHotelTab(page);
-    await OzonTravel.findHotel(page, 'airport', "Аэропорт Москвы Домодедово", todayPlusAsStr(3), todayPlusAsStr(10));
-    await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
-});
+test.describe('Railway tikets',() => {
+    test('etSearch', async ({ page }) => {
+        await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
+        await OzonTravel.findTicket(page, 'Москва', 'Санкт-Петербург', todayPlus(10));
+        await expect(page.locator('div[text="По времени отправления"]')).toHaveCount(1);
+    });
+})
+test.describe('Hotels', () => {
+    test('Smoke', async ({ page }) => {
+        await OzonTravel.selectHotelTab(page);
+        await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');
+    });
+    test('Find by city', async ({ page }) => {
+        await OzonTravel.selectHotelTab(page);
+        await OzonTravel.findHotel(page, 'city', "Москва", todayPlusAsStr(3), todayPlusAsStr(20));
+        await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
+    });
+    test('Find by hotel', async ({ page }) => {
+        await OzonTravel.selectHotelTab(page);
+        await OzonTravel.findHotel(page, 'hotel', "SK ROYAL Москва 4", todayPlusAsStr(10), todayPlusAsStr(16));
+        await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
+    });
+    test('Find by airport', async ({ page }) => {
+        
+        await OzonTravel.selectHotelTab(page);
+        await OzonTravel.findHotel(page, 'airport', "Аэропорт Москвы Домодедово", todayPlusAsStr(3), todayPlusAsStr(10));
+        await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
+    });
+}
+)
