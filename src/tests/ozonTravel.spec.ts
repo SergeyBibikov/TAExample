@@ -18,6 +18,12 @@ test('Avia-Railway tickets toggle ', async ({ page }) => {
     await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
     await expect(page.locator('body')).toContainText('Жд билеты на поезд');
 });
+test('All stories', async ({ page }) => {
+    const storiesView = '//div[@class="vue-portal-target"]//div[img[contains(@src, "main")]]/..';
+    
+    await page.locator('text=Смотреть все').click();
+    await expect(page.locator(storiesView)).toHaveCount(1);
+});
 test('Reserve as a juridical face', async ({ page }) => {
     await page.locator('text=Бронируйте как юрлицо').click();
     await expect(page.locator('body')).toContainText('OZON Командировки');
