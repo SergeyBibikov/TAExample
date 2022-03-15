@@ -29,22 +29,7 @@ test('Reserve as a juridical face', async ({ page }) => {
     await expect(page.locator('body')).toContainText('OZON Командировки');
     await expect(page.locator('body')).toContainText('Уникальный сервис для оформления деловых поездок');
 });
-test('Destination switch network calls', async ({ page }) => {
 
-    const fromLoc = page.locator(OzonTravel.FROM);
-    const toLoc = page.locator(OzonTravel.TO);
-
-    await page.waitForTimeout(1000);
-    await toLoc.click();
-    await fromLoc.click();
-    await page.locator('text=MOW').first().click();
-    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
-    await toLoc.click();
-    await page.locator('text=LED').first().click();
-    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
-    await page.locator(OzonTravel.DESTINATION_SWITCH).click();
-    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelAutocompleteLocation');
-});
 test('Validation of empty fields', async ({ page }) => {
     const findTickets = page.locator('//button[contains(.,"Найти билеты")]');
 
@@ -56,7 +41,29 @@ test('Validation of empty fields', async ({ page }) => {
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
     await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
-test.describe('Railway tikets',() => {
+test.describe('Airline tickets', ()=>{
+    test('Destination switch network calls', async ({ page }) => {
+        const fromLoc = page.locator(OzonTravel.FROM);
+        const toLoc = page.locator(OzonTravel.TO);
+    
+        await page.waitForTimeout(1000);
+        await toLoc.click();
+        await fromLoc.click();
+        await page.locator('text=MOW').first().click();
+        await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
+        await toLoc.click();
+        await page.locator('text=LED').first().click();
+        await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
+        await page.locator(OzonTravel.DESTINATION_SWITCH).click();
+        await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelAutocompleteLocation');
+    });
+
+    test('Complex route', async ({ page }) => {
+        await page.locator('//span[text()="Составить сложный маршрут"]').click();
+        await expect(page.locator('//span[text()="Добавить перелет"]')).toHaveCount(1);
+    });
+});
+test.describe('Railway tickets',() => {
     test('Search', async ({ page }) => {
         await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
         await OzonTravel.findTicket(page, 'Москва', 'Санкт-Петербург', todayPlus(10));
