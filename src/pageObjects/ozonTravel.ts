@@ -31,6 +31,7 @@ async function fillPlaceField(page: Page, placeType: Place, placeName: string) {
 }
 
 export class OzonTravel {
+    static ADVANTAGES = '[data-widget="seoOzonAdvantages"]';
     static FROM = '//p[text()="Откуда"]/preceding-sibling::input';
     static TO = '//p[text()="Куда"]/preceding-sibling::input';
     static DATE = '//p[text()="Когда"]/..';

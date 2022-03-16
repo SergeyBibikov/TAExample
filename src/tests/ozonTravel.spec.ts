@@ -10,20 +10,18 @@ test.beforeEach(async ({ page }) => {
     await Header.goToNavbarLink(page, 'Ozon Travel');
     await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
 });
+
 test('Successful page load', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Покупать авиа- и ж/д билеты на Ozon удобно!');
 });
-test('Avia-Railway tickets toggle ', async ({ page }) => {
-    await expect(page.locator('body')).toContainText('Поиск дешёвых авиабилетов');
-    await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
-    await expect(page.locator('body')).toContainText('Жд билеты на поезд');
-});
+
 test('All stories', async ({ page }) => {
     const storiesView = '//div[@class="vue-portal-target"]//div[img[contains(@src, "main")]]/..';
     
     await page.locator('text=Смотреть все').click();
     await expect(page.locator(storiesView)).toHaveCount(1);
 });
+
 test('Reserve as a juridical face', async ({ page }) => {
     await page.locator('text=Бронируйте как юрлицо').click();
     await expect(page.locator('body')).toContainText('OZON Командировки');
@@ -41,6 +39,7 @@ test('Validation of empty fields', async ({ page }) => {
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
     await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
 });
+
 test.describe('Airline tickets', ()=>{
     test('Destination switch network calls', async ({ page }) => {
         const fromLoc = page.locator(OzonTravel.FROM);
@@ -63,11 +62,19 @@ test.describe('Airline tickets', ()=>{
         await expect(page.locator('//span[text()="Добавить перелет"]')).toHaveCount(1);
     });
 });
+
 test.describe('Railway tickets',() => {
     test('Search', async ({ page }) => {
         await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
         await OzonTravel.findTicket(page, 'Москва', 'Санкт-Петербург', todayPlus(10));
         await page.waitForSelector('div[text="По времени отправления"]');
+    });
+    test('Advantages', async ({ page }) => {
+        await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
+        await expect(page.locator(OzonTravel.ADVANTAGES)).toContainText('Экономия времени и денег');
+        await expect(page.locator(OzonTravel.ADVANTAGES)).toContainText('Большой выбор');
+        await expect(page.locator(OzonTravel.ADVANTAGES)).toContainText('Поддержка 24/7');
+        await expect(page.locator(OzonTravel.ADVANTAGES)).toContainText('Удобный поиск');
     });
 })
 test.describe('Hotels', () => {
