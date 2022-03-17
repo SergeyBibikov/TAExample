@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 
-test('1Smoke', async ({ page }) => {
+test('Smoke', async ({ page }) => {
     await Homepage.open(page);
     await Header.goToNavbarLink(page, 'Ozon fresh');
     await expect(page
