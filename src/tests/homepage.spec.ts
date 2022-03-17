@@ -60,7 +60,7 @@ test.describe('Top bar links', () => {
         await Homepage.open(page);
         await page.hover('text=Помощь');
         const helpPopup = page.locator('//*[text()="Статус заказа"]/../..');
-        await expect(helpPopup.locator('a')).toHaveCount(9);
+        await expect(helpPopup.locator('a')).toHaveCount(8);
     });
     test('Help link', async ({ page }) => {
         await Homepage.open(page);
@@ -131,7 +131,7 @@ test.describe('Header', () => {
     test('Navigation links list', async ({ page }) => {
         const expectedLinks = [
             'TOP Fashion', 'Premium',
-            'Ozon Travel', 'Ozon Express',
+            'Ozon Travel', 'Ozon fresh',
             'Ozon Счёт', 'LIVE',
             'Бренды',
             'Магазины', 'Электроника',

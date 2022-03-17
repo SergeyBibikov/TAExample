@@ -122,12 +122,8 @@ test('Clear comparison', async ({ page }) => {
     await expect(page.locator('body')).toContainText('В сравнении пока ничего нет');
 });
 test('Unsuccessful search', async ({ page }) => {
-    const searchString = 'sdfsdf';
+    const searchString = 'sdfsdf23sdfsdf';
     await Homepage.open(page);
     await Header.searchProduct(page, searchString);
-    const resultsCount = page.locator(SearchResults.fullTextResults);
-    await expect(resultsCount).toContainText('По запросу sdfsdf найден');
-    await expect(resultsCount).toContainText(`Вы искали ${searchString}?`);
-    await resultsCount.locator('div >> nth=1').click();
     await page.waitForSelector('//div[contains(text(),"Простите, по вашему запросу товаров сейчас нет.")]', { timeout: 5000 });
 });
