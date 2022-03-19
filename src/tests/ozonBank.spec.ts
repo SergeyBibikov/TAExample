@@ -11,3 +11,13 @@ test.beforeEach(async ({ page }) => {
 test('Smoke', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Открыть Ozon Счёт');
 });
+
+test('Bank info. Show more', async ({ page }) => {
+    const moreInfo = page.locator('.ob-container >> text=Узнать подробнее');
+
+    await page.locator('header >> text=О банке').click(); 
+    await expect(page.locator('body')).toContainText('Ваш новый ОЗОН Банк');
+    await expect(moreInfo).toHaveCount(1);
+    await moreInfo.click();
+    await expect(page.locator('body')).toContainText('Оставайтесь с нами и ждите анонсов о новых финансовых продуктах');
+});
