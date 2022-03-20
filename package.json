@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "npx playwright test --reporter=html",
+    "test": "export LANG=ru_RU.UTF-8 && npx playwright test --reporter=html",
     "report": "npx playwright show-report",
     "ch": "npx playwright test --headed --project=chromium",
     "fh": "npx playwright test --headed --project=firefox"

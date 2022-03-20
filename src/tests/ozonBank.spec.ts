@@ -21,3 +21,10 @@ test('Bank info. Show more', async ({ page }) => {
     await moreInfo.click();
     await expect(page.locator('body')).toContainText('Оставайтесь с нами и ждите анонсов о новых финансовых продуктах');
 });
+// TODO: Добавить отдельные кейсы для списков
+test('Client info', async ({ page }) => {
+    await page.locator('header >> text=Клиентам').click(); 
+    await expect(page.locator('body')).toContainText('Встречайте ОЗОН Банк');
+    await expect(page.locator('body')).toContainText('Информация для клиентов');
+    await expect(page.locator('body')).toContainText('Архив документов');
+});

@@ -153,7 +153,7 @@ test.describe('Header', () => {
         await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
         await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
     });
-
+    // TODO: добавить вход через Apple
     test('Sign in on click. Ozonid card', async ({ page }) => {
         const ozonId = page.locator('[data-widget="ozonIdIframe"]');
         const ozonIdIframe = ozonId.frameLocator('iframe');
