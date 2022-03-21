@@ -153,7 +153,6 @@ test.describe('Header', () => {
         await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
         await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
     });
-    // TODO: добавить вход через Apple
     test('Sign in on click. Ozonid card', async ({ page }) => {
         const ozonId = page.locator('[data-widget="ozonIdIframe"]');
         const ozonIdIframe = ozonId.frameLocator('iframe');
@@ -169,6 +168,7 @@ test.describe('Header', () => {
         await expect(phoneInput).toHaveCount(1);
         await expect(getCodeButton).toHaveCount(1);
         await expect(ozonIdIframe.locator('//a[text()="Войти по почте"]')).toHaveCount(1);
+        await expect(ozonIdIframe.locator('//a[span[contains(., "Вход с Apple")]]')).toHaveCount(1);
         await phoneInput.fill("33");
         await getCodeButton.click();
         await expect(frameBody).toContainText("Некорректный формат телефона");
