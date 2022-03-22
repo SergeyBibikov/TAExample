@@ -144,7 +144,7 @@ export class SearchResults {
         await resultSummary.waitFor({state: "visible"});
         const content = await resultSummary.textContent();
         if (content) {
-            return Number(content.match(/найдено (\d*) товар/)?.[1]);
+            return Number(content.match(/найдено? (\d*) товар/)?.[1]);
         }
         return 0
     }

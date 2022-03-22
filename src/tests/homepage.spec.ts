@@ -13,7 +13,7 @@ test.describe('Top bar links', () => {
             'Ozon для бизнеса',
             'Мобильное приложение',
             'Подарочные сертификаты',
-            'Реферальная программа',
+            'Продавайте на Ozon',
             'Зарабатывай с Ozon',
             'Помощь',
             'Пункты выдачи'
@@ -39,10 +39,10 @@ test.describe('Top bar links', () => {
         await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
     });
 
-    test('Referral program', async ({ page }) => {
+    test('Sell on Ozon', async ({ page }) => {
         await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Реферальная программа');
-        await expect(page.locator('body')).toContainText('получить 300 баллов на первый заказ или доступ к закрытым предложениям');
+        await Homepage.clickTopBarLink(page, 'Продавайте на Ozon');
+        await expect(page.locator('body')).toContainText('Любому бизнесу найдётся место на Ozon');
     });
 
     test('Earn with Ozon', async ({ page }) => {

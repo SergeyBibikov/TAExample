@@ -24,8 +24,13 @@ test('All stories', async ({ page }) => {
 
 test('Reserve as a juridical face', async ({ page }) => {
     await page.locator('text=Бронируйте как юрлицо').click();
-    await expect(page.locator('body')).toContainText('OZON Командировки');
-    await expect(page.locator('body')).toContainText('Уникальный сервис для оформления деловых поездок');
+    await expect(page.locator('body')).toContainText('Ozon Travel');
+    await expect(page.locator('body')).toContainText('для бизнеса');
+    await expect(page.locator('body')).toContainText('0%');
+    await expect(page.locator('body')).toContainText('сервисного сбора');
+    await expect(page.locator('body')).toContainText('за командировки');
+    await expect(page.locator('body')).toContainText('Плюсы для вашей компании');
+    await expect(page.locator('body')).toContainText('Индивидуальный подход к каждому');
 });
 
 test('Validation of empty fields', async ({ page }) => {

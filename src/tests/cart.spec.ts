@@ -1,10 +1,16 @@
-import { expect, test } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
 import * as assert from 'assert';
 
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { Cart } from '../pageObjects/cart';
 import { SearchResults } from '../pageObjects/searchResults';
+
+const addIphoneToCart = async (page: Page) => {
+    await Homepage.open(page);
+    await Header.searchProduct(page, 'iphone 13 pro 128gb');
+    await SearchResults.addItemToReqularCart(page, 'Смартфон Apple iPhone 13 Pro 128GB, графитовый');
+}
 
 test('Empty cart. B2B ad popup', async ({ page }) => {
     await Homepage.open(page);
@@ -15,9 +21,7 @@ test('Empty cart. B2B ad popup', async ({ page }) => {
 });
 
 test('Add item to cart and delete it', async ({ page }) => {
-    await Homepage.open(page);
-    await Header.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.addItemToReqularCart(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    await addIphoneToCart(page);
     const cartItemsCount = await Header.getCartItemsCount(page);
     assert.equal(cartItemsCount, 1);
     await Header.goToCart(page);
@@ -38,9 +42,7 @@ test('Add item to express cart', async ({ page }) => {
 });
 
 test('Unauthorized user. Proceed to checkout', async ({ page }) => {
-    await Homepage.open(page);
-    await Header.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.addItemToReqularCart(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    await addIphoneToCart(page);
     await Header.goToCart(page);
     await Cart.closeB2BPopup(page);
     await Cart.goToCheckout(page);
