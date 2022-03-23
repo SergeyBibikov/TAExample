@@ -66,10 +66,14 @@ export class OzonTravel {
         const waitForField = async () => {
             await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/travelMainSaveField');
         }
+
+        const month = date.toLocaleString('default', {month : 'long'});
+        const monthLoc = page.locator(`//div[span[contains(text(),"${month}")]]/..`).first();
+
         const fromLoc = page.locator(this.FROM);
         const toLoc = page.locator(this.TO);
         const dateLoc = page.locator(this.DATE);
-        const dayLoc =  page.locator(`//td//div[contains(text(),"${date.getDate()}")]`).first();
+        const dayLoc =  monthLoc.locator(`//td//div[contains(.,"${date.getDate()}")]`).first();
 
         await toLoc.click();
         await fromLoc.click();
