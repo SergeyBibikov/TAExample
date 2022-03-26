@@ -11,24 +11,20 @@ test.beforeEach(async ({ page }) => {
 test('Smoke', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Открыть Ozon Счёт');
 });
-
-test('Bank info. Show more', async ({ page }) => {
-    const moreInfo = page.locator('.ob-container >> text=Узнать подробнее');
+//TODO: Отдельные тесты для осн. сведений и устан.инфо
+test('Bank info', async ({ page }) => {
 
     await page.locator('header >> text=О банке').click();
-    await expect(page.locator('body')).toContainText('Ваш новый ОЗОН Банк');
-    await expect(moreInfo).toHaveCount(1);
-    await moreInfo.click();
-    await expect(page.locator('body')).toContainText('Оставайтесь с нами и ждите анонсов о новых финансовых продуктах');
+    await expect(page.locator('body')).toContainText('Основная информация');
+    await expect(page.locator('body')).toContainText('Основные сведения');
+    await expect(page.locator('body')).toContainText('Установочные сведения');
 });
-
 test('For clients', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
     await expect(page.locator('body')).toContainText('теперь ООО "Еком Банк" будет обслуживать операции по вашему Озон Счёту.');
     await expect(page.locator('body')).toContainText('Информация для клиентов');
     await expect(page.locator('body')).toContainText('Архив документов');
 });
-
 test('Client info docs', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
     await page.locator('//div[text()="Информация для клиентов"]/../following-sibling::div').click();
