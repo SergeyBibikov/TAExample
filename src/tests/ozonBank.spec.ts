@@ -19,6 +19,17 @@ test('Bank info', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Основные сведения');
     await expect(page.locator('body')).toContainText('Установочные сведения');
 });
+test('Info details', async ({ page }) => {
+    await page.locator('header >> text=О банке').click();
+
+    await expect(page.locator('//span[text()="Основные сведения"]/parent::div[contains(@class, tabsTitleActive)]')).toHaveCount(1);
+    await expect(page.locator('body')).toContainText('Общество с ограниченной ответственностью «ОЗОН Банк»');
+    await expect(page.locator('body')).toContainText('Limited Liability Company OZON Bank');
+    await page.locator('text=Установочные сведения').click();
+    await expect(page.locator('//span[text()="Установочные сведения"]/parent::div[contains(@class, tabsTitleActive)]')).toHaveCount(1);
+    await expect(page.locator('body')).toContainText('345 000 000 (триста сорок пять миллионов) рублей');
+    await expect(page.locator('body')).toContainText('Ни Российская Федерация, ни субъекты Российской Федерации не участвуют в капитале кредитной организации');
+});
 test('For clients', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
     await expect(page.locator('body')).toContainText('теперь ООО "Еком Банк" будет обслуживать операции по вашему Озон Счёту.');
