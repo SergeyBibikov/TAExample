@@ -11,7 +11,6 @@ test.beforeEach(async ({ page }) => {
 test('Smoke', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Открыть Ozon Счёт');
 });
-//TODO: Отдельные тесты для осн. сведений и устан.инфо
 test('Bank info', async ({ page }) => {
 
     await page.locator('header >> text=О банке').click();
@@ -29,6 +28,12 @@ test('Info details', async ({ page }) => {
     await expect(page.locator('//span[text()="Установочные сведения"]/parent::div[contains(@class, tabsTitleActive)]')).toHaveCount(1);
     await expect(page.locator('body')).toContainText('345 000 000 (триста сорок пять миллионов) рублей');
     await expect(page.locator('body')).toContainText('Ни Российская Федерация, ни субъекты Российской Федерации не участвуют в капитале кредитной организации');
+});
+test('Information disclosure', async ({ page }) => {
+    await page.locator('text=Раскрытие информации').click();
+    await expect(page.locator('body')).toContainText('Информация в регулятивных целях');
+    await expect(page.locator('body')).toContainText('Скоро здесь появятся наши');
+    await expect(page.locator('body')).toContainText('обновлённые документы');
 });
 test('For clients', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
