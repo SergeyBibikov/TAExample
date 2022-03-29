@@ -73,3 +73,8 @@ test('Archive docs', async ({ page }) => {
     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 24.03.2022)');
     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 21.03.2022)');
 });
+test('Help section', async ({ page }) => {
+    const helpSection = page.locator('//h2[text()="Помощь"]/..');
+    await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
+    await expect(helpSection).toContainText('Пополнить Ozon Счёт');
+});
