@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { Header } from "../pageObjects/header";
 import { Homepage } from "../pageObjects/homepage";
+import { Bank } from "../pageObjects/ozonBank";
 
 
 test.beforeEach(async ({ page }) => {
@@ -74,7 +75,16 @@ test('Archive docs', async ({ page }) => {
     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 21.03.2022)');
 });
 test('Help section', async ({ page }) => {
-    const helpSection = page.locator('//h2[text()="Помощь"]/..');
+    const helpSection = page.locator(Bank.helpSection);
     await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
     await expect(helpSection).toContainText('Пополнить Ozon Счёт');
+    await expect(helpSection).toContainText('Вывести деньги');
+});
+//FIXME
+test('How to open account?', async ({ page }) => {
+    const text = `Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.`
+    const howToLocator = page.locator(Bank.howToOpenAccountCard);
+    await howToLocator.locator('div', {hasText: 'Как открыть Ozon Счёт?'}).click();
+    await page.pause();
+    await expect(howToLocator.locator('div.content')).toContainText(text);
 });
