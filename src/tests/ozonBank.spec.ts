@@ -80,11 +80,10 @@ test('Help section', async ({ page }) => {
     await expect(helpSection).toContainText('Пополнить Ozon Счёт');
     await expect(helpSection).toContainText('Вывести деньги');
 });
-//FIXME
 test('How to open account?', async ({ page }) => {
     const text = `Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.`
     const howToLocator = page.locator(Bank.howToOpenAccountCard);
+    await page.reload();
     await howToLocator.locator('div', {hasText: 'Как открыть Ozon Счёт?'}).click();
-    await page.pause();
     await expect(howToLocator.locator('div.content')).toContainText(text);
 });
