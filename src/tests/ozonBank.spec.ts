@@ -82,8 +82,19 @@ test('Help section', async ({ page }) => {
 });
 test('How to open account?', async ({ page }) => {
     const text = `Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.`
-    const howToLocator = page.locator(Bank.howToOpenAccountCard);
-    await page.reload();
-    await howToLocator.locator('div', {hasText: 'Как открыть Ozon Счёт?'}).click();
-    await expect(howToLocator.locator('div.content')).toContainText(text);
-});
+    const howToLocator = page.locator(Bank.getHelpSectionCardLocator("Как открыть"));
+
+    const tryToCheck = async () => {
+        await howToLocator.locator('div', { hasText: 'Как открыть Ozon Счёт?' }).click();
+        await expect(howToLocator.locator('div.content')).toContainText(text);
+
+    };
+    try {
+        await tryToCheck();
+    } catch (error) {
+        await page.waitForTimeout(500);
+        await page.evaluate(() => { window.stop() });
+        await tryToCheck();
+    }
+
+    });
