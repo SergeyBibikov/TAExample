@@ -79,22 +79,14 @@ test('Help section', async ({ page }) => {
     await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
     await expect(helpSection).toContainText('Пополнить Ozon Счёт');
     await expect(helpSection).toContainText('Вывести деньги');
+    await expect(helpSection).toContainText('Повысить лимиты');
 });
 test('How to open account?', async ({ page }) => {
-    const text = `Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.`
-    const howToLocator = page.locator(Bank.getHelpSectionCardLocator("Как открыть"));
+    const text = 'Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
+    await Bank.checkHelpCardContent(page, "Как открыть", text);
+});
 
-    const tryToCheck = async () => {
-        await howToLocator.locator('div', { hasText: 'Как открыть Ozon Счёт?' }).click();
-        await expect(howToLocator.locator('div.content')).toContainText(text);
-
-    };
-    try {
-        await tryToCheck();
-    } catch (error) {
-        await page.waitForTimeout(500);
-        await page.evaluate(() => { window.stop() });
-        await tryToCheck();
-    }
-
-    });
+test('Account refill', async ({ page }) => {
+    const text = 'Пополнить Ozon Счёт можно с карты и по номеру телефона через Систему быстрых платежей.';
+    await Bank.checkHelpCardContent(page, "Пополнить ", text);
+});
