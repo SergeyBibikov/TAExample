@@ -85,8 +85,12 @@ test('How to open account?', async ({ page }) => {
     const text = 'Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
     await Bank.checkHelpCardContent(page, "Как открыть", text);
 });
-
 test('Account refill', async ({ page }) => {
     const text = 'Пополнить Ozon Счёт можно с карты и по номеру телефона через Систему быстрых платежей.';
     await Bank.checkHelpCardContent(page, "Пополнить ", text);
+});
+test('Transfer money from account', async ({ page }) => {
+    const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас персональный Счёт';
+    await Bank.checkHelpCardContent(page, "Вывести деньги", text);
+    
 });
