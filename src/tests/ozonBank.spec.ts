@@ -92,5 +92,9 @@ test('Account refill', async ({ page }) => {
 test('Transfer money from account', async ({ page }) => {
     const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас персональный Счёт';
     await Bank.checkHelpCardContent(page, "Вывести деньги", text);
-    
+});
+test('Increase limits', async ({ page }) => {
+    const text =  `Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки, \
+нажмите Лимиты в личном кабинете Счёта и заполните небольшую анкету.`;
+    await Bank.checkHelpCardContent(page, "Повысить лимиты", text);
 });
