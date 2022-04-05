@@ -13,11 +13,10 @@ test('Smoke', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Открыть Ozon Счёт');
 });
 test('Bank info', async ({ page }) => {
-
+    const infoBlock = page.locator('//div[contains(@class, "infoBlock")]');
     await page.locator('header >> text=О банке').click();
-    await expect(page.locator('body')).toContainText('Основная информация');
-    await expect(page.locator('body')).toContainText('Основные сведения');
-    await expect(page.locator('body')).toContainText('Установочные сведения');
+    await expect(infoBlock).toContainText('Ваш новый банк от группы Ozon');
+    await expect(infoBlock).toContainText('Узнать подробнее');
 });
 test('Info details', async ({ page }) => {
     await page.locator('header >> text=О банке').click();
@@ -74,27 +73,30 @@ test('Archive docs', async ({ page }) => {
     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 24.03.2022)');
     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 21.03.2022)');
 });
-test('Help section', async ({ page }) => {
-    const helpSection = page.locator(Bank.helpSection);
-    await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
-    await expect(helpSection).toContainText('Пополнить Ozon Счёт');
-    await expect(helpSection).toContainText('Вывести деньги');
-    await expect(helpSection).toContainText('Повысить лимиты');
-});
-test('How to open account?', async ({ page }) => {
-    const text = 'Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
-    await Bank.checkHelpCardContent(page, "Как открыть", text);
-});
-test('Account refill', async ({ page }) => {
-    const text = 'Пополнить Ozon Счёт можно с карты и по номеру телефона через Систему быстрых платежей.';
-    await Bank.checkHelpCardContent(page, "Пополнить ", text);
-});
-test('Transfer money from account', async ({ page }) => {
-    const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас персональный Счёт';
-    await Bank.checkHelpCardContent(page, "Вывести деньги", text);
-});
-test('Increase limits', async ({ page }) => {
-    const text =  `Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки, \
-нажмите Лимиты в личном кабинете Счёта и заполните небольшую анкету.`;
-    await Bank.checkHelpCardContent(page, "Повысить лимиты", text);
+
+test.describe('Help section',()=>{
+    test('Smoke', async ({ page }) => {
+        const helpSection = page.locator(Bank.helpSection);
+        await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
+        await expect(helpSection).toContainText('Пополнить Ozon Счёт');
+        await expect(helpSection).toContainText('Вывести деньги');
+        await expect(helpSection).toContainText('Повысить лимиты');
+    });
+    test('How to open account?', async ({ page }) => {
+        const text = 'Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
+        await Bank.checkHelpCardContent(page, "Как открыть", text);
+    });
+    test('Account refill', async ({ page }) => {
+        const text = 'Пополнить Ozon Счёт можно с карты и по номеру телефона через Систему быстрых платежей.';
+        await Bank.checkHelpCardContent(page, "Пополнить ", text);
+    });
+    test('Transfer money from account', async ({ page }) => {
+        const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас персональный Счёт';
+        await Bank.checkHelpCardContent(page, "Вывести деньги", text);
+    });
+    test('Increase limits', async ({ page }) => {
+        const text =  `Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки, \
+    нажмите Лимиты в личном кабинете Счёта и заполните небольшую анкету.`;
+        await Bank.checkHelpCardContent(page, "Повысить лимиты", text);
+    });
 });
