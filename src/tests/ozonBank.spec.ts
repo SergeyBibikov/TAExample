@@ -12,28 +12,35 @@ test.beforeEach(async ({ page }) => {
 test('Smoke', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Открыть Ozon Счёт');
 });
+
+
 test('Bank info', async ({ page }) => {
     const infoBlock = page.locator('//div[contains(@class, "infoBlock")]');
     await page.locator('header >> text=О банке').click();
     await expect(infoBlock).toContainText('Ваш новый банк от группы Ozon');
     await expect(infoBlock).toContainText('Узнать подробнее');
 });
-test('Info details', async ({ page }) => {
-    await page.locator('header >> text=О банке').click();
-
-    await expect(page.locator('//span[text()="Основные сведения"]/parent::div[contains(@class, tabsTitleActive)]')).toHaveCount(1);
-    await expect(page.locator('body')).toContainText('Общество с ограниченной ответственностью «ОЗОН Банк»');
-    await expect(page.locator('body')).toContainText('Limited Liability Company OZON Bank');
-    await page.locator('text=Установочные сведения').click();
-    await expect(page.locator('//span[text()="Установочные сведения"]/parent::div[contains(@class, tabsTitleActive)]')).toHaveCount(1);
-    await expect(page.locator('body')).toContainText('345 000 000 (триста сорок пять миллионов) рублей');
-    await expect(page.locator('body')).toContainText('Ни Российская Федерация, ни субъекты Российской Федерации не участвуют в капитале кредитной организации');
-});
-test('Information disclosure', async ({ page }) => {
-    await page.locator('text=Раскрытие информации').click();
-    await expect(page.locator('body')).toContainText('Информация в регулятивных целях');
-    await expect(page.locator('body')).toContainText('Скоро здесь появятся наши');
-    await expect(page.locator('body')).toContainText('обновлённые документы');
+test.describe('About', ()=>{
+    test('Info details', async ({ page }) => {
+        const aboutLoc = Bank.getAboutLocator(page);
+        await aboutLoc.click();
+        await aboutLoc.hover();
+        const mainInfo = page.locator('//a[text()="Основная информация"]');
+        await expect(mainInfo).toBeVisible();
+        await mainInfo.click();
+        await expect(page.locator('body')).toContainText('Общество с ограниченной ответственностью «Еком Банк»');
+        await expect(page.locator('body')).toContainText('Limited Liability Company Ecom Bank');
+        await page.locator('text=Установочные сведения').click();
+        await expect(page.locator('//span[text()="Установочные сведения"]/parent::div[contains(@class, tabsTitleActive)]')).toHaveCount(1);
+        await expect(page.locator('body')).toContainText('3 600 000 000 (три миллиарда шестьсот миллионов) рублей');
+        await expect(page.locator('body')).toContainText('Ни Российская Федерация, ни субъекты Российской Федерации не участвуют в капитале кредитной организации');
+    });
+    test('Information disclosure', async ({ page }) => {
+        await page.locator('text=Раскрытие информации').click();
+        await expect(page.locator('body')).toContainText('Информация в регулятивных целях');
+        await expect(page.locator('body')).toContainText('Скоро здесь появятся наши');
+        await expect(page.locator('body')).toContainText('обновлённые документы');
+    });
 });
 test('For clients', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
@@ -76,7 +83,7 @@ test('Archive docs', async ({ page }) => {
 
 test.describe('Help section',()=>{
     test('Smoke', async ({ page }) => {
-        const helpSection = page.locator(Bank.helpSection);
+        const helpSection = page.locator(Bank.selectors.helpSection);
         await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
         await expect(helpSection).toContainText('Пополнить Ozon Счёт');
         await expect(helpSection).toContainText('Вывести деньги');
