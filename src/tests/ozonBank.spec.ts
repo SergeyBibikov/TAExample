@@ -21,13 +21,19 @@ test('Bank info', async ({ page }) => {
     await expect(infoBlock).toContainText('Узнать подробнее');
 });
 test.describe('About', ()=>{
-    test('Info details', async ({ page }) => {
+    test('Popup on hover', async ({ page }) => {
         const aboutLoc = Bank.getAboutLocator(page);
         await aboutLoc.click();
         await aboutLoc.hover();
         const mainInfo = page.locator('//a[text()="Основная информация"]');
+        const infoDisclosure = page.locator('//a[text()="Раскрытие информации"]');
+        const juridicalInfo = page.locator('//a[text()="Правовая информация"]');
         await expect(mainInfo).toBeVisible();
-        await mainInfo.click();
+        await expect(infoDisclosure).toBeVisible();
+        await expect(juridicalInfo).toBeVisible();
+    });
+    test('Info details', async ({ page }) => {
+        await page.locator('text=Основная информация').click();
         await expect(page.locator('body')).toContainText('Общество с ограниченной ответственностью «Еком Банк»');
         await expect(page.locator('body')).toContainText('Limited Liability Company Ecom Bank');
         await page.locator('text=Установочные сведения').click();
@@ -37,7 +43,6 @@ test.describe('About', ()=>{
     });
     test('Information disclosure', async ({ page }) => {
         await page.locator('text=Раскрытие информации').click();
-        await expect(page.locator('body')).toContainText('Информация в регулятивных целях');
         await expect(page.locator('body')).toContainText('Скоро здесь появятся наши');
         await expect(page.locator('body')).toContainText('обновлённые документы');
     });
