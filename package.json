@@ -1,6 +1,7 @@
 {
   "scripts": {
     "test": "npx playwright test --reporter=html",
+    "debug": "npx playwright test -g \"@debug\" --reporter=html",
     "report": "npx playwright show-report",
     "clear_l": "rm -rf test-results",
     "clear_w": "rd /s /q test-results",

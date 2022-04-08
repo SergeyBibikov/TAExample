@@ -63,6 +63,7 @@ export class Header {
     static async searchProduct(page: Page, searchItem: string) {
         await page.locator(this.SEARCH_INPUT).fill(searchItem);
         await page.locator(this.SEARCH_BUTTON).click();
+        await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');   
     }
     
     static async clearSearch(page: Page){

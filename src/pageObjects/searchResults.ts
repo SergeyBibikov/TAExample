@@ -2,7 +2,6 @@ import { Page } from '@playwright/test';
 import * as assert from 'assert';
 
 const toCart = '//*[contains(text(),"В корзину")]/ancestor::button';
-const regularCart = '//*[contains(text(),"Завтра")]/ancestor::span/preceding-sibling::div';
 const expressCart = '//*[contains(text(),"За час")]/ancestor::span/preceding-sibling::div';
 
 export class SearchResults {
@@ -12,7 +11,6 @@ export class SearchResults {
     static FOUND_ITEMS_LIST = '//div[@data-widget="searchResultsV2"]/div';
     static readonly pagination = '//div[@data-widget="megaPaginator"]';
     static buttons = {
-        TO_CART_REGULAR: regularCart + toCart,
         TO_CART_EXPRESS: expressCart + toCart,
     }
 
@@ -55,8 +53,9 @@ export class SearchResults {
     
     static getFoundItemDiv(page: Page, itemName: string){
         return page
-            .locator(this.FOUND_ITEMS_LIST)
-            .locator(`//span[contains(text(),"${itemName}")]/ancestor::a/parent::div/parent::div`);
+            //.locator(this.FOUND_ITEMS_LIST)
+            .locator(`(//span[contains(text(),"${itemName}")])[1]`)
+            .locator('xpath=/ancestor::a/../..');
     }
 
     /**
@@ -96,14 +95,20 @@ export class SearchResults {
      */
     static async addItemToReqularCart(page: Page, itemName: string) {
         const itemDataDiv = this.getFoundItemDiv(page, itemName);
-        await itemDataDiv
-            .locator('xpath=/following-sibling::div[1]')
-            .locator(this.buttons.TO_CART_REGULAR)
-            .click();
-        await itemDataDiv
-            .locator('xpath=/following-sibling::div[1]')
-            .locator(this.buttons.TO_CART_REGULAR)
-            .waitFor({state: "hidden"});
+        const cartLocator = itemDataDiv
+        .locator('xpath=/following-sibling::div[1]')
+        .locator('//span[contains(., "доставит")]/..//button[contains(., "В корзину")]');
+
+        const add = async () => {
+            await cartLocator.click();
+            await cartLocator.waitFor({state: "hidden",timeout:2000});
+        }
+        //2 attempts to reduce flakiness
+        try {
+            await add();
+        } catch (_) {
+            await add();
+        }
     }
     static async addItemToExpressCart(page: Page, itemName: string) {
         const itemDataDiv = this.getFoundItemDiv(page, itemName);

@@ -24,14 +24,11 @@ test('All stories', async ({ page }) => {
 
 test('Reserve as a juridical face', async ({ page }) => {
     await page.locator('text=Бронируйте как юрлицо').click();
-    await expect(page.locator('body')).toContainText('Вы не авторизованы');
-    // await expect(page.locator('body')).toContainText('Ozon Travel');
-    // await expect(page.locator('body')).toContainText('для бизнеса');
-    // await expect(page.locator('body')).toContainText('0%');
-    // await expect(page.locator('body')).toContainText('сервисного сбора');
-    // await expect(page.locator('body')).toContainText('за командировки');
-    // await expect(page.locator('body')).toContainText('Плюсы для вашей компании');
-    // await expect(page.locator('body')).toContainText('Индивидуальный подход к каждому');
+    await expect(page.locator('body')).toContainText('Ozon Travel');
+    await expect(page.locator('body')).toContainText('для бизнеса');
+    await expect(page.locator('body')).toContainText('0%');
+    await expect(page.locator('body')).toContainText('сервисного сбора');
+    await expect(page.locator('body')).toContainText('за командировки');
 });
 
 test('Validation of empty fields', async ({ page }) => {
@@ -70,7 +67,7 @@ test.describe('Airline tickets', ()=>{
 });
 
 test.describe('Railway tickets',() => {
-    test('1Search', async ({ page }) => {
+    test('Search', async ({ page }) => {
         await page.locator('//span[text()="ЖД билеты"]/ancestor::button').click();
         await OzonTravel.findTicket(page, 'Москва', 'Санкт-Петербург', todayPlus(10));
         await page.waitForSelector('div[text="По времени отправления"]');
