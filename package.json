@@ -2,8 +2,10 @@
   "scripts": {
     "test": "npx playwright test --reporter=html",
     "report": "npx playwright show-report",
-    "ch": "npx playwright test --headed --project=chromium",
-    "fh": "npx playwright test --headed --project=firefox"
+    "clear_l": "rm -rf test-results",
+    "clear_w": "rd /s /q test-results",
+    "ch": "npx playwright test --headed --project=chromium --reporter=html",
+    "fh": "npx playwright test --headed --project=firefox -reporter=html"
   },
   "devDependencies": {
     "@playwright/test": "^1.19.0",

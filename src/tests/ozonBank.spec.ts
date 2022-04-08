@@ -49,9 +49,8 @@ test.describe('About', ()=>{
 });
 test('For clients', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
-    await expect(page.locator('body')).toContainText('теперь ООО "Еком Банк" будет обслуживать операции по вашему Озон Счёту.');
+    await expect(page.locator('body')).toContainText('Встречайте банк от группы Ozon');
     await expect(page.locator('body')).toContainText('Информация для клиентов');
-    await expect(page.locator('body')).toContainText('Архив документов');
 });
 test('Client info docs', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
@@ -69,22 +68,23 @@ test('Client info docs', async ({ page }) => {
     await expect(infoDocs)
         .toContainText('Согласие на получение рекламы');
 });
-test('Archive docs', async ({ page }) => {
-    await page.locator('header >> text=Клиентам').click();
-    await page.locator('//div[text()="Информация для клиентов"]/../following-sibling::div').click();
+//TODO: The section was removed for now at least. Delete test if it doesn't return
+// test('Archive docs', async ({ page }) => {
+//     await page.locator('header >> text=Клиентам').click();
+//     await page.locator('//div[text()="Информация для клиентов"]/../following-sibling::div').click();
 
-    const archiveDocs = page.locator('//div[text()="Архив документов"]/ancestor::div[contains(@class, "headerWrapper")]/..');
-    await expect(archiveDocs.locator('.doc')).toHaveCount(10);
-    await expect(archiveDocs).toContainText('Общие условия');
-    await expect(archiveDocs).toContainText('Тарифы РКО');
-    await expect(archiveDocs).toContainText('Правила (общие условия) выпуска и обслуживания расчетных карт с овердрафтом ООО "ОЗОН Банк"');
-    await expect(archiveDocs).toContainText('Правила обслуживания клиентов (до 24.03.2022)');
-    await expect(archiveDocs).toContainText('Правила обслуживания клиентов (до 21.03.2022)');
-    await expect(archiveDocs).toContainText('Порядок обработки персональных данных (до 24.03.2022)');
-    await expect(archiveDocs).toContainText('Порядок обработки персональных данных (до 21.03.2022)');
-    await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 24.03.2022)');
-    await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 21.03.2022)');
-});
+//     const archiveDocs = page.locator('//div[text()="Архив документов"]/ancestor::div[contains(@class, "headerWrapper")]/..');
+//     await expect(archiveDocs.locator('.doc')).toHaveCount(10);
+//     await expect(archiveDocs).toContainText('Общие условия');
+//     await expect(archiveDocs).toContainText('Тарифы РКО');
+//     await expect(archiveDocs).toContainText('Правила (общие условия) выпуска и обслуживания расчетных карт с овердрафтом ООО "ОЗОН Банк"');
+//     await expect(archiveDocs).toContainText('Правила обслуживания клиентов (до 24.03.2022)');
+//     await expect(archiveDocs).toContainText('Правила обслуживания клиентов (до 21.03.2022)');
+//     await expect(archiveDocs).toContainText('Порядок обработки персональных данных (до 24.03.2022)');
+//     await expect(archiveDocs).toContainText('Порядок обработки персональных данных (до 21.03.2022)');
+//     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 24.03.2022)');
+//     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 21.03.2022)');
+// });
 
 test.describe('Help section',()=>{
     test('Smoke', async ({ page }) => {

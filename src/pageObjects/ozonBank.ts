@@ -2,11 +2,11 @@ import { Page, expect } from "@playwright/test";
 
 export class Bank {
     static selectors = {
-        helpSection : '//h2[text()="Помощь"]/..',
-        about : 'div[class^="header"] >> text=О банке',
+        helpSection: '//h2[text()="Помощь"]/..',
+        about: 'div[class^="header"] >> text=О банке',
     }
-    
-    static getAboutLocator(page: Page){
+
+    static getAboutLocator(page: Page) {
         return page.locator(this.selectors.about)
     }
     static getHelpSectionCardLocator(sectionName: string): string {
@@ -20,12 +20,20 @@ export class Bank {
             await expect(cardLocator.locator('div.content')).toContainText(expectedText);
 
         };
+        const waitAndStopLoading = async (time: number) => {
+            await page.waitForTimeout(time);
+            await page.evaluate(() => { window.stop() });
+        }
         try {
             await tryToCheck();
-        } catch (error) {
-            await page.waitForTimeout(500);
-            await page.evaluate(() => { window.stop() });
-            await tryToCheck();
+        } catch (_) {
+            await waitAndStopLoading(1000);
+            try {
+                await tryToCheck();
+            } catch (_) {
+                await waitAndStopLoading(5000);
+                await tryToCheck();
+            }
         }
     }
 }
