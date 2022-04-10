@@ -66,14 +66,6 @@ test('Pagination', async ({ page }) => {
     const currentTopResult = await SearchResults.getFirstItemName(page);
     assert.notDeepEqual(currentTopResult, initialTopResult);
 });
-test('Add item to favourites', async ({ page }) => {
-    await Homepage.open(page);
-    await Header.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.addItemToFavourites(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
-    assert.equal((await Header.getFavouriteItemsCount(page)), 1);
-    await Header.goToFavourites(page);
-    await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText("Смартфон Apple iPhone 13 128GB, темная ночь");
-});
 test('Toggle item comparison', async ({ page }) => {
     const model = 'Смартфон Apple iPhone 13 128GB, синий'
     await Homepage.open(page);
