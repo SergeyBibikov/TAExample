@@ -122,6 +122,7 @@ export class SearchResults {
         await itemDataDiv
             .locator('xpath=/following-sibling::div[2]/div[1]')
             .click();
+        await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/favoriteBatchAddItems');
     }
     static async addItemToComparison(page: Page, itemName: string) {
         this.clickMoreOnItemCard(page, itemName);

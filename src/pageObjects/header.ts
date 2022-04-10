@@ -31,7 +31,7 @@ export class Header {
             .locator(this.FAVOURITES)
             .locator('span')
             .first();
-        await counter.waitFor({ state: "visible" });
+        await counter.waitFor({ state: "attached" });
 
         return Number(await counter.textContent());
     }
