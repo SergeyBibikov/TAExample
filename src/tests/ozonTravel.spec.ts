@@ -1,14 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { todayPlus, todayPlusAsStr } from '../helpers/dates';
-import { Header } from '../pageObjects/header';
-import { Homepage } from '../pageObjects/homepage';
 import { OzonTravel } from '../pageObjects/ozonTravel';
 
 
 test.beforeEach(async ({ page }) => {
-    await Homepage.open(page);
-    await Header.goToNavbarLink(page, 'Ozon Travel');
-    await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
+    await OzonTravel.open(page);
 });
 
 test('Successful page load', async ({ page }) => {
@@ -81,6 +77,7 @@ test.describe('Railway tickets',() => {
     });
 })
 test.describe('Hotels', () => {
+    
     test('Smoke', async ({ page }) => {
         await OzonTravel.selectHotelTab(page);
         await expect(page.locator('body')).toContainText('Бронирование отелей и гостиниц');

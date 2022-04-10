@@ -40,8 +40,13 @@ export class OzonTravel {
     static hotelLocators = hotel;
 
     
+    static async open(page: Page){
+        await page.goto('https://www.ozon.ru/travel/')
+        await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
+    }
+    
     static async selectHotelTab(page: Page){
-        await page.locator('text=Отели').click();
+        await page.locator('//span[text()="Отели"]').click();
         await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');
     }
     /**
