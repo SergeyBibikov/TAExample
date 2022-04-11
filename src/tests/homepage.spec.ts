@@ -32,13 +32,27 @@ test.describe('Top bar links', () => {
         await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
         await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
     });
-
-    test('Mobile app', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Мобильное приложение');
-        await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
-    });
-
+    //TODO:add tests for google play and app gallery
+    test.describe('Mobile app', () => {
+        test('Navigate from homepage', async ({ page }) => {
+            await Homepage.open(page);
+            await Homepage.clickTopBarLink(page, 'Мобильное приложение');
+            await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
+        });
+        test('App store link', async ({ page, context }) => {
+            await page.goto('https://www.ozon.ru/info/appspromo/');
+            const [newPage] = await Promise.all([
+                context.waitForEvent('page'),
+                page.locator('//a[contains(@href, "itunes")]')
+                    .first()
+                    .click()
+            ])
+            await newPage.waitForLoadState();
+            await expect(newPage.locator('nav#localnav')).toContainText('App Store');
+            await expect(newPage.locator('section[class*="product-her"]'))
+                .toContainText('OZON: товары, билеты, продукты ');
+        });
+    })
     test('Sell on Ozon', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Продавайте на Ozon');

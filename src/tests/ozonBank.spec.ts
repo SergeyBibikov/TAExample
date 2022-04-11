@@ -20,7 +20,7 @@ test('Bank info', async ({ page }) => {
     await expect(infoBlock).toContainText('Ваш новый банк от группы Ozon');
     await expect(infoBlock).toContainText('Узнать подробнее');
 });
-test.describe('About', ()=>{
+test.describe('About', () => {
     test('Popup on hover', async ({ page }) => {
         const aboutLoc = Bank.getAboutLocator(page);
         await aboutLoc.click();
@@ -86,7 +86,7 @@ test('Client info docs', async ({ page }) => {
 //     await expect(archiveDocs).toContainText('Политика обработки и защиты персональных данных (до 21.03.2022)');
 // });
 
-test.describe('Help section',()=>{
+test.describe('Help section', () => {
     test('Smoke', async ({ page }) => {
         const helpSection = page.locator(Bank.selectors.helpSection);
         await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
@@ -107,7 +107,7 @@ test.describe('Help section',()=>{
         await Bank.checkHelpCardContent(page, "Вывести деньги", text);
     });
     test('Increase limits', async ({ page }) => {
-        const text =  `Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки, \
+        const text = `Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки, \
     нажмите Лимиты в личном кабинете Счёта и заполните небольшую анкету.`;
         await Bank.checkHelpCardContent(page, "Повысить лимиты", text);
     });
