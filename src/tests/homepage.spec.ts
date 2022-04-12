@@ -52,6 +52,19 @@ test.describe('Top bar links', () => {
             await expect(newPage.locator('section[class*="product-her"]'))
                 .toContainText('OZON: товары, билеты, продукты ');
         });
+        test('AppGallery link', async ({ page, context }) => {
+            await page.goto('https://www.ozon.ru/info/appspromo/');
+            const [newPage] = await Promise.all([
+                context.waitForEvent('page'),
+                page.locator('//a[contains(@href, "appgallery")]')
+                    .first()
+                    .click()
+            ])
+            await newPage.waitForLoadState();
+            await expect(newPage.locator('.headerContainer')).toContainText('AppGallery');
+            await expect(newPage.locator('.detailheadcard'))
+                .toContainText('OZON: товары, авиа');
+        });
     })
     test('Sell on Ozon', async ({ page }) => {
         await Homepage.open(page);
