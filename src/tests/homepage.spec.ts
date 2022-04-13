@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
 import * as assert from 'assert';
 
 import * as compare from "../helpers/comparison";
@@ -32,7 +32,6 @@ test.describe('Top bar links', () => {
         await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
         await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
     });
-    //TODO:add tests for google play and app gallery
     test.describe('Mobile app', () => {
         test('Navigate from homepage', async ({ page }) => {
             await Homepage.open(page);
@@ -155,25 +154,6 @@ test('Sign in or register button', async ({ page }) => {
 });
 
 test.describe('Header', () => {
-    //TODO: return travel link check when the text is stable
-    test('Navigation links list', async ({ page }) => {
-        const expectedLinks = [
-            'TOP Fashion', 'Premium',
-            'Ozon fresh',
-            'Ozon Счёт', 'LIVE',
-            'Бренды',
-            'Магазины', 'Электроника',
-            'Одежда и обувь', 'Детские товары',
-            'Дом и сад'
-        ]
-
-        await Homepage.open(page);
-        const presentLinks = await Header.getNavBarLinks(page);
-        const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
-        if (diff) {
-            assert.fail(`The following links are missing: ${diff}`);
-        }
-    });
 
     test('Sign in on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
@@ -201,7 +181,6 @@ test.describe('Header', () => {
         await getCodeButton.click();
         await expect(frameBody).toContainText("Некорректный формат телефона");
     });
-
     test('Go to orders while not being signed in', async ({ page }) => {
         await Homepage.open(page);
         await Header.goToOrders(page);
@@ -218,7 +197,42 @@ test.describe('Header', () => {
         await expect(page.locator('//span[contains(text(),"Моя коллекция")]')).toHaveCount(1);
     });
 });
+test.describe('Header links correct leads', () => {
+    const checkPageLoad = async (p: Page, link: string, textToExpect: string) => {
+        await Homepage.open(p);
+        await Header.goToNavbarLink(p, link);
+        await expect(p.locator('body')).toContainText(textToExpect);
+    }
+    //TODO: return travel link check when the text is stable
+    test('Links list', async ({ page }) => {
+        const expectedLinks = [
+            'TOP Fashion', 'Premium',
+            'Ozon fresh',
+            'Ozon Счёт', 'LIVE',
+            'Бренды',
+            'Магазины', 'Электроника',
+            'Одежда и обувь', 'Детские товары',
+            'Дом и сад'
+        ]
 
+        await Homepage.open(page);
+        const presentLinks = await Header.getNavBarLinks(page);
+        const diff = compare.getMissingArrayElements(presentLinks, expectedLinks);
+        if (diff) {
+            assert.fail(`The following links are missing: ${diff}`);
+        }
+    });
+    test('TOP Fashion', async ({ page }) => {
+        await checkPageLoad(page, 'TOP Fashion', 'TOP Fashion');
+    });
+    test('Premium', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Premium',
+            'Подписка на кешбэк, бесплатную доставку, кино, курсы и ранний доступ к распродажам'
+        );
+    });
+})
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
     await Header.openCatalogue(page);

@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
     await Homepage.open(page);
     await Header.goToNavbarLink(page, 'Ozon Счёт');
 })
-
+//TODO: transfer to header links smoke
 test('Smoke', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Открыть Ozon Счёт');
 });
