@@ -203,6 +203,7 @@ test.describe('Header links correct leads', () => {
         await Header.goToNavbarLink(p, link);
         await expect(p.locator('body')).toContainText(textToExpect);
     }
+    //TODO:add all links tests
     //TODO: return travel link check when the text is stable
     test('Links list', async ({ page }) => {
         const expectedLinks = [
@@ -230,6 +231,20 @@ test.describe('Header links correct leads', () => {
             page,
             'Premium',
             'Подписка на кешбэк, бесплатную доставку, кино, курсы и ранний доступ к распродажам'
+        );
+    });
+    test('Ozon Счёт', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Ozon Счёт',
+            'Открыть Ozon Счёт'
+        );
+    });
+    test('Акции', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Акции',
+            'Выгодные предложения'
         );
     });
 })
