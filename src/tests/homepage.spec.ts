@@ -247,6 +247,13 @@ test.describe('Header links correct leads', () => {
             'Выгодные предложения'
         );
     });
+    test('Бренды', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Бренды',
+            'Популярные бренды'
+        );
+    });
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
