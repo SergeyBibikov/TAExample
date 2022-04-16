@@ -254,6 +254,13 @@ test.describe('Header links correct leads', () => {
             'Популярные бренды'
         );
     });
+    test('Магазины', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Магазины',
+            'Все магазины'
+        );
+    });
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
