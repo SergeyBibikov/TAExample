@@ -261,6 +261,13 @@ test.describe('Header links correct leads', () => {
             'Все магазины'
         );
     });
+    test('Электроника', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Электроника',
+            'Бытовая техника'
+        );
+});
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
