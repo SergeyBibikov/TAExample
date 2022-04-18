@@ -240,6 +240,11 @@ test.describe('Header links correct leads', () => {
             'Открыть Ozon Счёт'
         );
     });
+    test('LIVE', async ({ page }) => {
+        await Homepage.open(page);
+        await Header.goToNavbarLink(page, 'LIVE');
+        await expect(page.locator('[data-widget="webTopStreams"]')).toHaveCount(1);
+    });
     test('Акции', async ({ page }) => {
         await checkPageLoad(
             page,
@@ -267,7 +272,7 @@ test.describe('Header links correct leads', () => {
             'Электроника',
             'Бытовая техника'
         );
-});
+    });
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
