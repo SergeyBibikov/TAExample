@@ -273,6 +273,13 @@ test.describe('Header links correct leads', () => {
             'Бытовая техника'
         );
     });
+    test('Одежда и обувь', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Одежда и обувь',
+            'Женская одежда, обувь и аксессуары'
+        );
+    });
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
