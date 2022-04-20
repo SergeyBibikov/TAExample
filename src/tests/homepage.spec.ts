@@ -280,6 +280,13 @@ test.describe('Header links correct leads', () => {
             'Женская одежда, обувь и аксессуары'
         );
     });
+    test('Детские товары', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Детские товары',
+            'Игрушки и игры'
+        );
+    });
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
