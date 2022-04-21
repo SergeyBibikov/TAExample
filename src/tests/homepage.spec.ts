@@ -287,6 +287,13 @@ test.describe('Header links correct leads', () => {
             'Игрушки и игры'
         );
     });
+    test('Дом и сад', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Дом и сад',
+            'Товары для праздников'
+        );
+    });
 })
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
