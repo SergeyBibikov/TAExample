@@ -233,6 +233,13 @@ test.describe('Header links correct leads', () => {
             'Подписка на кешбэк, бесплатную доставку, кино, курсы и ранний доступ к распродажам'
         );
     });
+    test('Ozon fresh', async ({ page }) => {
+        await checkPageLoad(
+            page,
+            'Ozon fresh',
+            'Успей купить!'
+        );
+    });
     test('Ozon Счёт', async ({ page }) => {
         await checkPageLoad(
             page,
