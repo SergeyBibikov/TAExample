@@ -5,8 +5,8 @@
     "report": "npx playwright show-report",
     "clear_l": "rm -rf test-results",
     "clear_w": "rd /s /q test-results",
-    "ch": "npx playwright test --headed --project=chromium --reporter=html",
-    "fh": "npx playwright test --headed --project=firefox -reporter=html"
+    "ch": "npx playwright test --headed --project=chromium --reporter=html --retries=0",
+    "fh": "npx playwright test --headed --project=firefox --reporter=html --retries=0"
   },
   "devDependencies": {
     "@playwright/test": "^1.19.0",
