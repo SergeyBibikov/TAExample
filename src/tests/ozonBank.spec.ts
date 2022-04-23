@@ -98,7 +98,7 @@ test.describe('Help section', () => {
         await Bank.checkHelpCardContent(page, "Пополнить ", text);
     });
     test('Transfer money from account', async ({ page }) => {
-        const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас персональный Счёт';
+        const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас Базовый Счёт';
         await Bank.checkHelpCardContent(page, "Вывести деньги", text);
     });
     test('Increase limits', async ({ page }) => {

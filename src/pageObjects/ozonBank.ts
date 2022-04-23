@@ -16,7 +16,7 @@ export class Bank {
         const cardLocator = page.locator(this.getHelpSectionCardLocator(card));
 
         const tryToCheck = async () => {
-            await cardLocator.locator('div', { hasText: card }).click();
+            await cardLocator.locator('div span', { hasText: card }).click();
             await expect(cardLocator.locator('div.content')).toContainText(expectedText);
 
         };
