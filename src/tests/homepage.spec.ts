@@ -30,7 +30,7 @@ test.describe('Top bar links', () => {
     test('Ozon for business', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
-        await expect(page.locator('body')).toContainText('Покупайте как юридическое лицо');
+        await expect(page.locator('body')).toContainText('Для компаний любого масштаба');
     });
     test.describe('Mobile app', () => {
         test('Navigate from homepage', async ({ page }) => {
@@ -49,7 +49,7 @@ test.describe('Top bar links', () => {
             await newPage.waitForLoadState();
             await expect(newPage.locator('nav#localnav')).toContainText('App Store');
             await expect(newPage.locator('section[class*="product-her"]'))
-                .toContainText('OZON: товары, билеты, продукты ');
+                .toContainText('OZON: товары, отели, билеты');
         });
         test('AppGallery link', async ({ page, context }) => {
             await page.goto('https://www.ozon.ru/info/appspromo/');
@@ -100,7 +100,7 @@ test.describe('Top bar links', () => {
         await expect(mainContent).toContainText("Товары");
         await expect(mainContent).toContainText("Акции и бонусы");
         await expect(mainContent).toContainText("Безопасность");
-        await expect(mainContent).toContainText("Вопросы по билетам");
+        await expect(mainContent).toContainText("Отели и билеты");
     });
 
     test('Pick points', async ({ page }) => {
@@ -197,7 +197,7 @@ test.describe('Header', () => {
         await expect(page.locator('//span[contains(text(),"Моя коллекция")]')).toHaveCount(1);
     });
 });
-test.describe('Header links correct leads', () => {
+test.describe('Header links', () => {
     const checkPageLoad = async (p: Page, link: string, textToExpect: string) => {
         await Homepage.open(p);
         await Header.goToNavbarLink(p, link);

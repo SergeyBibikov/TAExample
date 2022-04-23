@@ -54,7 +54,7 @@ export class SearchResults {
     static getFoundItemDiv(page: Page, itemName: string){
         return page
             //.locator(this.FOUND_ITEMS_LIST)
-            .locator(`(//span[contains(text(),"${itemName}")])[1]`)
+            .locator(`(//span[contains(text(),"${itemName}")])[2]`)
             .locator('xpath=/ancestor::a/../..');
     }
 

@@ -18,21 +18,20 @@ test('Category select and delete', async ({ page }) => {
     await expect(catLoc).toContainText('Везде');
 });
 
-test('Search for Iphone 13', async ({ page }) => {
-    const filterCategories = ['Оперативная память', 'Линейка'];
-    const filterOptions = ['4-8 ГБ', 'Apple iPhone 13'];
+test('Search for Samsung Galaxy S20 FE', async ({ page }) => {
+    const filterCategories = ['Оперативная память', 'Модель'];
+    const filterOptions = ['4-8 ГБ', 'Samsung Galaxy S20 FE'];
 
     await Homepage.open(page);
-    await Header.searchProduct(page, 'iphone 13');
+    await Header.searchProduct(page, 'samsung galaxy s20');
     const foundItemsCount = await SearchResults.getFoundItemsCount(page);
-    assert.equal(foundItemsCount > 200, true, `Found items count = ${foundItemsCount}`);
+    assert.equal(foundItemsCount > 100, true, `Found items count = ${foundItemsCount}`);
     const category = await SearchResults.getDetectedCategory(page);
-    assert.strictEqual(category, "Смартфоны Apple");
+    assert.strictEqual(category, "Смартфоны");
     await SearchResults.addFilter(page, filterCategories[0], filterOptions[0]);
     await SearchResults.addFilter(page, filterCategories[1], filterOptions[1]);
     await page.waitForSelector('text=Очистить всё');
     await SearchResults.haveActiveFilters(page, [
-        'Бренды: Apple',
         `${filterCategories[0]}: ${filterOptions[0]}`,
         `${filterCategories[1]}: ${filterOptions[1]}`]);
 });
