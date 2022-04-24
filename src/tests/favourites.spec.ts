@@ -9,8 +9,8 @@ test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     await Homepage.open(page);
-    await Header.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.addItemToFavourites(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');
+    await Header.searchProduct(page, 'xiaomi mi 11');
+    await SearchResults.addItemToFavourites(page, 'Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
     await context.storageState({ path: Favourites.fileName });
 });
 
@@ -19,7 +19,7 @@ test('Add item to favourites', async ({ browser }) => {
     await Homepage.open(page);
     assert.equal((await Header.getFavouriteItemsCount(page)), 1);
     await Header.goToFavourites(page);
-    await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText('Смартфон Apple iPhone 13 128GB, темная ночь');
+    await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText('Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
 });
 
 test('Empty comparison', async ({ page }) => {
@@ -32,6 +32,13 @@ test('Favourite shops', async ({ page }) => {
     await Favourites.open(page);
     await page.locator('text=Избранные магазины').click();
     await expect(page.locator('div[data-widget="myGuest"]')).toContainText('Вы не авторизованы');
+});
+test('In stock radiobox', async ({ browser }) => {
+    const page = await Favourites.getPageWithContext(browser);
+    await Favourites.open(page);
+    await page.locator('//label[div[contains(.,"В наличии")]]').check();
+    await expect(page.locator('//button[span[contains(.,"В наличии")]]')).toHaveCount(1);
+    await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
 });
 test('My collection', async ({ page }) => {
     await Favourites.open(page);
