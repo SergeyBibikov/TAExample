@@ -40,6 +40,14 @@ test('In stock radiobox', async ({ browser }) => {
     await expect(page.locator('//button[span[contains(.,"В наличии")]]')).toHaveCount(1);
     await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
 });
+test('Not in stock radiobox', async ({ browser }) => {
+    const page = await Favourites.getPageWithContext(browser);
+    await Favourites.open(page);
+    await page.locator('//label[div[contains(.,"Не в наличии")]]').check();
+    await expect(page.locator('//button[span[contains(.,"Не в наличии")]]')).toHaveCount(1);
+    await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
+    await expect(page.locator('body')).toContainText('Ничего не нашлось');
+});
 test('My collection', async ({ page }) => {
     await Favourites.open(page);
     await page.locator('text=Моя коллекция').click();
