@@ -48,6 +48,16 @@ test('Not in stock radiobox', async ({ browser }) => {
     await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
     await expect(page.locator('body')).toContainText('Ничего не нашлось');
 });
+test('Clear filters', async ({ browser }) => {
+    const page = await Favourites.getPageWithContext(browser);
+    await Favourites.open(page);
+
+    await page.locator('//label[div[contains(.,"В наличии")]]').check();
+    await page.locator('//button[span[contains(.,"Очистить")]]').click();
+
+    await expect(page.locator('//button[span[contains(.,"Не в наличии")]]')).toHaveCount(0);
+    await expect(page.locator('//label[div[contains(.,"Неважно")]]')).toBeChecked();
+});
 test('My collection', async ({ page }) => {
     await Favourites.open(page);
     await page.locator('text=Моя коллекция').click();
