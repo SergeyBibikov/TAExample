@@ -63,3 +63,9 @@ test('My collection', async ({ page }) => {
     await page.locator('text=Моя коллекция').click();
     await expect(page.locator('section[data-widget="emptyState"]')).toContainText('Коллекция пуста');
 });
+test('Delete from favourites', async ({ browser }) => {
+    const page = await Favourites.getPageWithContext(browser);
+    await Favourites.open(page);
+    await page.click('(//div[@data-widget="searchResultsV2"]//button)[3]');
+    assert.equal((await Header.getFavouriteItemsCount(page)), 0);
+});
