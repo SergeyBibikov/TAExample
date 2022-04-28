@@ -13,7 +13,6 @@ test.beforeAll(async ({ browser }) => {
     await SearchResults.addItemToFavourites(page, 'Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
     await context.storageState({ path: Favourites.fileName });
 });
-
 test('Add item to favourites', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Homepage.open(page);
@@ -21,7 +20,6 @@ test('Add item to favourites', async ({ browser }) => {
     await Header.goToFavourites(page);
     await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText('Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
 });
-
 test('Empty comparison', async ({ page }) => {
     await Favourites.open(page);
     await page.locator('text=Сравнение товаров').click();
