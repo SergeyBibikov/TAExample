@@ -50,6 +50,17 @@ test('Add item to express cart', async ({ page }) => {
     await expect(addressPopup).toContainText("Уточнение адреса");
 });
 
+test('Add 10+ items', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await Homepage.open(page);
+    await Header.goToCart(page);
+    await Cart.closeB2BPopup(page);
+    await expect(page.locator('input[type="number"]')).toHaveCount(0);
+    await page.locator('input[role="combobox"] >> nth=1').click();
+    await page.locator('text=10+').click();
+    await expect(page.locator('input[type="number"]')).toHaveCount(1);
+});
+
 test('Unauthorized user. Proceed to checkout', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await Homepage.open(page);
