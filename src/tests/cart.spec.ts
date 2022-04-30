@@ -1,10 +1,17 @@
-import { expect, test } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
 import * as assert from 'assert';
 
 import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { Cart } from '../pageObjects/cart';
 import { SearchResults } from '../pageObjects/searchResults';
+
+
+const openCachedCart = async (page: Page) => {
+    await Homepage.open(page);
+    await Header.goToCart(page);
+    await Cart.closeB2BPopup(page);
+}
 
 test.beforeAll((async ({ browser }) => {
     const context = await browser.newContext();
@@ -49,15 +56,19 @@ test('Add item to express cart', async ({ page }) => {
     await expect(addressPopup).toHaveCount(1);
     await expect(addressPopup).toContainText("Уточнение адреса");
 });
-
-test('Add 10+ items', async ({ browser }) => {
+test('Cart total on quantity increase', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
-    await Homepage.open(page);
-    await Header.goToCart(page);
-    await Cart.closeB2BPopup(page);
+    await openCachedCart(page);
+    const initialTotal = Number(await Cart.getTotal(page));
+    await Cart.setQuantity(page, '2');
+    const newTotal = Number(await Cart.getTotal(page));
+    assert.equal(newTotal, initialTotal * 2);
+});
+test('10+ items select to input change', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await openCachedCart(page);
     await expect(page.locator('input[type="number"]')).toHaveCount(0);
-    await page.locator('input[role="combobox"] >> nth=1').click();
-    await page.locator('text=10+').click();
+    await Cart.setQuantity(page, '10+');
     await expect(page.locator('input[type="number"]')).toHaveCount(1);
 });
 
