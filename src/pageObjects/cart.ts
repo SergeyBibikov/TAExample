@@ -41,16 +41,16 @@ export class Cart {
         const c = await browser.newContext({ storageState: this.fileName });
         return await c.newPage()
     }
-    
+
     static async getTotal(page: Page): Promise<string> {
         // (//div[span[contains(., "Общая стоимость")]]//span)[2]
         let tc = await page.locator('(//div[span[contains(., "Общая стоимость")]]//span)[2]').textContent();
         tc = tc?.trim() || "";
         return tc
     }
-    
-    static async setQuantity(page: Page, quantity: string){
+
+    static async setQuantity(page: Page, quantity: string) {
         await page.locator('input[role="combobox"] >> nth=1').click();
-        await page.locator(`.vue-portal-target >> text=${quantity}`).click();
+        await page.locator(`.vue-portal-target >> text=${quantity}`).first().click();
     }
 }

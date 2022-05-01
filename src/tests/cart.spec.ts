@@ -56,13 +56,16 @@ test('Add item to express cart', async ({ page }) => {
     await expect(addressPopup).toHaveCount(1);
     await expect(addressPopup).toContainText("Уточнение адреса");
 });
-test('Cart total on quantity increase', async ({ browser }) => {
+test('Cart total on quantity change', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await openCachedCart(page);
     const initialTotal = Number(await Cart.getTotal(page));
     await Cart.setQuantity(page, '2');
-    const newTotal = Number(await Cart.getTotal(page));
-    assert.equal(newTotal, initialTotal * 2);
+    const totalAfterIncrease = Number(await Cart.getTotal(page));
+    assert.equal(totalAfterIncrease, initialTotal * 2);
+    await Cart.setQuantity(page, '1');
+    const totalAfterDecrease = Number(await Cart.getTotal(page));
+    assert.equal(totalAfterDecrease, initialTotal);
 });
 test('10+ items select to input change', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
