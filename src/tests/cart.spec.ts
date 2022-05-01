@@ -56,6 +56,7 @@ test('Add item to express cart', async ({ page }) => {
     await expect(addressPopup).toHaveCount(1);
     await expect(addressPopup).toContainText("Уточнение адреса");
 });
+
 test('Cart total on quantity change', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await openCachedCart(page);
@@ -67,6 +68,14 @@ test('Cart total on quantity change', async ({ browser }) => {
     const totalAfterDecrease = Number(await Cart.getTotal(page));
     assert.equal(totalAfterDecrease, initialTotal);
 });
+test('Bonus points info block', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await openCachedCart(page);
+    const bonusPointsBlock = page.locator('[data-widget="totalScoresWeb"]');
+    await expect(bonusPointsBlock).toHaveCount(1);
+    await expect(bonusPointsBlock).toContainText(/Получите до .* балл/);
+});
+
 test('10+ items select to input change', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await openCachedCart(page);
@@ -74,6 +83,8 @@ test('10+ items select to input change', async ({ browser }) => {
     await Cart.setQuantity(page, '10+');
     await expect(page.locator('input[type="number"]')).toHaveCount(1);
 });
+
+
 
 test('Unauthorized user. Proceed to checkout', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
