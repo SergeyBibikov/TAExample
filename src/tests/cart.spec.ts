@@ -68,6 +68,7 @@ test('Cart total on quantity change', async ({ browser }) => {
     const totalAfterDecrease = Number(await Cart.getTotal(page));
     assert.equal(totalAfterDecrease, initialTotal);
 });
+
 test('Bonus points info block', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await openCachedCart(page);
@@ -84,7 +85,13 @@ test('10+ items select to input change', async ({ browser }) => {
     await expect(page.locator('input[type="number"]')).toHaveCount(1);
 });
 
-
+test('Checkout button disabled with no items selected', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await openCachedCart(page);
+    await expect(page.locator(Cart.GO_TO_CHECKOUT)).not.toHaveAttribute('disabled', 'disabled');
+    await page.locator('//*[@data-widget="split"]//input[@type="checkbox"]/following-sibling::div').click();
+    await expect(page.locator(Cart.GO_TO_CHECKOUT)).toHaveAttribute('disabled', 'disabled');
+});
 
 test('Unauthorized user. Proceed to checkout', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);

@@ -3,6 +3,7 @@ import { Browser, Page } from '@playwright/test';
 export class Cart {
 
     static readonly B2B_POPUP = '//div[@data-widget="alertPopup"]';
+    static readonly GO_TO_CHECKOUT = '(//div[@text="Перейти к оформлению"])[1]//button';
     static readonly CONFIRM_DELETION_POPUP = 'div.vue-portal-target section';
     static readonly fileName = "cartState.json";
     static readonly productName = "xiaomi mi 11";
