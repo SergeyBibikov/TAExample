@@ -7,7 +7,7 @@ import { Cart } from '../pageObjects/cart';
 import { SearchResults } from '../pageObjects/searchResults';
 
 
-const openCachedCart = async (page: Page) => {
+const openCartFromHomepage = async (page: Page) => {
     await Homepage.open(page);
     await Header.goToCart(page);
     await Cart.closeB2BPopup(page);
@@ -59,7 +59,7 @@ test('Add item to express cart', async ({ page }) => {
 
 test('Cart total on quantity change', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
-    await openCachedCart(page);
+    await openCartFromHomepage(page);
     const initialTotal = Number(await Cart.getTotal(page));
     await Cart.setQuantity(page, '2');
     const totalAfterIncrease = Number(await Cart.getTotal(page));
@@ -71,7 +71,7 @@ test('Cart total on quantity change', async ({ browser }) => {
 
 test('Bonus points info block', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
-    await openCachedCart(page);
+    await openCartFromHomepage(page);
     const bonusPointsBlock = page.locator('[data-widget="totalScoresWeb"]');
     await expect(bonusPointsBlock).toHaveCount(1);
     await expect(bonusPointsBlock).toContainText(/Получите до .* балл/);
@@ -79,7 +79,7 @@ test('Bonus points info block', async ({ browser }) => {
 
 test('10+ items select to input change', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
-    await openCachedCart(page);
+    await openCartFromHomepage(page);
     await expect(page.locator('input[type="number"]')).toHaveCount(0);
     await Cart.setQuantity(page, '10+');
     await expect(page.locator('input[type="number"]')).toHaveCount(1);
@@ -87,10 +87,16 @@ test('10+ items select to input change', async ({ browser }) => {
 
 test('Checkout button disabled with no items selected', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
-    await openCachedCart(page);
+    await openCartFromHomepage(page);
     await expect(page.locator(Cart.GO_TO_CHECKOUT)).not.toHaveAttribute('disabled', 'disabled');
     await page.locator('//*[@data-widget="split"]//input[@type="checkbox"]/following-sibling::div').click();
     await expect(page.locator(Cart.GO_TO_CHECKOUT)).toHaveAttribute('disabled', 'disabled');
+});
+
+test('Protecting glass is recommended when a phone is in the cart', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await openCartFromHomepage(page);
+    await expect(page.locator(Cart.RECOMMEND_SECTION)).toContainText('стекло');
 });
 
 test('Unauthorized user. Proceed to checkout', async ({ browser }) => {
