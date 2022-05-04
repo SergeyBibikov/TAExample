@@ -69,6 +69,15 @@ test('Cart total on quantity change', async ({ browser }) => {
     assert.equal(totalAfterDecrease, initialTotal);
 });
 
+test('Add cart item to favourites', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await openCartFromHomepage(page);
+    await page.locator('//span[text()="B избранное"]').click();
+    await page.waitForResponse('https://www.ozon.ru/api/composer-api.bx/_action/favoriteBatchAddItems');
+    assert.equal(await Header.getFavouriteItemsCount(page), 1);
+    await expect(page.locator('//span[text()="B избранном"]')).toHaveCount(1);
+});
+
 test('Bonus points info block', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await openCartFromHomepage(page);

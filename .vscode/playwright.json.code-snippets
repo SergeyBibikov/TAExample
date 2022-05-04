@@ -15,22 +15,28 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"Add a new playwright test" : {
+	"Add a new playwright test": {
 		"prefix": "pt",
 		"body": [
 			"test('$1', async ({ page }) => {\n\t\n});",
 		]
 	},
-	"Add a static async method":{
+	"Add a static async method": {
 		"prefix": "sam",
 		"body": [
 			"\nstatic async $1(page: Page){\n\t\n}"
 		]
 	},
-	"Add an expect function":{
+	"Add an expect function": {
 		"prefix": "exp",
 		"body": [
 			"await expect(page.locator($1));"
 		]
-	}
+	},
+	"Add locator": {
+		"prefix": "loc",
+		"body": [
+			"page.locator('$1')"
+		]
+	},
 }
