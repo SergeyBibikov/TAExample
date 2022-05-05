@@ -19,8 +19,8 @@ test('Category select and delete', async ({ page }) => {
 });
 
 test('Search for Samsung Galaxy S20 FE', async ({ page }) => {
-    const filterCategories = ['Оперативная память', 'Модель'];
-    const filterOptions = ['4-8 ГБ', 'Samsung Galaxy S20 FE'];
+    const filterCategories = ['Оперативная память', 'Встроенная память'];
+    const filterOptions = ['4-8 ГБ', '64-128 ГБ'];
 
     await Homepage.open(page);
     await Header.searchProduct(page, 'samsung galaxy s20');
