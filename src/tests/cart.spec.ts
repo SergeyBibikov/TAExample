@@ -102,6 +102,14 @@ test('Checkout button disabled with no items selected', async ({ browser }) => {
     await expect(page.locator(Cart.GO_TO_CHECKOUT)).toHaveAttribute('disabled', 'disabled');
 });
 
+test('"Delete selected" button hides when no items are selected', async ({ browser }) => {
+    const page = await Cart.getPageWithContext(browser);
+    await openCartFromHomepage(page);
+    await expect(page.locator('text=Удалить выбранные')).toHaveCount(1);
+    await page.locator('//*[@data-widget="split"]//input[@type="checkbox"]/following-sibling::div').click();
+    await expect(page.locator('text=Удалить выбранные')).toHaveCount(0);
+});
+
 test('Protecting glass is recommended when a phone is in the cart', async ({ browser }) => {
     const page = await Cart.getPageWithContext(browser);
     await openCartFromHomepage(page);

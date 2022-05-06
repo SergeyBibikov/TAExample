@@ -32,6 +32,7 @@ test.describe('Top bar links', () => {
         await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
         await expect(page.locator('body')).toContainText('Для компаний любого масштаба');
     });
+
     test.describe('Mobile app', () => {
         test('Navigate from homepage', async ({ page }) => {
             await Homepage.open(page);
@@ -65,6 +66,7 @@ test.describe('Top bar links', () => {
                 .toContainText('OZON: товары, авиа');
         });
     })
+
     test('Sell on Ozon', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Продавайте на Ozon');
@@ -82,12 +84,14 @@ test.describe('Top bar links', () => {
         await Homepage.clickTopBarLink(page, 'Подарочные сертификаты');
         await expect(page.locator('//div[@data-widget="webProductHeading"]')).toContainText('Электронный подарочный сертификат');
     });
+
     test('Help on hover', async ({ page }) => {
         await Homepage.open(page);
         await page.hover('text=Помощь');
         const helpPopup = page.locator('//*[text()="Статус заказа"]/../..');
         await expect(helpPopup.locator('a')).toHaveCount(8);
     });
+
     test('Help link', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Помощь');
@@ -197,6 +201,7 @@ test.describe('Header', () => {
         await expect(page.locator('//span[contains(text(),"Моя коллекция")]')).toHaveCount(1);
     });
 });
+
 test.describe('Header links', () => {
     const checkPageLoad = async (p: Page, link: string, textToExpect: string) => {
         await Homepage.open(p);
@@ -302,6 +307,7 @@ test.describe('Header links', () => {
         );
     });
 })
+
 test('Catalogue. Filters change on hover', async ({ page }) => {
     await Homepage.open(page);
     await Header.openCatalogue(page);
@@ -310,6 +316,7 @@ test('Catalogue. Filters change on hover', async ({ page }) => {
     await page.hover(Header.CATALOGUE_CATEGORIES + '//a[span[text()="Электроника"]]');
     await expect(page.locator(Header.CATALOGUE_FILTERS)).toContainText('Моноблоки');
 });
+
 
 test.describe('Footer', () => {
     test('Accessibility version button', async ({ page }) => {
