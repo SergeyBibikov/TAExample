@@ -157,6 +157,7 @@ test('Sign in or register button', async ({ page }) => {
     await expect(ozonIdIframe.locator('body')).toContainText("Только для зарегистрированных пользователей");
 });
 
+//TODO: add test on 'personal room' click
 test.describe('Header', () => {
 
     test('Sign in on hover. Pop-up', async ({ page }) => {
@@ -169,20 +170,20 @@ test.describe('Header', () => {
         const ozonId = page.locator('[data-widget="ozonIdIframe"]');
         const ozonIdIframe = ozonId.frameLocator('iframe');
         const frameBody = ozonIdIframe.locator('body');
-        const getCodeButton = ozonIdIframe.locator('//button[contains(., "Получить код")]');
+        const signInButton = ozonIdIframe.locator('//button[contains(., "Войти")]');
         const phoneInput = ozonIdIframe.locator('input[name="phone"]');
 
 
         await Homepage.open(page);
         await page.locator(Header.SIGN_IN).click();
         await expect(ozonId).toHaveCount(1);
-        await expect(frameBody).toContainText('Войдите или зарегистрируйтесь, чтобы продолжить');
+        await expect(frameBody).toContainText('Введите свой номер телефона, чтобы войти');
         await expect(phoneInput).toHaveCount(1);
-        await expect(getCodeButton).toHaveCount(1);
+        await expect(signInButton).toHaveCount(1);
         await expect(ozonIdIframe.locator('//a[text()="Войти по почте"]')).toHaveCount(1);
         await expect(ozonIdIframe.locator('//a[span[contains(., "Вход с Apple")]]')).toHaveCount(1);
         await phoneInput.fill("33");
-        await getCodeButton.click();
+        await signInButton.click();
         await expect(frameBody).toContainText("Некорректный формат телефона");
     });
     test('Go to orders while not being signed in', async ({ page }) => {
