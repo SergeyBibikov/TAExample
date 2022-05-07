@@ -157,7 +157,6 @@ test('Sign in or register button', async ({ page }) => {
     await expect(ozonIdIframe.locator('body')).toContainText("Только для зарегистрированных пользователей");
 });
 
-//TODO: add test on 'personal room' click
 test.describe('Header', () => {
 
     test('Sign in on hover. Pop-up', async ({ page }) => {
@@ -185,6 +184,15 @@ test.describe('Header', () => {
         await phoneInput.fill("33");
         await signInButton.click();
         await expect(frameBody).toContainText("Некорректный формат телефона");
+    });
+    test('Successful transfer from signin popup to account page', async ({ page }) => {
+        const sideBar = page.locator('[data-widget="column"]').first();
+
+        await Homepage.open(page);
+        await page.locator(Header.SIGN_IN).hover();
+        await page.locator('//button[contains(. , "Личный кабинет")]').click();
+        await expect(sideBar).toContainText("Для меня");
+        await expect(sideBar).toContainText("Акции и подписки");
     });
     test('Go to orders while not being signed in', async ({ page }) => {
         await Homepage.open(page);
