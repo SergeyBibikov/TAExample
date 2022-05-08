@@ -70,7 +70,10 @@ test.describe('Top bar links', () => {
     test('Sell on Ozon', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Продавайте на Ozon');
-        await expect(page.locator('body')).toContainText('Любому бизнесу найдётся место на Ozon');
+
+        await expect(page.locator('body')).toContainText('Вход');
+        await expect(page.locator('body')).toContainText('Зарегистрироваться');
+        await expect(page.locator('body')).toContainText('Конфиденциальность');
     });
 
     test('Earn with Ozon', async ({ page }) => {
