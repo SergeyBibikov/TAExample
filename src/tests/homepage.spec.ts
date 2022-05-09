@@ -5,6 +5,7 @@ import * as compare from "../helpers/comparison";
 import { Header } from '../pageObjects/header';
 import { Footer } from '../pageObjects/footer';
 import { Homepage } from '../pageObjects/homepage';
+import { SignInCard } from '../pageObjects/signInCard';
 
 test.describe('Top bar links', () => {
 
@@ -160,33 +161,44 @@ test('Sign in or register button', async ({ page }) => {
     await expect(ozonIdIframe.locator('body')).toContainText("Только для зарегистрированных пользователей");
 });
 
-test.describe('Header', () => {
-
-    test('Sign in on hover. Pop-up', async ({ page }) => {
+test.describe('Sign in from header',() => {
+    test('Sign in button on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
         await page.hover(Header.SIGN_IN);
         await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
         await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
     });
-    test('Sign in on click. Ozonid card', async ({ page }) => {
-        const ozonId = page.locator('[data-widget="ozonIdIframe"]');
-        const ozonIdIframe = ozonId.frameLocator('iframe');
-        const frameBody = ozonIdIframe.locator('body');
-        const signInButton = ozonIdIframe.locator('//button[contains(., "Войти")]');
-        const phoneInput = ozonIdIframe.locator('input[name="phone"]');
-
+    test('Check ozon card content', async ({ page }) => {
+        const signInCard = new SignInCard(page);
 
         await Homepage.open(page);
         await page.locator(Header.SIGN_IN).click();
-        await expect(ozonId).toHaveCount(1);
-        await expect(frameBody).toContainText('Введите свой номер телефона, чтобы войти');
-        await expect(phoneInput).toHaveCount(1);
-        await expect(signInButton).toHaveCount(1);
-        await expect(ozonIdIframe.locator('//a[text()="Войти по почте"]')).toHaveCount(1);
-        await expect(ozonIdIframe.locator('//a[span[contains(., "Вход с Apple")]]')).toHaveCount(1);
-        await phoneInput.fill("33");
-        await signInButton.click();
-        await expect(frameBody).toContainText("Некорректный формат телефона");
+        await expect(signInCard.root).toHaveCount(1);
+        await expect(signInCard.cardBody).toContainText('Введите свой номер телефона, чтобы войти');
+        await expect(signInCard.phoneInput).toHaveCount(1);
+        await expect(signInCard.signInButton).toHaveCount(1);
+        await expect(signInCard.signInWithEmail).toHaveCount(1);
+        await expect(signInCard.signInWithApple).toHaveCount(1);
+        
+    });
+
+    test('Validation on incorrect phone', async ({ page }) => {
+        await Homepage.open(page);
+        await page.locator(Header.SIGN_IN).click();
+        const signInCard = new SignInCard(page);
+
+        await signInCard.phoneInput.fill("33");
+        await signInCard.signInButton.click();
+        await expect(signInCard.cardBody).toContainText("Некорректный формат телефона");
+    });
+
+    test('Validation on missing phone', async ({ page }) => {
+        await Homepage.open(page);
+        await page.locator(Header.SIGN_IN).click();
+        const signInCard = new SignInCard(page);
+
+        await signInCard.signInButton.click();
+        await expect(signInCard.cardBody).toContainText("Заполните телефон");
     });
     test('Successful transfer from signin popup to account page', async ({ page }) => {
         const sideBar = page.locator('[data-widget="column"]').first();
@@ -197,6 +209,10 @@ test.describe('Header', () => {
         await expect(sideBar).toContainText("Для меня");
         await expect(sideBar).toContainText("Акции и подписки");
     });
+});
+
+test.describe('Header', () => {
+
     test('Go to orders while not being signed in', async ({ page }) => {
         await Homepage.open(page);
         await Header.goToOrders(page);
