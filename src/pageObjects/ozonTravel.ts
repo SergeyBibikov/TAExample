@@ -25,7 +25,7 @@ async function fillPlaceField(page: Page, placeType: Place, placeName: string) {
             await page.locator('//div[text()="Отель"]/../following-sibling::div[1]').click();
             break;
         case 'airport':
-            await page.locator('//div[text()="Аэропорт"]/../following-sibling::div[1]').click();
+            await page.locator('//div[text()="Аэропорт"]/../following-sibling::div').click();
             break;
     }
 }

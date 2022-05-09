@@ -92,10 +92,12 @@ test.describe('Hotels', () => {
         await OzonTravel.findHotel(page, 'hotel', "SK ROYAL Москва 4", todayPlusAsStr(10), todayPlusAsStr(16));
         await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
     });
+    //FIXME: stabilize
     test('Find by airport', async ({ page }) => {
-        
         await OzonTravel.selectHotelTab(page);
-        await OzonTravel.findHotel(page, 'airport', "Аэропорт Москвы Домодедово", todayPlusAsStr(3), todayPlusAsStr(10));
+        await OzonTravel.findHotel(page, 'airport', "Аэропорт Москвы Домодедово", 
+            todayPlusAsStr(3),
+            todayPlusAsStr(10));
         await expect(page.locator('body')).toContainText('Опрашиваем подходящие отели');
     });
 }

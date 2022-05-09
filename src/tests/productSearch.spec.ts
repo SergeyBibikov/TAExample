@@ -66,36 +66,42 @@ test('Pagination', async ({ page }) => {
     assert.notDeepEqual(currentTopResult, initialTopResult);
 });
 test('Toggle item comparison', async ({ page }) => {
-    const model = 'Смартфон Apple iPhone 13 128GB, синий'
+    const modelFull = 'Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный';
+    const modelShort = 'xiaomi mi 11';
+
     await Homepage.open(page);
-    await Header.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.clickMoreOnItemCard(page, model);
+    await Header.searchProduct(page, modelShort);
+    await SearchResults.clickMoreOnItemCard(page, modelFull);
     const similarProducts = page.locator('//div[contains(text(),"Похожие товары")]');
     await expect(similarProducts).toHaveCount(1);
     const addToComparison = page.locator('//div[contains(text(),"Добавить в сравнение")]');
     await expect(addToComparison).toHaveCount(1);
     await addToComparison.click();
     await expect(page.locator('//div[contains(text(), "Товар добавлен")]')).toHaveCount(1);
-    await SearchResults.clickMoreOnItemCard(page, model);
+    await SearchResults.clickMoreOnItemCard(page, modelFull);
     const deleteFromComparison = page.locator('//div[contains(text(),"Удалить из сравнения")]');
     await expect(deleteFromComparison).toHaveCount(1);
     await deleteFromComparison.click();
     await expect(page.locator('//div[contains(text(), "Товар удален")]')).toHaveCount(1);
 });
 test('Add two items to comparison and go to compare page', async ({ page }) => {
-    const firstItem = 'Смартфон Apple iPhone 13 128GB, темная ночь';
-    const secondItem = 'Смартфон Apple iPhone 11 128GB, черный';
+    const firstItem = 'Iphone 13 128GB';
+    const firstItemFull = 'Смартфон Apple iPhone 13 128GB, темная ночь';
+
+    const secondItem = 'xiaomi mi 11';
+    const secondItemFull = 'Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный';
+
     const comparisonContainer = page.locator('[data-widget="webCompare"]');
 
     await Homepage.open(page);
-    await Header.searchProduct(page, 'Iphone 13 128GB');
-    await SearchResults.addItemToComparison(page, firstItem);
-    await Header.searchProduct(page, 'iphone 11');
-    await SearchResults.addItemToComparison(page, secondItem);
+    await Header.searchProduct(page, firstItem);
+    await SearchResults.addItemToComparison(page, firstItemFull);
+    await Header.searchProduct(page, secondItem);
+    await SearchResults.addItemToComparison(page, secondItemFull);
     await Header.goToFavourites(page);
     await page.locator('text=Сравнение товаров').click();
-    await expect(comparisonContainer).toContainText(firstItem);
-    await expect(comparisonContainer).toContainText(secondItem);
+    await expect(comparisonContainer).toContainText(firstItemFull);
+    await expect(comparisonContainer).toContainText(secondItemFull);
     const categoryTabs = page.locator('//div[@data-widget="webCompare"]/div[2]');
     await expect(categoryTabs).toContainText('Смартфоны');
     await expect(categoryTabs).toContainText('Все товары');
