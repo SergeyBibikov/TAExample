@@ -4,4 +4,3 @@ TODO: centralize product configuration
 
 Failing tests:
 Earn with Ozon (403)
-Find by airport

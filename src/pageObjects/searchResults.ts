@@ -135,6 +135,11 @@ export class SearchResults {
             .locator('xpath=/following-sibling::div[2]/div[2]')
             .click();
     }
+
+    
+    static async openFirstFoundItem(page: Page){
+        await page.locator(this.FOUND_ITEMS_LIST).locator('div').first().locator('a >> nth=1').click();
+    }
     static async showSimilarProducts(page: Page, itemName: string){
         await this.clickMoreOnItemCard(page, itemName);
     }
