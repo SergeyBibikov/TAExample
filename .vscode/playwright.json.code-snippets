@@ -39,4 +39,10 @@
 			"page.locator('$1')"
 		]
 	},
+	"Click element": {
+		"prefix": "click",
+		"body": [
+			"await page.locator('$1').click();"
+		]
+	},
 }

@@ -13,8 +13,8 @@ export class Header {
     static FAVOURITES = this.ROOT + '//a[@data-widget="favoriteCounter"]';
     static horizontalMenu = this.ROOT + '//ul[@data-widget="horizontalMenu"]';
     static CATALOGUE_ROOT = '//div[@data-widget="catalogMenu"]';
-    static CATALOGUE_CATEGORIES = this.CATALOGUE_ROOT +'/div[2]/div/div[1]';
-    static CATALOGUE_FILTERS = this.CATALOGUE_ROOT +'/div[2]/div/div[2]';
+    static CATALOGUE_CATEGORIES = this.CATALOGUE_ROOT + '/div[2]/div/div[1]';
+    static CATALOGUE_FILTERS = this.CATALOGUE_ROOT + '/div[2]/div/div[2]';
 
     static async getCartItemsCount(page: Page): Promise<number> {
         const counter = page
@@ -37,7 +37,7 @@ export class Header {
     }
 
     static async getNavBarLinks(page: Page): Promise<string[]> {
-        const links = page.locator(this.horizontalMenu+'/li');
+        const links = page.locator(this.horizontalMenu + '/li');
         await links.first().waitFor({ state: "visible" });
         return (await links.allTextContents()).map(x => x.trim());
     }
@@ -48,29 +48,31 @@ export class Header {
     static async goToOrders(page: Page) {
         await page.locator(this.ORDERS).click();
     }
-    
-    static async goToNavbarLink(page: Page, link: string){
+
+    static async goToNavbarLink(page: Page, link: string) {
         await page.locator(this.horizontalMenu + `//li[contains(., "${link}")]`).click();
     }
     static async goToFavourites(page: Page) {
         await page.locator(this.FAVOURITES).click();
     }
 
-    static async openCatalogue(page: Page){
+    static async openCatalogue(page: Page) {
         await page.locator('//button//span[text()="Каталог"]').click();
     }
 
     static async searchProduct(page: Page, searchItem: string) {
         await page.locator(this.SEARCH_INPUT).fill(searchItem);
         await page.locator(this.SEARCH_BUTTON).click();
-        await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');   
+        await page.waitForLoadState();
+        //TODO: delete if tests pass
+        // await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');   
     }
-    
-    static async clearSearch(page: Page){
+
+    static async clearSearch(page: Page) {
         await page.locator(this.SEARCH_INPUT + '/following-sibling::div').click();
     }
-    
-    static async clearHistory(page: Page){
+
+    static async clearHistory(page: Page) {
         await page.locator(this.SEARCH_HISTORY)
             .locator('text=Очистить').click();
     }
