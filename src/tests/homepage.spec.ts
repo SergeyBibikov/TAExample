@@ -119,6 +119,7 @@ test.describe('Top bar links', () => {
 
 });
 
+//TODO: use function getElementColor
 test('Promo code', async ({ page }) => {
     const expectedColor = 'rgb(249, 17, 85)';
     const getBorderColor = async () => {
@@ -161,7 +162,7 @@ test('Sign in or register button', async ({ page }) => {
     await expect(ozonIdIframe.locator('body')).toContainText("Только для зарегистрированных пользователей");
 });
 
-test.describe('Sign in from header',() => {
+test.describe('Sign in from header', () => {
     test('Sign in button on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
         await page.hover(Header.SIGN_IN);
@@ -179,7 +180,7 @@ test.describe('Sign in from header',() => {
         await expect(signInCard.signInButton).toHaveCount(1);
         await expect(signInCard.signInWithEmail).toHaveCount(1);
         await expect(signInCard.signInWithApple).toHaveCount(1);
-        
+
     });
 
     test('Validation on incorrect phone', async ({ page }) => {

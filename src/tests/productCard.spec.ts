@@ -3,6 +3,7 @@ import { Header } from '../pageObjects/header';
 import { Homepage } from '../pageObjects/homepage';
 import { ProductCard } from '../pageObjects/productCard';
 import { SearchResults } from '../pageObjects/searchResults';
+import { getElementColor } from "../helpers/dom";
 
 const openCardPage = async (page: Page) => {
     const searchItem = 'чехол iphone se 2020';
@@ -58,4 +59,16 @@ test('Add to comparison', async ({ page }) => {
     await productHeaderSection.locator('text=Добавить к сравнению').click();
     await expect(productHeaderSection).not.toContainText('Добавить к сравнению');
     await expect(productHeaderSection).toContainText('Перейти в сравнение');
+});
+
+test('Add to favourites', async ({ page }) => {
+    const expectedFavIconColor = 'rgb(249, 17, 85)'
+
+    await openCardPage(page);
+    await page.locator('text=В избранное').click();
+    const count = await Header.getFavouriteItemsCount(page);
+    expect(count).toEqual(1);
+    await expect(page.locator(ProductCard.nameSection)).toContainText('В избранном');
+    const color = await page.evaluate(getElementColor, 'button[aria-label="Убрать из избранного"] > span > svg')
+    expect(color).toEqual(expectedFavIconColor);
 });
