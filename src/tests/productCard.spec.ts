@@ -89,3 +89,17 @@ test('Sticky header with add to cart button on scroll', async ({ page }) => {
     expect(bb).not.toBeNull();
 
 });
+
+test('Add to cart button should change text on product addition/deletion', async ({ page }) => {
+    const checkOutSection = page.locator(ProductCard.checkoutSection);
+
+    await ProductCard.addToCart(page);
+
+    const count = await Header.getCartItemsCount(page);
+    expect(count).toEqual(1);
+    await expect(checkOutSection).not.toContainText('Добавить в корзину');
+    await expect(checkOutSection).toContainText('В корзине');
+
+    await ProductCard.decreaseQty(page);
+    await expect(checkOutSection).toContainText('Добавить в корзину');
+});
