@@ -7,6 +7,7 @@ import { getElementColor } from "../helpers/dom";
 test.beforeEach(async ({ page }) => {
     const productLink = 'https://www.ozon.ru/product/chehol-nakladka-gurdini-ultra-twin-0-3-mm-silikon-dlya-apple-iphone-se-2020-7-8-4-7-162212667'
     await page.goto(productLink);
+    await page.waitForSelector('text=Рекомендуем также');
 });
 
 test('All main sections must be displayed', async ({ page }) => {
@@ -27,7 +28,6 @@ test('Scroll to description', async ({ page }) => {
         });
     }
 
-    await page.waitForLoadState();
     await page.locator('text=Перейти к описанию').click();
 
     let offsetAfterScroll = await getOffset();
@@ -77,12 +77,6 @@ test('Share options should show on hover', async ({ page }) => {
 });
 
 test('Sticky header with add to cart button on scroll', async ({ page }) => {
-
-    await page.evaluate(() => {
-        window.scroll(0, 1000);
-    });
-
-    await page.waitForSelector('text=Рекомендуем также');
 
     await page.evaluate(() => {
         window.scroll(0, 2000);
