@@ -103,3 +103,12 @@ test('Add to cart button should change text on product addition/deletion', async
     await ProductCard.decreaseQty(page);
     await expect(checkOutSection).toContainText('Добавить в корзину');
 });
+
+test('Popup on notification link', async ({ page }) => {
+    const notifForm = page.locator('//h1[contains(., "Узнайте о снижении цены")]/..');
+
+    await page.locator('text=Узнать о снижении цены').click();
+
+    await expect(notifForm.locator('//p[text()="Ваш e-mail"]/preceding-sibling::input')).toHaveCount(1);
+    await expect(notifForm.locator('//span[text()="Готово"]/ancestor::button')).toHaveCount(1);
+});
