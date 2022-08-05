@@ -166,8 +166,8 @@ test.describe('Sign in from header', () => {
     test('Sign in button on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
         await page.hover(Header.SIGN_IN);
-        await expect(page.locator('//button[contains(. , "Войти или зарегистрироваться")]')).toHaveCount(1);
-        await expect(page.locator('//button[contains(. , "Личный кабинет")]')).toHaveCount(1);
+        await page.waitForSelector('//button[contains(. , "Войти или зарегистрироваться")]');
+        await page.waitForSelector('//button[contains(. , "Личный кабинет")]');
     });
     test('Check ozon card content', async ({ page }) => {
         const signInCard = new SignInCard(page);
