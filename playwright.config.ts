@@ -1,10 +1,10 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-    retries: 1,
+    retries: 0,
     workers: 2,
     testDir: './src/tests',
-    timeout: 60 * 1000,
+    timeout: 5 * 1000,
     use: {
         screenshot: 'only-on-failure'
     },
