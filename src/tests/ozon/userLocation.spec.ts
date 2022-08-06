@@ -7,12 +7,3 @@ test('Auto detected user location', async ({ page }) => {
     const currentLocation = await Homepage.getCurrentUserLocation(page);
     assert.equal(currentLocation, 'Москва');
 });
-
-test('Change user location', async ({ page }) => {
-    const newLocation = 'Санкт-Петербург';
-
-    await Homepage.open(page);
-    await Homepage.setUserLocation(page, newLocation);
-    const currentLocation = await Homepage.getCurrentUserLocation(page);
-    assert.equal(currentLocation, newLocation);
-});
