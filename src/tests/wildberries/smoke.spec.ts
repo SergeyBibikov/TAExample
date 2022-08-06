@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
 import Urls from "../../urls";
 
-const SELL_ON_WB = '[data-wba-header-name="Seller"]';
+const APP_STORE_BUTTON = 'a[href*="https://apps.apple.com/ru/app/wb"]'
 const PHONE_SIGN_IN_CARD = '[data-component="LoginByPhoneView"]'
 const COUNTRY_SELECT = PHONE_SIGN_IN_CARD + ' [class*="--select-locale"]'
+const PHONE_CODES_DROPDOWN = PHONE_SIGN_IN_CARD + ' ul'
 const PHONE_INPUT = PHONE_SIGN_IN_CARD + ' [data-find="phone-input"]'
 const GET_SMS_BUTTON = PHONE_SIGN_IN_CARD + '>> button:has-text("To get SMS code")'
-const APP_STORE_BUTTON = 'a[href*="https://apps.apple.com/ru/app/wb"]'
 const GOOGLE_PLAY_BUTTON = 'a[href*="https://play.google.com/store/apps/details?id=com.wildberries.portal"]'
+const SELL_ON_WB = '[data-wba-header-name="Seller"]';
 
 test.afterEach(async ({ page }) => {
     await page.waitForTimeout(1000);
@@ -49,5 +50,14 @@ test.describe('Seller page', () => {
         await page.locator(PHONE_INPUT).fill("1");
         await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveAttribute('disabled', '');
         await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('The field is filled incorrectly');
+    });
+
+    test('Country phone codes dropdown', async ({ page }) => {
+        await page.waitForSelector(PHONE_SIGN_IN_CARD);
+        await page.locator(COUNTRY_SELECT).click();
+        await expect.soft(page.locator(PHONE_CODES_DROPDOWN)).toContainText('+375');
+        await expect.soft(page.locator(PHONE_CODES_DROPDOWN)).toContainText('+7');
+        await expect.soft(page.locator(PHONE_CODES_DROPDOWN)).toContainText('+996');
+        await expect.soft(page.locator(PHONE_CODES_DROPDOWN)).toContainText('+374');
     });
 })
