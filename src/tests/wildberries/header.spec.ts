@@ -4,7 +4,7 @@ import Urls from "../../urls";
 const SELL_ON_WB = '[data-wba-header-name="Seller"]';
 const PHONE_SIGN_IN_CARD = '[data-component="LoginByPhoneView"]'
 const COUNTRY_SELECT = PHONE_SIGN_IN_CARD + ' [class*="--select-locale"]'
-const PHONE_INPUT = PHONE_SIGN_IN_CARD + ' [class*="input--phone"]'
+const PHONE_INPUT = PHONE_SIGN_IN_CARD + ' [data-find="phone-input"]'
 const GET_SMS_BUTTON = PHONE_SIGN_IN_CARD + '>> button:has-text("To get SMS code")'
 const APP_STORE_BUTTON = 'a[href*="https://apps.apple.com/ru/app/wb"]'
 const GOOGLE_PLAY_BUTTON = 'a[href*="https://play.google.com/store/apps/details?id=com.wildberries.portal"]'
@@ -28,13 +28,21 @@ test.describe('Seller page', () => {
 
     test('Phone sign in component elements', async ({ page }) => {
         await page.waitForSelector(PHONE_SIGN_IN_CARD);
+        await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('Country');
+        await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('Contact number');
         await expect.soft(page.locator(COUNTRY_SELECT)).toHaveCount(1);
         await expect.soft(page.locator(PHONE_INPUT)).toHaveCount(1);
         await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveCount(1);
     });
-    
+
     test('App Store and Google Play buttons visibility', async ({ page }) => {
         await expect.soft(page.locator(APP_STORE_BUTTON)).toHaveCount(1);
         await expect.soft(page.locator(GOOGLE_PLAY_BUTTON)).toHaveCount(1);
+    });
+
+    test('Send sms btn is blocked when phone is invalid', async ({ page }) => {
+        await page.locator(PHONE_INPUT).fill("1");
+        await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveAttribute('disabled', '');
+        await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('The field is filled incorrectly');
     });
 })
