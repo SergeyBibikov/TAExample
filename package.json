@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test": "npx playwright test --reporter=html",
     "test_ozon": "npx playwright test ozon --reporter=html",
     "test_wb": "npx playwright test wildberries --reporter=html",
     "debug": "npx playwright test -g \"@debug\" --reporter=html",

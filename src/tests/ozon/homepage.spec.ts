@@ -39,20 +39,7 @@ test.describe('Top bar links', () => {
             await Homepage.clickTopBarLink(page, 'Мобильное приложение');
             await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
         });
-        //REPLACE
-        test('App store link', async ({ page, context }) => {
-            await page.goto('https://www.ozon.ru/info/appspromo/');
-            const [newPage] = await Promise.all([
-                context.waitForEvent('page'),
-                page.locator('//a[contains(@href, "itunes")]')
-                    .first()
-                    .click()
-            ])
-            await newPage.waitForLoadState();
-            await expect(newPage.locator('nav#localnav')).toContainText('App Store');
-            await expect(newPage.locator('section[class*="product-her"]'))
-                .toContainText('OZON: товары, отели, билеты');
-        });
+        
         //REPLACE
         test('AppGallery link', async ({ page, context }) => {
             await page.goto('https://www.ozon.ru/info/appspromo/');
