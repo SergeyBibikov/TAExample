@@ -9,6 +9,10 @@ const GET_SMS_BUTTON = PHONE_SIGN_IN_CARD + '>> button:has-text("To get SMS code
 const APP_STORE_BUTTON = 'a[href*="https://apps.apple.com/ru/app/wb"]'
 const GOOGLE_PLAY_BUTTON = 'a[href*="https://play.google.com/store/apps/details?id=com.wildberries.portal"]'
 
+test.afterEach(async ({ page }) => {
+    await page.waitForTimeout(1000);
+})
+
 test('Sell on Wildberries button click leads to sellers page', async ({ page, context }) => {
     await page.goto(Urls.WB_MAIN_PAGE);
     await page.locator(SELL_ON_WB).click();
@@ -29,7 +33,7 @@ test.describe('Seller page', () => {
     test('Phone sign in component elements', async ({ page }) => {
         await page.waitForSelector(PHONE_SIGN_IN_CARD);
         await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('Country');
-        await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('Contact number');
+        await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('Сontact number');
         await expect.soft(page.locator(COUNTRY_SELECT)).toHaveCount(1);
         await expect.soft(page.locator(PHONE_INPUT)).toHaveCount(1);
         await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveCount(1);
@@ -41,6 +45,7 @@ test.describe('Seller page', () => {
     });
 
     test('Send sms btn is blocked when phone is invalid', async ({ page }) => {
+        await page.waitForSelector(PHONE_SIGN_IN_CARD);
         await page.locator(PHONE_INPUT).fill("1");
         await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveAttribute('disabled', '');
         await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('The field is filled incorrectly');
