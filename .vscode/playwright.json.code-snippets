@@ -45,4 +45,10 @@
 			"await page.locator('$1').click();"
 		]
 	},
+	"pause": {
+		"prefix": "pause",
+		"body": [
+			"await page.pause();"
+		]
+	},
 }
