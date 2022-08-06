@@ -6,6 +6,8 @@ const PHONE_SIGN_IN_CARD = '[data-component="LoginByPhoneView"]'
 const COUNTRY_SELECT = PHONE_SIGN_IN_CARD + ' [class*="--select-locale"]'
 const PHONE_INPUT = PHONE_SIGN_IN_CARD + ' [class*="input--phone"]'
 const GET_SMS_BUTTON = PHONE_SIGN_IN_CARD + '>> button:has-text("To get SMS code")'
+const APP_STORE_BUTTON = 'a[href*="https://apps.apple.com/ru/app/wb"]'
+const GOOGLE_PLAY_BUTTON = 'a[href*="https://play.google.com/store/apps/details?id=com.wildberries.portal"]'
 
 test('Sell on Wildberries button click leads to sellers page', async ({ page, context }) => {
     await page.goto(Urls.WB_MAIN_PAGE);
@@ -30,5 +32,9 @@ test.describe('Seller page', () => {
         await expect.soft(page.locator(PHONE_INPUT)).toHaveCount(1);
         await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveCount(1);
     });
-
+    
+    test('App Store and Google Play buttons visibility', async ({ page }) => {
+        await expect.soft(page.locator(APP_STORE_BUTTON)).toHaveCount(1);
+        await expect.soft(page.locator(GOOGLE_PLAY_BUTTON)).toHaveCount(1);
+    });
 })
