@@ -1,6 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { Header } from "../../pageObjects/header";
-import { Homepage } from "../../pageObjects/homepage";
 import { Bank } from "../../pageObjects/ozonBank";
 import Urls from "../../urls";
 
@@ -56,7 +54,7 @@ test.describe('For clients tab', () => {
         await page.locator(FOR_CLIENTS).click();
     });
     test('Main info', async ({ page }) => {
-        
+
         await expect(page.locator('body')).toContainText('Встречайте банк от группы Ozon');
         await expect(page.locator('body')).toContainText('Информация для клиентов');
     });
@@ -99,29 +97,45 @@ test.describe('For clients tab', () => {
     });
 })
 
-test.describe('Help section', () => {
-    test('Smoke', async ({ page }) => {
+test.describe('Q&A answers', () => {
+    test('All four topics should be present', async ({ page }) => {
         const helpSection = page.locator(Bank.selectors.helpSection);
-        await expect(helpSection).toContainText('Как открыть Ozon Счёт?');
-        await expect(helpSection).toContainText('Пополнить Ozon Счёт');
+        await expect(helpSection).toContainText('Как открыть Ozon Карту?');
+        await expect(helpSection).toContainText('Пополнить Ozon Карту');
         await expect(helpSection).toContainText('Вывести деньги');
         await expect(helpSection).toContainText('Повысить лимиты');
     });
-    test('How to open account?', async ({ page }) => {
-        const text = 'Заполните недостающие данные на анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
-        await Bank.checkHelpCardContent(page, "Как открыть", text);
+    test('How to open card?', async ({ page }) => {
+        const text = 'Заполните недостающие данные в анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
+
+        const answer = await Bank.getAnswerCardContent(page, 'Как открыть')
+
+        await expect.soft(answer).toContainText(text);
+        await expect.soft(answer).toContainText('4 цифр.');
     });
-    test('Account refill', async ({ page }) => {
-        const text = 'Пополнить Ozon Счёт можно с карты и по номеру телефона через Систему быстрых платежей.';
-        await Bank.checkHelpCardContent(page, "Пополнить ", text);
+    test('Card refill', async ({ page }) => {
+        const answer = await Bank.getAnswerCardContent(page, 'Пополнить')
+
+        await expect.soft(answer).toContainText('можно по номеру телефона через Систему быстрых платежей');
+        await expect.soft(answer).toContainText('или с карты другого банка');
+        await expect.soft(answer).toContainText('Мы не берем комиссию за пополнение независимо от суммы');
     });
     test('Transfer money from account', async ({ page }) => {
-        const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас Базовый Счёт';
-        await Bank.checkHelpCardContent(page, "Вывести деньги", text);
+        const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас Базовый';
+
+        const answer = await Bank.getAnswerCardContent(page, 'Вывести деньги')
+
+        await expect.soft(answer).toContainText(text);
+        await expect.soft(answer).toContainText('С Анонимного ');
+        await expect.soft(answer).toContainText(' вы сможете потратить деньги только на покупки в ');
+        await expect.soft(answer).toContainText('Ozon');
     });
     test('Increase limits', async ({ page }) => {
-        const text = `Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки, \
-    нажмите Лимиты в личном кабинете Счёта и заполните небольшую анкету.`;
-        await Bank.checkHelpCardContent(page, "Повысить лимиты", text);
+        const answer = await Bank.getAnswerCardContent(page, 'Повысить лимиты')
+
+        await expect.soft(answer).toContainText('После регистрации у вас будет Анонимный ');
+        await expect.soft(answer).toContainText(', который имеет ограничения:');
+        await expect.soft(answer).toContainText('Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки,');
+        await expect.soft(answer).toContainText('нажмите Лимиты в личном кабинете');
     });
 });

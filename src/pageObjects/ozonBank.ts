@@ -1,8 +1,8 @@
-import { Page, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class Bank {
     static selectors = {
-        helpSection: '//h2[text()="Помощь"]/..',
+        helpSection: '//h2[text()="Вопросы и ответы"]/..',
         about: 'div[class^="header"] >> text=О банке',
     }
 
@@ -12,28 +12,9 @@ export class Bank {
     static getHelpSectionCardLocator(sectionName: string): string {
         return this.selectors.helpSection + `//span[contains(., "${sectionName}")]/ancestor::div[contains(@class, "sliding-box")]`;
     }
-    static async checkHelpCardContent(page: Page, card: string, expectedText: string) {
-        const cardLocator = page.locator(this.getHelpSectionCardLocator(card));
-
-        const tryToCheck = async () => {
-            await cardLocator.locator('div span', { hasText: card }).click();
-            await expect(cardLocator.locator('div.content')).toContainText(expectedText);
-
-        };
-        const waitAndStopLoading = async (time: number) => {
-            await page.waitForTimeout(time);
-            await page.evaluate(() => { window.stop() });
-        }
-        try {
-            await tryToCheck();
-        } catch (_) {
-            await waitAndStopLoading(1000);
-            try {
-                await tryToCheck();
-            } catch (_) {
-                await waitAndStopLoading(5000);
-                await tryToCheck();
-            }
-        }
+    static async getAnswerCardContent(page: Page, card: string): Promise<Locator> {
+        const question = page.locator(this.getHelpSectionCardLocator(card));
+        await question.click();
+        return question.locator('div.content');
     }
 }
