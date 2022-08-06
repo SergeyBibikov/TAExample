@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 
 export class Homepage {
     private static homepage = 'https://www.ozon.ru/';
-    private static userLocationButton = '(//div[@role="navigation"]//button/span/span)[1]';
+    private static userLocationButton = '(//div[@role="navigation"]//button/span/span)[2]';
     private static locationModal = '//h2[contains(text(), "Выберите город")]/parent::div';
 
     static topBar = '//div[@data-widget="topBar"]';
