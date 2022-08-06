@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import * as assert from 'assert';
 
-import { Homepage } from '../pageObjects/homepage';
-import { SearchResults } from '../pageObjects/searchResults';
-import { Header } from '../pageObjects/header';
+import { Homepage } from '../../pageObjects/homepage';
+import { SearchResults } from '../../pageObjects/searchResults';
+import { Header } from '../../pageObjects/header';
 
 test('Category select and delete', async ({ page }) => {
     await Homepage.open(page);

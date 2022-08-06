@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { Header } from '../pageObjects/header';
-import { Homepage } from '../pageObjects/homepage';
+import { Header } from '../../pageObjects/header';
+import { Homepage } from '../../pageObjects/homepage';
 
 test('Smoke', async ({ page }) => {
     await Homepage.open(page);

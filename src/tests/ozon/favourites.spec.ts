@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
-import { Favourites } from '../pageObjects/favourites';
-import { Header } from '../pageObjects/header';
-import { Homepage } from '../pageObjects/homepage';
-import { SearchResults } from '../pageObjects/searchResults';
+import { Favourites } from '../../pageObjects/favourites';
+import { Header } from '../../pageObjects/header';
+import { Homepage } from '../../pageObjects/homepage';
+import { SearchResults } from '../../pageObjects/searchResults';
 import * as assert from 'assert';
 
 test.beforeAll(async ({ browser }) => {

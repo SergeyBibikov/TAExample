@@ -1,11 +1,11 @@
 import { expect, Page, test } from '@playwright/test';
 import * as assert from 'assert';
 
-import * as compare from "../helpers/comparison";
-import { Header } from '../pageObjects/header';
-import { Footer } from '../pageObjects/footer';
-import { Homepage } from '../pageObjects/homepage';
-import { SignInCard } from '../pageObjects/signInCard';
+import * as compare from "../../helpers/comparison";
+import { Header } from '../../pageObjects/header';
+import { Footer } from '../../pageObjects/footer';
+import { Homepage } from '../../pageObjects/homepage';
+import { SignInCard } from '../../pageObjects/signInCard';
 
 test.describe('Top bar links', () => {
 
@@ -15,9 +15,8 @@ test.describe('Top bar links', () => {
             'Мобильное приложение',
             'Подарочные сертификаты',
             'Продавайте на Ozon',
-            'Зарабатывай с Ozon',
             'Помощь',
-            'Пункты выдачи'
+            'Реферальная программа',
         ];
 
         await Homepage.open(page);
@@ -40,6 +39,7 @@ test.describe('Top bar links', () => {
             await Homepage.clickTopBarLink(page, 'Мобильное приложение');
             await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
         });
+        //REPLACE
         test('App store link', async ({ page, context }) => {
             await page.goto('https://www.ozon.ru/info/appspromo/');
             const [newPage] = await Promise.all([
@@ -53,6 +53,7 @@ test.describe('Top bar links', () => {
             await expect(newPage.locator('section[class*="product-her"]'))
                 .toContainText('OZON: товары, отели, билеты');
         });
+        //REPLACE
         test('AppGallery link', async ({ page, context }) => {
             await page.goto('https://www.ozon.ru/info/appspromo/');
             const [newPage] = await Promise.all([
@@ -92,7 +93,7 @@ test.describe('Top bar links', () => {
     test('Help on hover', async ({ page }) => {
         await Homepage.open(page);
         await page.hover('text=Помощь');
-        const helpPopup = page.locator('//*[text()="Статус заказа"]/../..');
+        const helpPopup = page.locator('//*[text()="Статус заказа"]/../../..');
         await expect(helpPopup.locator('a')).toHaveCount(8);
     });
 
@@ -243,9 +244,11 @@ test.describe('Header links', () => {
         const expectedLinks = [
             'TOP Fashion', 'Premium',
             'Ozon fresh',
-            'Ozon Счёт', 'LIVE',
+            'Ozon Карта', 'Рассрочка',
+            'Акции',
             'Бренды',
-            'Магазины', 'Электроника',
+            'Express',
+            'Электроника',
             'Одежда и обувь', 'Детские товары',
             'Дом и сад'
         ]

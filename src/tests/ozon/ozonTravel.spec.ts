@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { todayPlus, todayPlusAsStr } from '../helpers/dates';
-import { OzonTravel } from '../pageObjects/ozonTravel';
+import { todayPlus, todayPlusAsStr } from '../../helpers/dates';
+import { OzonTravel } from '../../pageObjects/ozonTravel';
 
 
 test.beforeEach(async ({ page }) => {
@@ -36,7 +36,7 @@ test('Validation of empty fields', async ({ page }) => {
     await findTickets.click();
     await page.waitForSelector('input[name="travelSearchFrom"][errors="Введите город вылета"]')
     await page.waitForSelector('input[name="travelSearchTo"][errors="Введите город прилета"]')
-    await page.waitForSelector('//p[text()="Туда"]/ancestor::label/..//p[text()="Введите дату"]');
+    await page.waitForSelector('//p[text()="Туда"]/ancestor::label/../..//p[text()="Введите дату"]');
 });
 
 test.describe('Airline tickets', ()=>{

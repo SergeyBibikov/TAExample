@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { Header } from "../pageObjects/header";
-import { Homepage } from "../pageObjects/homepage";
-import { Bank } from "../pageObjects/ozonBank";
+import { Header } from "../../pageObjects/header";
+import { Homepage } from "../../pageObjects/homepage";
+import { Bank } from "../../pageObjects/ozonBank";
 
 
 test.beforeEach(async ({ page }) => {
@@ -49,7 +49,7 @@ test('For clients', async ({ page }) => {
 });
 test('Client info docs', async ({ page }) => {
     await page.locator('header >> text=Клиентам').click();
-    await page.locator('//div[text()="Информация для клиентов"]/../following-sibling::div').click();
+    await page.locator('//div[text()="Информация для клиентов"]/../../following-sibling::div').click();
     const infoDocs = page.locator('//div[text()="Информация для клиентов"]/ancestor::div[contains(@class, "headerWrapper")]/..');
     await expect(infoDocs.locator('.doc')).toHaveCount(5);
     await expect(infoDocs)
@@ -66,7 +66,7 @@ test('Client info docs', async ({ page }) => {
 //TODO: The section was removed for now at least. Delete test if it doesn't return
 // test('Archive docs', async ({ page }) => {
 //     await page.locator('header >> text=Клиентам').click();
-//     await page.locator('//div[text()="Информация для клиентов"]/../following-sibling::div').click();
+//     await page.locator('//div[text()="Информация для клиентов"]/../../following-sibling::div').click();
 
 //     const archiveDocs = page.locator('//div[text()="Архив документов"]/ancestor::div[contains(@class, "headerWrapper")]/..');
 //     await expect(archiveDocs.locator('.doc')).toHaveCount(10);

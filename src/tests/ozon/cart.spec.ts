@@ -1,10 +1,10 @@
 import { expect, Page, test } from '@playwright/test';
 import * as assert from 'assert';
 
-import { Header } from '../pageObjects/header';
-import { Homepage } from '../pageObjects/homepage';
-import { Cart } from '../pageObjects/cart';
-import { SearchResults } from '../pageObjects/searchResults';
+import { Header } from '../../pageObjects/header';
+import { Homepage } from '../../pageObjects/homepage';
+import { Cart } from '../../pageObjects/cart';
+import { SearchResults } from '../../pageObjects/searchResults';
 
 
 const openCartFromHomepage = async (page: Page) => {

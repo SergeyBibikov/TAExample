@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { Header } from '../pageObjects/header';
-import { ProductCard } from '../pageObjects/productCard';
-import { getElementColor } from "../helpers/dom";
+import { Header } from '../../pageObjects/header';
+import { ProductCard } from '../../pageObjects/productCard';
+import { getElementColor } from "../../helpers/dom";
 
 
 test.beforeEach(async ({ page }) => {
