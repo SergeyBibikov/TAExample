@@ -39,31 +39,7 @@ test.describe('Top bar links', () => {
             await Homepage.clickTopBarLink(page, 'Мобильное приложение');
             await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
         });
-        
-        //REPLACE
-        test('AppGallery link', async ({ page, context }) => {
-            await page.goto('https://www.ozon.ru/info/appspromo/');
-            const [newPage] = await Promise.all([
-                context.waitForEvent('page'),
-                page.locator('//a[contains(@href, "appgallery")]')
-                    .first()
-                    .click()
-            ])
-            await newPage.waitForLoadState();
-            await expect(newPage.locator('.headerContainer')).toContainText('AppGallery');
-            await expect(newPage.locator('.detailheadcard'))
-                .toContainText('OZON: товары, авиа');
-        });
     })
-
-    test('Sell on Ozon', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Продавайте на Ozon');
-
-        await expect(page.locator('body')).toContainText('Вход');
-        await expect(page.locator('body')).toContainText('Зарегистрироваться');
-        await expect(page.locator('body')).toContainText('Конфиденциальность');
-    });
 
     test('Earn with Ozon', async ({ page }) => {
         await Homepage.open(page);
