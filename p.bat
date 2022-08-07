@@ -1,0 +1,1 @@
+npx playwright test -g %1 --headed
