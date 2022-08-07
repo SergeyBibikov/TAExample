@@ -1,7 +1,8 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-    workers: 2,
+    retries: 1,
+    workers: 4,
     use: {
         screenshot: 'only-on-failure'
     },

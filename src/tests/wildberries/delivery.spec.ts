@@ -4,6 +4,10 @@ import WbLocators from "../../wbLocators";
 
 const DELIVERY_INFO_CONTENT = '.delivery-banner-content'
 
+test.afterEach(async ({ page }) => {
+    await page.waitForTimeout(1000);
+});
+
 test('Delivery terms', async ({ page }) => {
     await page.goto(Urls.WB_MAIN_PAGE);
     await page.locator(WbLocators.DELIVERY_INFO_BUTTON).click();

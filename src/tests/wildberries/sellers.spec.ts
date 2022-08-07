@@ -26,6 +26,7 @@ test.describe('Seller page', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(Urls.WB_SELLER_PAGE);
     });
+
     test('Header info links presence', async ({ page }) => {
         await expect.soft(page.locator('header')).toContainText('About the company');
         await expect.soft(page.locator('header')).toContainText('About the service');

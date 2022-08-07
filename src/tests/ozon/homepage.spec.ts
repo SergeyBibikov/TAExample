@@ -207,7 +207,7 @@ test.describe('Footer', () => {
         await expect(infoLinksSection.locator('xpath=/div[4]/span')).toHaveText('Ozon для бизнеса');
     });
 
-    test.skip('Ozon ecosystem links', async ({ page }) => {
+    test('Ozon ecosystem links', async ({ page }) => {
         await Homepage.open(page);
         const ecoSection = page.locator(Footer.locators.ECOSYSTEM_SECTION);
         await expect(ecoSection.locator('a')).toHaveCount(5);
