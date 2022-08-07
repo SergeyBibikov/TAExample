@@ -4,6 +4,7 @@ import WbLocators from "../../wbLocators";
 
 const CHAT_BUTTON = '[class*="btn-chat-open"]'
 const CHOOSE_FILE_BUTTON = 'label.upload-photo-btn'
+const CLEAR_SEARCH = '//button[text()="Очистить поиск"]'
 const POPULAR_BRANDS = '//h2[text()="Популярные бренды"]'
 const SELL_HITS = '//h2[contains(., "Хиты продаж")]'
 const SEARCH_BY_PHOTO_BUTTON = '//button[contains(text(),"Поиск по фото")]'
@@ -57,4 +58,11 @@ test('Suitable search suggestions depending on the input text', async ({ page })
     const suggestions = page.locator(SEARCH_SUGGESTIONS);
     await expect.soft(suggestions).toContainText('телефон');
     await expect.soft(suggestions).toContainText('телевизор');
+});
+
+test('Search text delete button is present', async ({ page }) => {
+    const search = page.locator(SEARCH_INPUT);
+    await search.fill('теле');
+    await page.locator(CLEAR_SEARCH).click();
+    expect(await search.textContent()).toEqual('');
 });
