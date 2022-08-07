@@ -1,114 +1,67 @@
 import { test, expect } from '@playwright/test';
 import { Header } from '../../pageObjects/header';
 import { ProductCard } from '../../pageObjects/productCard';
-import { getElementColor } from "../../helpers/dom";
+import Urls from '../../urls';
 
+const ASK_SELLER = '//div[text()="Спросить продавца о товаре"]'
+const BREAD_CRUMPS = '[data-widget="breadCrumbs"]'
+const BUYERS_PHOTOS = '(//div[contains(text(), "Фото и видео покупателей")])[1]/..//img'
+const FAQ = '#pdp-faq'
+const NOTIFY_ON_PRICE_CHANGE_BUTTON = '//button[span[span[text()="Узнать о снижении цены"]]]'
+const POSSIBLE_ACTIONS = '(//div[div[@data-widget="webAddToFavorite"]])[1]'
+const PRODUCT_CODE = '//span[contains(., "Код") and contains(., "товара")]'
+const SELLER_CARD = '[data-widget="webCurrentSeller"]'
+const WANT_DISCOUNT = '//span[contains(text(), "Хочу скидку")]'
 
 test.beforeEach(async ({ page }) => {
-    const productLink = 'https://www.ozon.ru/product/chehol-nakladka-gurdini-ultra-twin-0-3-mm-silikon-dlya-apple-iphone-se-2020-7-8-4-7-162212667'
-    await page.goto(productLink);
-    await page.waitForSelector('text=Рекомендуем также');
+    await page.goto(Urls.OZON_IPHONE_CARD);
 });
 
-test('All main sections must be displayed', async ({ page }) => {
-
-    await expect(page.locator('#layoutPage')).toContainText('Фото и видео покупателей');
-    await expect(page.locator('#layoutPage')).toContainText('Рекомендуем также');
-    await expect(page.locator('#layoutPage')).toContainText('Покупают вместе');
-    await expect(page.locator('#layoutPage')).toContainText('Спонсорские товары');
-    await expect(page.locator('#layoutPage')).toContainText('Характеристики');
-    await expect(page.locator('#layoutPage')).toContainText('Подборки товаров');
-    await expect(page.locator('#layoutPage')).toContainText('Отзывы и вопросы о товаре');
+test('Product code is present', async ({ page }) => {
+    await page.waitForSelector(PRODUCT_CODE);
 });
 
-test('Scroll to description', async ({ page }) => {
-    const getOffset = async () => {
-        return await page.evaluate(() => {
-            return window.scrollY
-        });
-    }
+test('IPhone category path', async ({ page }) => {
+    const bc = page.locator(BREAD_CRUMPS);
 
-    await page.locator('text=Перейти к описанию').click();
-
-    let offsetAfterScroll = await getOffset();
-    while (true) {
-        const currentOffset = await getOffset();
-        if (currentOffset === offsetAfterScroll) {
-            break;
-        }
-        offsetAfterScroll = currentOffset;
-    }
-
-    expect(offsetAfterScroll).toBeGreaterThan(2000);
+    await expect.soft(bc).toContainText('Электроника');
+    await expect.soft(bc).toContainText('Телефоны и смарт-часы');
+    await expect.soft(bc).toContainText('Смартфоны');
+    await expect.soft(bc).toContainText('Apple');
 });
 
-test('Add to comparison button should change text when product is added', async ({ page }) => {
+test('Product possible actions, reviews and questions buttons are present', async ({ page }) => {
+    const actions = page.locator(POSSIBLE_ACTIONS);
 
-    const productHeaderSection = page.locator(ProductCard.nameSection);
-
-    await expect(productHeaderSection).toContainText('Добавить к сравнению');
-    await productHeaderSection.locator('text=Добавить к сравнению').click();
-    await expect(productHeaderSection).not.toContainText('Добавить к сравнению');
-    await expect(productHeaderSection).toContainText('Перейти в сравнение');
+    await expect.soft(actions).toContainText('отзыв');
+    await expect.soft(actions).toContainText('видео');
+    await expect.soft(actions).toContainText('вопрос');
+    await expect.soft(actions).toContainText('В избранное');
+    await expect.soft(actions).toContainText('Добавить к сравнению');
+    await expect.soft(actions).toContainText('Поделиться');
 });
 
-test('Icon color should change when product is added to favourites', async ({ page }) => {
-    const expectedFavIconColor = 'rgb(249, 17, 85)'
+test('FAQ presence and content', async ({ page }) => {
+    const faq = page.locator(FAQ);
 
-    await page.locator('text=В избранное').click();
-    const count = await Header.getFavouriteItemsCount(page);
-    expect(count).toEqual(1);
-    await expect(page.locator(ProductCard.nameSection)).toContainText('В избранном');
-    const color = await page.evaluate(getElementColor, 'button[aria-label="Убрать из избранного"] > span > svg')
-    expect(color).toEqual(expectedFavIconColor);
+    await expect.soft(faq).toContainText('Условия доставки');
+    await expect.soft(faq).toContainText('Способы оплаты');
+    await expect.soft(faq).toContainText('Возврат товаров');
+    await expect.soft(faq).toContainText('Возврат денег');
 });
 
-test('Share options should show on hover', async ({ page }) => {
-
-    await page.locator(ProductCard.nameSection).locator('[aria-label="Поделиться"] > span span').hover();
-
-    const exp = expect(page.locator('.vue-portal-target').nth(1));
-
-    await exp.toContainText('Скопировать ссылку');
-    await exp.toContainText('ВКонтакте');
-    await exp.toContainText('Одноклассники');
-    await exp.toContainText('Telegram');
-    await exp.toContainText('Twitter');
+test('"I want a discount" button is present', async ({ page }) => {
+    await page.waitForSelector(WANT_DISCOUNT);
 });
 
-test('Sticky header with add to cart button on scroll', async ({ page }) => {
-
-    await page.evaluate(() => {
-        window.scroll(0, 2000);
-    });
-
-    const bb = await page
-        .locator('[triggering-object-selector="#short-product-info-trigger-new"]')
-        .locator('//button[contains(., "Добавить в корзину")]').boundingBox();
-
-    expect(bb).not.toBeNull();
-
+test('Seller card has "ask seller" button', async ({ page }) => {
+    await page.waitForSelector(`${SELLER_CARD} >> ${ASK_SELLER}`)
 });
 
-test('Add to cart button should change text on product addition/deletion', async ({ page }) => {
-    const checkOutSection = page.locator(ProductCard.checkoutSection);
-
-    await ProductCard.addToCart(page);
-
-    const count = await Header.getCartItemsCount(page);
-    expect(count).toEqual(1);
-    await expect(checkOutSection).not.toContainText('Добавить в корзину');
-    await expect(checkOutSection).toContainText('В корзине');
-
-    await ProductCard.decreaseQty(page);
-    await expect(checkOutSection).toContainText('Добавить в корзину');
+test('"Notify on price change" button is present', async ({ page }) => {
+    await page.waitForSelector(NOTIFY_ON_PRICE_CHANGE_BUTTON);
 });
 
-test('Popup on notification link', async ({ page }) => {
-    const notifForm = page.locator('//h1[contains(., "Узнайте о снижении цены")]/..');
-
-    await page.locator('text=Узнать о снижении цены').click();
-
-    await expect(notifForm.locator('//p[text()="Ваш e-mail"]/preceding-sibling::input')).toHaveCount(1);
-    await expect(notifForm.locator('//span[text()="Готово"]/ancestor::button')).toHaveCount(1);
+test('Buyers photo section has images', async ({ page }) => {
+    expect.soft(await page.locator(BUYERS_PHOTOS).count()).toBeGreaterThan(0);
 });

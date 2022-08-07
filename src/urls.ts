@@ -8,4 +8,6 @@ export default class Urls{
     static readonly OZON_TRAVEL_RAILWAY = 'https://www.ozon.ru/travel/railway/'
     static readonly OZON_TRAVEL_HOTELS = 'https://www.ozon.ru/travel/hotels/'
     static readonly OZON_FINANCE = 'https://finance.ozon.ru/'
+    static readonly OZON_IPHONE_CARD = 'https://www.ozon.ru/product/smartfon-apple-iphone-13-256gb-temnaya-noch-652168877/?asb=BGqoUhw7T4cohPeSxIPlNF4fPkyLvKMAskf2sv%252FxCnlMV%252BrrDYH%252FyutOvbZAZZmw&asb2=gGMPayvwQoPerzKMXbk2yWAKZ81nG8FJxaBPxn53Id8Q1vy6HtUzykeOsN5w8oUn-wn8HrEfqQvEETwAz0dDjR-yD3eWVF-79XlM3J38pHmILSORkwGhO27Jc2ZrG-kMYdROprzb1Qi5BRK-zZkXEA&keywords=Iphone+13&sh=7U4Oqv1JXw'
+
 }
