@@ -5,7 +5,7 @@ import { Homepage } from '../../pageObjects/homepage';
 import { SearchResults } from '../../pageObjects/searchResults';
 import { Header } from '../../pageObjects/header';
 
-test('Category select and delete', async ({ page }) => {
+test.skip('Category select and delete', async ({ page }) => {
     await Homepage.open(page);
     const catLoc = page.locator(Header.SEARCH_CATEGORY);
     await expect(catLoc).toContainText('Везде');
@@ -18,7 +18,7 @@ test('Category select and delete', async ({ page }) => {
     await expect(catLoc).toContainText('Везде');
 });
 
-test('Search for Samsung Galaxy S20 FE', async ({ page }) => {
+test.skip('Search for Samsung Galaxy S20 FE', async ({ page }) => {
     const filterCategories = ['Оперативная память', 'Встроенная память'];
     const filterOptions = ['4-8 ГБ', '64-128 ГБ'];
 
@@ -43,7 +43,7 @@ test('Search history', async ({ page }) => {
     await Header.clearHistory(page);
     await expect(page.locator(Header.SEARCH_HISTORY)).toHaveCount(0);
 });
-test('"Didn\'t find what you need?" button', async ({ page }) => {
+test.skip('"Didn\'t find what you need?" button', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'iphone 13');
     const didntFindButton = "xpath=//div[contains(text(),'Не нашли, что искали?')]";
@@ -65,7 +65,7 @@ test('Pagination', async ({ page }) => {
     const currentTopResult = await SearchResults.getFirstItemName(page);
     assert.notDeepEqual(currentTopResult, initialTopResult);
 });
-test('Toggle item comparison', async ({ page }) => {
+test.skip('Toggle item comparison', async ({ page }) => {
     const modelFull = 'Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный';
     const modelShort = 'xiaomi mi 11';
 
@@ -84,7 +84,7 @@ test('Toggle item comparison', async ({ page }) => {
     await deleteFromComparison.click();
     await expect(page.locator('//div[contains(text(), "Товар удален")]')).toHaveCount(1);
 });
-test('Add two items to comparison and go to compare page', async ({ page }) => {
+test.skip('Add two items to comparison and go to compare page', async ({ page }) => {
     const firstItem = 'Iphone 13 128GB';
     const firstItemFull = 'Смартфон Apple iPhone 13 128GB, темная ночь';
 
@@ -106,7 +106,7 @@ test('Add two items to comparison and go to compare page', async ({ page }) => {
     await expect(categoryTabs).toContainText('Смартфоны');
     await expect(categoryTabs).toContainText('Все товары');
 });
-test('Clear comparison', async ({ page }) => {
+test.skip('Clear comparison', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'Iphone 13 128GB');
     await SearchResults.addItemToComparison(page, 'Смартфон Apple iPhone 13 128GB, темная ночь');

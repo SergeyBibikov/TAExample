@@ -26,7 +26,7 @@ test('Empty favourites', async ({ page }) => {
 */
 
 
-test('Add item to favourites', async ({ browser }) => {
+test.skip('Add item to favourites', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Homepage.open(page);
     assert.equal((await Header.getFavouriteItemsCount(page)), 1);
@@ -34,19 +34,19 @@ test('Add item to favourites', async ({ browser }) => {
     await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText('Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
 });
 
-test('Favourite shops', async ({ page }) => {
+test.skip('Favourite shops', async ({ page }) => {
     await Favourites.open(page);
     await page.locator('text=Избранные магазины').click();
     await expect(page.locator('div[data-widget="myGuest"]')).toContainText('Вы не авторизованы');
 });
-test('In stock radiobox', async ({ browser }) => {
+test.skip('In stock radiobox', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);
     await page.locator('//label[div[contains(.,"В наличии")]]').check();
     await expect(page.locator('//button[span[contains(.,"В наличии")]]')).toHaveCount(1);
     await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
 });
-test('Not in stock radiobox', async ({ browser }) => {
+test.skip('Not in stock radiobox', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);
     await page.locator('//label[div[contains(.,"Не в наличии")]]').check();
@@ -54,7 +54,7 @@ test('Not in stock radiobox', async ({ browser }) => {
     await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
     await expect(page.locator('body')).toContainText('Ничего не нашлось');
 });
-test('Clear filters', async ({ browser }) => {
+test.skip('Clear filters', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);
 
@@ -65,7 +65,7 @@ test('Clear filters', async ({ browser }) => {
     await expect(page.locator('//label[div[contains(.,"Неважно")]]')).toBeChecked();
 });
 
-test('Delete from favourites', async ({ browser }) => {
+test.skip('Delete from favourites', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);
     await page.click('(//div[@data-widget="searchResultsV2"]//button)[3]');

@@ -5,7 +5,6 @@ import * as compare from "../../helpers/comparison";
 import { Header } from '../../pageObjects/header';
 import { Footer } from '../../pageObjects/footer';
 import { Homepage } from '../../pageObjects/homepage';
-import { SignInCard } from '../../pageObjects/signInCard';
 
 test.describe('Top bar links', () => {
 
@@ -27,7 +26,7 @@ test.describe('Top bar links', () => {
         }
     });
 
-    test('Ozon for business', async ({ page }) => {
+    test.skip('Ozon for business', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
         await expect(page.locator('body')).toContainText('Для компаний любого масштаба');
@@ -41,7 +40,7 @@ test.describe('Top bar links', () => {
         });
     })
 
-    test('Gift certificate', async ({ page }) => {
+    test.skip('Gift certificate', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Подарочные сертификаты');
         await expect(page.locator('//div[@data-widget="webProductHeading"]')).toContainText('Электронный подарочный сертификат');
@@ -123,57 +122,57 @@ test.describe('Header links', () => {
             assert.fail(`The following links are missing: ${diff}`);
         }
     });
-    test('TOP Fashion', async ({ page }) => {
+    test.skip('TOP Fashion', async ({ page }) => {
         await checkPageLoad(page, 'TOP Fashion', 'TOP Fashion');
     });
-    test('LIVE', async ({ page }) => {
+    test.skip('LIVE', async ({ page }) => {
         await Homepage.open(page);
         await Header.goToNavbarLink(page, 'LIVE');
         await expect(page.locator('[data-widget="webTopStreams"]')).toHaveCount(1);
     });
-    test('Акции', async ({ page }) => {
+    test.skip('Акции', async ({ page }) => {
         await checkPageLoad(
             page,
             'Акции',
             'Выгодные предложения'
         );
     });
-    test('Бренды', async ({ page }) => {
+    test.skip('Бренды', async ({ page }) => {
         await checkPageLoad(
             page,
             'Бренды',
             'Популярные бренды'
         );
     });
-    test('Магазины', async ({ page }) => {
+    test.skip('Магазины', async ({ page }) => {
         await checkPageLoad(
             page,
             'Магазины',
             'Все магазины'
         );
     });
-    test('Электроника', async ({ page }) => {
+    test.skip('Электроника', async ({ page }) => {
         await checkPageLoad(
             page,
             'Электроника',
             'Бытовая техника'
         );
     });
-    test('Одежда и обувь', async ({ page }) => {
+    test.skip('Одежда и обувь', async ({ page }) => {
         await checkPageLoad(
             page,
             'Одежда и обувь',
             'Женская одежда, обувь и аксессуары'
         );
     });
-    test('Детские товары', async ({ page }) => {
+    test.skip('Детские товары', async ({ page }) => {
         await checkPageLoad(
             page,
             'Детские товары',
             'Игрушки и игры'
         );
     });
-    test('Дом и сад', async ({ page }) => {
+    test.skip('Дом и сад', async ({ page }) => {
         await checkPageLoad(
             page,
             'Дом и сад',
@@ -208,7 +207,7 @@ test.describe('Footer', () => {
         await expect(infoLinksSection.locator('xpath=/div[4]/span')).toHaveText('Ozon для бизнеса');
     });
 
-    test('Ozon ecosystem links', async ({ page }) => {
+    test.skip('Ozon ecosystem links', async ({ page }) => {
         await Homepage.open(page);
         const ecoSection = page.locator(Footer.locators.ECOSYSTEM_SECTION);
         await expect(ecoSection.locator('a')).toHaveCount(5);
