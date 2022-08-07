@@ -10,6 +10,7 @@ const GET_SMS_BUTTON = PHONE_SIGN_IN_CARD + '>> button:has-text("To get SMS code
 const GOOGLE_PLAY_BUTTON = 'a[href*="https://play.google.com/store/apps/details?id=com.wildberries.portal"]'
 const SELL_ON_WB = '[data-wba-header-name="Seller"]';
 
+//Avoiding anti-bot threshold
 test.afterEach(async ({ page }) => {
     await page.waitForTimeout(1000);
 })

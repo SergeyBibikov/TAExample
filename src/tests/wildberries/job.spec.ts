@@ -13,6 +13,11 @@ const getPickupPointCardLocator = async (page: Page, card: String): Promise<Loca
     return jobDescription.locator(`section:has-text("${card}")`)
 }
 
+//Avoiding anti-bot threshold
+test.afterEach(async ({ page }) => {
+    await page.waitForTimeout(1000);
+})
+
 test('"Work at Wildberries" button lead on click', async ({ page }) => {
     await page.goto(Urls.WB_MAIN_PAGE);
     await page.locator(WORK_AT_WB_BUTTON).click();
@@ -72,7 +77,3 @@ test.describe('Job at WB page contents', () => {
 
 })
 
-//Avoiding anti-bot threshold
-test.afterEach(async ({ page }) => {
-    await page.waitForTimeout(1000);
-})
