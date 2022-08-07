@@ -36,7 +36,7 @@
 	"Add locator": {
 		"prefix": "loc",
 		"body": [
-			"page.locator('$1')"
+			"const _ = page.locator('$1');"
 		]
 	},
 	"Click element": {
