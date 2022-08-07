@@ -1,10 +1,10 @@
 import { expect, Page, Locator, test } from "@playwright/test";
 import Urls from "../../urls";
+import WbLocators from "../../wbLocators";
 
 
 const PICKUP_POINT_JOB_DESC = 'section#pickup-point'
 const WAREHOUSE_JOB_DESC = 'section#storage'
-const WORK_AT_WB_BUTTON = 'a:has-text("Работа в Wildberries")'
 const WORK_PLACE_SECTION = 'section[class*="employment__intro"]'
 
 const getPickupPointCardLocator = async (page: Page, card: String): Promise<Locator> => {
@@ -20,7 +20,7 @@ test.afterEach(async ({ page }) => {
 
 test('"Work at Wildberries" button lead on click', async ({ page }) => {
     await page.goto(Urls.WB_MAIN_PAGE);
-    await page.locator(WORK_AT_WB_BUTTON).click();
+    await page.locator(WbLocators.WORK_AT_WB_BUTTON).click();
     expect.soft(page.url()).toContain('services/trudoustroystvo');
 });
 
