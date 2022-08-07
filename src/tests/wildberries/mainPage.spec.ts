@@ -7,6 +7,8 @@ const CHOOSE_FILE_BUTTON = 'label.upload-photo-btn'
 const POPULAR_BRANDS = '//h2[text()="Популярные бренды"]'
 const SELL_HITS = '//h2[contains(., "Хиты продаж")]'
 const SEARCH_BY_PHOTO_BUTTON = '//button[contains(text(),"Поиск по фото")]'
+const SEARCH_INPUT = 'input#searchInput'
+const SEARCH_SUGGESTIONS = 'div.search-catalog__autocomplete'
 const WIDE_PRODUCT_LINE = '//h2[text()="Широкий ассортимент и высокое качество"]'
 const UPLOAD_PHOTO_TEXT = 'div.upload-photo-text'
 
@@ -40,4 +42,12 @@ test('Search by photo popup text', async ({ page }) => {
     await page.locator(SEARCH_BY_PHOTO_BUTTON).click();
     await expect.soft(page.locator(UPLOAD_PHOTO_TEXT)).toContainText('Максимальный размер: 8 МБ.');
     await expect.soft(page.locator(UPLOAD_PHOTO_TEXT)).toContainText('Поддерживаемые форматы: JPG, JPEG, PNG, BMP, GIF.');
+});
+
+test('Search hints on input click', async ({ page }) => {
+    const suggestions = page.locator(SEARCH_SUGGESTIONS);
+    expect.soft(await suggestions.allTextContents()).toEqual([""]);
+    await page.locator(SEARCH_INPUT).click();
+    await expect.soft(suggestions).toContainText('футболка женская');
+    await expect.soft(suggestions).toContainText('iphone');
 });
