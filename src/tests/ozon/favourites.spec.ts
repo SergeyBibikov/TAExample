@@ -4,15 +4,28 @@ import { Header } from '../../pageObjects/header';
 import { Homepage } from '../../pageObjects/homepage';
 import { SearchResults } from '../../pageObjects/searchResults';
 import * as assert from 'assert';
+import Urls from '../../urls';
 
-test.beforeAll(async ({ browser }) => {
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    await Homepage.open(page);
-    await Header.searchProduct(page, 'xiaomi mi 11');
-    await SearchResults.addItemToFavourites(page, 'Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
-    await context.storageState({ path: Favourites.fileName });
+/*
+    Passing
+*/
+test('Empty collection', async ({ page }) => {
+    await page.goto(Urls.OZON_FAVOURITES_COLLECTION);
+    await expect(page.locator('section[data-widget="emptyState"]')).toContainText('Коллекция пуста');
 });
+
+test('Empty favourites', async ({ page }) => {
+    await Favourites.open(page);
+    await expect(page.locator('section[data-widget="emptyState"]')).toContainText('В избранном пусто');
+});
+
+
+
+/*
+    FIX OR DELETE
+*/
+
+
 test('Add item to favourites', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Homepage.open(page);
@@ -20,12 +33,7 @@ test('Add item to favourites', async ({ browser }) => {
     await Header.goToFavourites(page);
     await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText('Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
 });
-test('Empty comparison', async ({ page }) => {
-    await Favourites.open(page);
-    await page.locator('text=Сравнение товаров').click();
-    await expect(page.locator('div[data-widget="container"]')).toContainText('В сравнении пока ничего нет');
-    await expect(page.locator('//a[contains(text(),"Перейдите к каталогу товаров")]')).toHaveCount(1);
-});
+
 test('Favourite shops', async ({ page }) => {
     await Favourites.open(page);
     await page.locator('text=Избранные магазины').click();
@@ -56,11 +64,7 @@ test('Clear filters', async ({ browser }) => {
     await expect(page.locator('//button[span[contains(.,"Не в наличии")]]')).toHaveCount(0);
     await expect(page.locator('//label[div[contains(.,"Неважно")]]')).toBeChecked();
 });
-test('My collection', async ({ page }) => {
-    await Favourites.open(page);
-    await page.locator('text=Моя коллекция').click();
-    await expect(page.locator('section[data-widget="emptyState"]')).toContainText('Коллекция пуста');
-});
+
 test('Delete from favourites', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);

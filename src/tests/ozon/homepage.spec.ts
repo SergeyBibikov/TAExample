@@ -41,12 +41,6 @@ test.describe('Top bar links', () => {
         });
     })
 
-    test('Earn with Ozon', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Зарабатывай с Ozon');
-        await expect(page.locator('//a[text()="Хочу зарабатывать"]')).toHaveCount(1);
-    });
-
     test('Gift certificate', async ({ page }) => {
         await Homepage.open(page);
         await Homepage.clickTopBarLink(page, 'Подарочные сертификаты');
@@ -58,21 +52,6 @@ test.describe('Top bar links', () => {
         await page.hover('text=Помощь');
         const helpPopup = page.locator('//*[text()="Статус заказа"]/../../..');
         await expect(helpPopup.locator('a')).toHaveCount(8);
-    });
-
-    test('Help link', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Помощь');
-        await expect(page.locator('//h3')).toHaveCount(8);
-        const mainContent = page.locator('div.book-columns');
-        await expect(mainContent).toContainText("Мой заказ");
-        await expect(mainContent).toContainText("Отмена и возврат");
-        await expect(mainContent).toContainText("Доставка");
-        await expect(mainContent).toContainText("Оплата");
-        await expect(mainContent).toContainText("Товары");
-        await expect(mainContent).toContainText("Акции и бонусы");
-        await expect(mainContent).toContainText("Безопасность");
-        await expect(mainContent).toContainText("Отели и билеты");
     });
 
     test('Pick points', async ({ page }) => {
@@ -113,85 +92,12 @@ test('Promo code', async ({ page }) => {
     await expect(page.locator('body')).toContainText('Вы не авторизованы');
 });
 
-test('Sign in or register button', async ({ page }) => {
-    await Homepage.open(page);
-    const auth = page.locator('[data-widget="authorization"]');
-    await expect(auth).toContainText('Вход');
-    const signInButton = auth.locator('//button[contains(.,"Вход или регистрация")]');
-    await expect(signInButton).toHaveCount(1);
-    await signInButton.click();
-    const ozonIdIframe = page.locator('[data-widget="ozonIdIframe"]').frameLocator('iframe');
-    await ozonIdIframe.locator('text=Войти по почте').click();
-    await expect(ozonIdIframe.locator('body')).toContainText("Войдите по почте");
-    await expect(ozonIdIframe.locator('body')).toContainText("Только для зарегистрированных пользователей");
-});
-
 test.describe('Sign in from header', () => {
     test('Sign in button on hover. Pop-up', async ({ page }) => {
         await Homepage.open(page);
         await page.hover(Header.SIGN_IN);
         await page.waitForSelector('//button[contains(. , "Войти или зарегистрироваться")]');
         await page.waitForSelector('//button[contains(. , "Личный кабинет")]');
-    });
-    test('Check ozon card content', async ({ page }) => {
-        const signInCard = new SignInCard(page);
-
-        await Homepage.open(page);
-        await page.locator(Header.SIGN_IN).click();
-        await expect(signInCard.root).toHaveCount(1);
-        await expect(signInCard.cardBody).toContainText('Введите свой номер телефона, чтобы войти');
-        await expect(signInCard.phoneInput).toHaveCount(1);
-        await expect(signInCard.signInButton).toHaveCount(1);
-        await expect(signInCard.signInWithEmail).toHaveCount(1);
-        await expect(signInCard.signInWithApple).toHaveCount(1);
-
-    });
-
-    test('Validation on incorrect phone', async ({ page }) => {
-        await Homepage.open(page);
-        await page.locator(Header.SIGN_IN).click();
-        const signInCard = new SignInCard(page);
-
-        await signInCard.phoneInput.fill("33");
-        await signInCard.signInButton.click();
-        await expect(signInCard.cardBody).toContainText("Некорректный формат телефона");
-    });
-
-    test('Validation on missing phone', async ({ page }) => {
-        await Homepage.open(page);
-        await page.locator(Header.SIGN_IN).click();
-        const signInCard = new SignInCard(page);
-
-        await signInCard.signInButton.click();
-        await expect(signInCard.cardBody).toContainText("Заполните телефон");
-    });
-    test('Successful transfer from signin popup to account page', async ({ page }) => {
-        const sideBar = page.locator('[data-widget="column"]').first();
-
-        await Homepage.open(page);
-        await page.locator(Header.SIGN_IN).hover();
-        await page.locator('//button[contains(. , "Личный кабинет")]').click();
-        await expect(sideBar).toContainText("Для меня");
-        await expect(sideBar).toContainText("Акции и подписки");
-    });
-});
-
-test.describe('Header', () => {
-
-    test('Go to orders while not being signed in', async ({ page }) => {
-        await Homepage.open(page);
-        await Header.goToOrders(page);
-        await expect(page.locator('//div[contains(text(), "Вы не авторизованы")]')).toHaveCount(1);
-        await expect(page.locator('//*[@data-widget="loginButton"]')).toHaveCount(1);
-    });
-    test('Go to Favourites when there are no items ', async ({ page }) => {
-        await Homepage.open(page);
-        await Header.goToFavourites(page);
-        await expect(page.locator('//div[contains(text(),"Избранное")]')).toHaveCount(1);
-        await expect(page.locator('//span[text()="В Избранном пока ничего нет"]')).toHaveCount(1);
-        await expect(page.locator('//span[contains(text(),"Сравнение товаров")]')).toHaveCount(1);
-        await expect(page.locator('//span[contains(text(),"Избранные магазины")]')).toHaveCount(1);
-        await expect(page.locator('//span[contains(text(),"Моя коллекция")]')).toHaveCount(1);
     });
 });
 
@@ -226,13 +132,7 @@ test.describe('Header links', () => {
     test('TOP Fashion', async ({ page }) => {
         await checkPageLoad(page, 'TOP Fashion', 'TOP Fashion');
     });
-    test('Premium', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Premium',
-            'Подписка на кешбэк, бесплатную доставку, кино, курсы и ранний доступ к распродажам'
-        );
-    });
+
     test('Ozon fresh', async ({ page }) => {
         await checkPageLoad(
             page,

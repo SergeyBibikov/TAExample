@@ -51,4 +51,10 @@
 			"await page.pause();"
 		]
 	},
+	"Wait for selector": {
+		"prefix": "wfs",
+		"body": [
+			"await page.waitForSelector('$1');"
+		]
+	},
 }
