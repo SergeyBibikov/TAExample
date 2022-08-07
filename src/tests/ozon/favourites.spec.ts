@@ -26,26 +26,6 @@ test('Empty favourites', async ({ page }) => {
 */
 
 
-test.skip('Add item to favourites', async ({ browser }) => {
-    const page = await Favourites.getPageWithContext(browser);
-    await Homepage.open(page);
-    assert.equal((await Header.getFavouriteItemsCount(page)), 1);
-    await Header.goToFavourites(page);
-    await expect(page.locator(SearchResults.FOUND_ITEMS_LIST)).toContainText('Смартфон Xiaomi 11 Lite 5G NE 8/256GB, черный');
-});
-
-test.skip('Favourite shops', async ({ page }) => {
-    await Favourites.open(page);
-    await page.locator('text=Избранные магазины').click();
-    await expect(page.locator('div[data-widget="myGuest"]')).toContainText('Вы не авторизованы');
-});
-test.skip('In stock radiobox', async ({ browser }) => {
-    const page = await Favourites.getPageWithContext(browser);
-    await Favourites.open(page);
-    await page.locator('//label[div[contains(.,"В наличии")]]').check();
-    await expect(page.locator('//button[span[contains(.,"В наличии")]]')).toHaveCount(1);
-    await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
-});
 test.skip('Not in stock radiobox', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);
