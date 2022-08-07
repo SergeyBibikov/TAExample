@@ -54,12 +54,6 @@ test.describe('Top bar links', () => {
         await expect(helpPopup.locator('a')).toHaveCount(8);
     });
 
-    test('Pick points', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Пункты выдачи');
-        await expect(page.locator('body')).toContainText("Выбор пункта выдачи");
-    });
-
 });
 
 //TODO: use function getElementColor
@@ -131,21 +125,6 @@ test.describe('Header links', () => {
     });
     test('TOP Fashion', async ({ page }) => {
         await checkPageLoad(page, 'TOP Fashion', 'TOP Fashion');
-    });
-
-    test('Ozon fresh', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Ozon fresh',
-            'Успей купить!'
-        );
-    });
-    test('Ozon Счёт', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Ozon Счёт',
-            'Открыть Ozon Счёт'
-        );
     });
     test('LIVE', async ({ page }) => {
         await Homepage.open(page);
