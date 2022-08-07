@@ -211,10 +211,10 @@ test.describe('Footer', () => {
         await Homepage.open(page);
         const ecoSection = page.locator(Footer.locators.ECOSYSTEM_SECTION);
         await expect(ecoSection.locator('a')).toHaveCount(5);
-        await expect(ecoSection).toContainText('Интернет-магазин');
-        await expect(ecoSection).toContainText('Работа в Ozon');
-        await expect(ecoSection).toContainText('Авиабилеты');
-        await expect(ecoSection).toContainText('Бесплатные IT курсы');
-        await expect(ecoSection).toContainText('Электронные книги');
+        await expect.soft(ecoSection).toContainText('Интернет-магазин');
+        await expect.soft(ecoSection).toContainText('Работа в Ozon');
+        await expect.soft(ecoSection).toContainText('Авиа- и ж/д билеты, Отели');
+        await expect.soft(ecoSection).toContainText('Курсы для middle-разработчиков');
+        await expect.soft(ecoSection).toContainText('Электронные книги');
     });
 });
