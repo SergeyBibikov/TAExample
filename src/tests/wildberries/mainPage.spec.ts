@@ -51,3 +51,10 @@ test('Search hints on input click', async ({ page }) => {
     await expect.soft(suggestions).toContainText('футболка женская');
     await expect.soft(suggestions).toContainText('iphone');
 });
+
+test('Suitable search suggestions depending on the input text', async ({ page }) => {
+    await page.locator(SEARCH_INPUT).fill('теле');
+    const suggestions = page.locator(SEARCH_SUGGESTIONS);
+    await expect.soft(suggestions).toContainText('телефон');
+    await expect.soft(suggestions).toContainText('телевизор');
+});

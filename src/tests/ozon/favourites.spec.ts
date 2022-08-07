@@ -26,14 +26,6 @@ test('Empty favourites', async ({ page }) => {
 */
 
 
-test.skip('Not in stock radiobox', async ({ browser }) => {
-    const page = await Favourites.getPageWithContext(browser);
-    await Favourites.open(page);
-    await page.locator('//label[div[contains(.,"Не в наличии")]]').check();
-    await expect(page.locator('//button[span[contains(.,"Не в наличии")]]')).toHaveCount(1);
-    await expect(page.locator('//button[span[contains(.,"Очистить")]]')).toHaveCount(1);
-    await expect(page.locator('body')).toContainText('Ничего не нашлось');
-});
 test.skip('Clear filters', async ({ browser }) => {
     const page = await Favourites.getPageWithContext(browser);
     await Favourites.open(page);

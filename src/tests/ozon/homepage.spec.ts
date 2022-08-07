@@ -181,15 +181,6 @@ test.describe('Header links', () => {
     });
 })
 
-test('Catalogue. Filters change on hover', async ({ page }) => {
-    await Homepage.open(page);
-    await Header.openCatalogue(page);
-    await page.hover(Header.CATALOGUE_CATEGORIES + '//a[span[text()="Обувь"]]');
-    await expect(page.locator(Header.CATALOGUE_FILTERS)).toContainText('Босоножки');
-    await page.hover(Header.CATALOGUE_CATEGORIES + '//a[span[text()="Электроника"]]');
-    await expect(page.locator(Header.CATALOGUE_FILTERS)).toContainText('Моноблоки');
-});
-
 
 test.describe('Footer', () => {
     test('Accessibility version button', async ({ page }) => {
