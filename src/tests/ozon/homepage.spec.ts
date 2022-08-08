@@ -26,12 +26,6 @@ test.describe('Top bar links', () => {
         }
     });
 
-    test.skip('Ozon for business', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Ozon для бизнеса');
-        await expect(page.locator('body')).toContainText('Для компаний любого масштаба');
-    });
-
     test.describe('Mobile app', () => {
         test('Navigate from homepage', async ({ page }) => {
             await Homepage.open(page);
@@ -40,11 +34,6 @@ test.describe('Top bar links', () => {
         });
     })
 
-    test.skip('Gift certificate', async ({ page }) => {
-        await Homepage.open(page);
-        await Homepage.clickTopBarLink(page, 'Подарочные сертификаты');
-        await expect(page.locator('//div[@data-widget="webProductHeading"]')).toContainText('Электронный подарочный сертификат');
-    });
 
     test('Help on hover', async ({ page }) => {
         await Homepage.open(page);
@@ -122,9 +111,7 @@ test.describe('Header links', () => {
             assert.fail(`The following links are missing: ${diff}`);
         }
     });
-    test.skip('TOP Fashion', async ({ page }) => {
-        await checkPageLoad(page, 'TOP Fashion', 'TOP Fashion');
-    });
+
     test.skip('LIVE', async ({ page }) => {
         await Homepage.open(page);
         await Header.goToNavbarLink(page, 'LIVE');
