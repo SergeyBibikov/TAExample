@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
 import Urls from "../../urls";
-import WbLocators from "../../wbLocators";
 
 const CHAT_BUTTON = '[class*="btn-chat-open"]'
 const CHOOSE_FILE_BUTTON = 'label.upload-photo-btn'
