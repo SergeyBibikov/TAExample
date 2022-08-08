@@ -9,6 +9,7 @@ const POPULAR_BRANDS = '//h2[text()="Популярные бренды"]'
 const SELL_HITS = '//h2[contains(., "Хиты продаж")]'
 const SEARCH_BY_PHOTO_BUTTON = '//button[contains(text(),"Поиск по фото")]'
 const SEARCH_INPUT = 'input#searchInput'
+const RESULTS_FOUND = '//h1[contains(text(), "По запросу") and contains(text(), "найдено")]' 
 const SEARCH_SUGGESTIONS = 'div.search-catalog__autocomplete'
 const WIDE_PRODUCT_LINE = '//h2[text()="Широкий ассортимент и высокое качество"]'
 const UPLOAD_PHOTO_TEXT = 'div.upload-photo-text'
@@ -65,4 +66,11 @@ test('Search text delete button is present', async ({ page }) => {
     await search.fill('теле');
     await page.locator(CLEAR_SEARCH).click();
     expect(await search.textContent()).toEqual('');
+});
+
+test('Search works', async ({ page }) => {
+    const search = page.locator(SEARCH_INPUT);
+    await search.fill('iphone');
+    await search.press('Enter');
+    await page.waitForSelector(RESULTS_FOUND);
 });
