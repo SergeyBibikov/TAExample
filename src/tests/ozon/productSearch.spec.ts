@@ -5,36 +5,6 @@ import { Homepage } from '../../pageObjects/homepage';
 import { SearchResults } from '../../pageObjects/searchResults';
 import { Header } from '../../pageObjects/header';
 
-test.skip('Category select and delete', async ({ page }) => {
-    await Homepage.open(page);
-    const catLoc = page.locator(Header.SEARCH_CATEGORY);
-    await expect(catLoc).toContainText('Везде');
-    await catLoc.click();
-    const popUp = page.locator('[data-widget="searchContextPopup"]');
-    await expect(popUp).toHaveCount(1);
-    await popUp.locator('text=Одежда').click();
-    await expect(catLoc).toContainText('Одежда');
-    await catLoc.locator('span').nth(1).click();
-    await expect(catLoc).toContainText('Везде');
-});
-
-test.skip('Search for Samsung Galaxy S20 FE', async ({ page }) => {
-    const filterCategories = ['Оперативная память', 'Встроенная память'];
-    const filterOptions = ['4-8 ГБ', '64-128 ГБ'];
-
-    await Homepage.open(page);
-    await Header.searchProduct(page, 'samsung galaxy s20');
-    const foundItemsCount = await SearchResults.getFoundItemsCount(page);
-    assert.equal(foundItemsCount > 100, true, `Found items count = ${foundItemsCount}`);
-    const category = await SearchResults.getDetectedCategory(page);
-    assert.strictEqual(category, "Смартфоны");
-    await SearchResults.addFilter(page, filterCategories[0], filterOptions[0]);
-    await SearchResults.addFilter(page, filterCategories[1], filterOptions[1]);
-    await page.waitForSelector('text=Очистить всё');
-    await SearchResults.haveActiveFilters(page, [
-        `${filterCategories[0]}: ${filterOptions[0]}`,
-        `${filterCategories[1]}: ${filterOptions[1]}`]);
-});
 test('Search history', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'iphone 13');
@@ -42,20 +12,6 @@ test('Search history', async ({ page }) => {
     await expect(page.locator(Header.SEARCH_HISTORY)).toHaveCount(1);
     await Header.clearHistory(page);
     await expect(page.locator(Header.SEARCH_HISTORY)).toHaveCount(0);
-});
-test.skip('"Didn\'t find what you need?" button', async ({ page }) => {
-    await Homepage.open(page);
-    await Header.searchProduct(page, 'iphone 13');
-    const didntFindButton = "xpath=//div[contains(text(),'Не нашли, что искали?')]";
-    await page.waitForSelector(didntFindButton);
-    await page.locator(didntFindButton).click();
-    const didntFindForm = '//form[contains(.,"Не нашли, что искали?")]';
-    await expect(page.locator(didntFindForm)).toHaveCount(1);
-    await expect(page.locator(didntFindForm).locator('//fieldset//div[contains(text(),"Товар")]')).toHaveCount(1);
-    await expect(page.locator(didntFindForm).locator('//fieldset//div[contains(text(),"Бренд")]')).toHaveCount(1);
-    const inpLoc = '//p[contains(text(),"Ссылка на товар")]/preceding-sibling::input';
-    await expect(page.locator(didntFindForm).locator(inpLoc)).toHaveCount(1);
-    await expect(page.locator(didntFindForm).locator('//button//span[contains(text(),"Отправить")]')).toHaveCount(1);
 });
 test('Pagination', async ({ page }) => {
     await Homepage.open(page);
