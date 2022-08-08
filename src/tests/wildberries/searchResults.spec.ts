@@ -5,8 +5,10 @@ import WbLocators from "../../wbLocators";
 const FILTERS = 'div#filters';
 const DELIVERY_TIME_FILTER = '[data-filter-name="fdlvr"]';
 const DISCOUNT_FILTER = '[data-filter-name="discount"]';
+const I_SEARCH_INPUT = 'input[placeholder="Я ищу..."]'
 const RAM_FILTER = '[data-filter-name="f4710"]';
 const ROM_FILTER = '[data-filter-name="f4424"]';
+const MODEL_FILTER = '[data-filter-name="f5023"]'
 const SORT_OPTIONS_BLOCK = 'div#catalog_sorter'
 
 
@@ -69,6 +71,11 @@ test('ROM filter options', async ({ page }) => {
 
     await expect.soft(romFilter).toContainText('128 ГБ');
     await expect.soft(romFilter).toContainText('256 ГБ');
+});
+
+test('Model filter has input for text model search', async ({ page }) => {
+    const input = page.locator(FILTERS).locator(MODEL_FILTER).locator(I_SEARCH_INPUT);
+    await expect(input).toHaveCount(1);
 });
 
 test('"You may also like" link presence', async ({ page }) => {
