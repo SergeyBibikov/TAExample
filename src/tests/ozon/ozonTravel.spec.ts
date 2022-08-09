@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import Urls from '../../urls';
 
-const CONVINIENCE_POINTS = '//div[contains(text(), "билеты на Ozon удобно!")]/following-sibling::div'
+const CONVINIENCE_POINTS = 'div[data-widget="seoOzonAdvantages"]'
 const TRAVEL_TITLE = '[data-widget="travelTitle"]'
 
 test.describe(() => {
@@ -16,10 +16,10 @@ test.describe(() => {
     test('There are 4 points of Ozon Travel convenience', async ({ page }) => {
         const convPoints = page.locator(CONVINIENCE_POINTS);
 
-        await expect.soft(convPoints).toContainText('Оплата баллами');
-        await expect.soft(convPoints).toContainText('Поддержка 24/7');
-        await expect.soft(convPoints).toContainText('Удобный поиск');
-        await expect.soft(convPoints).toContainText('Большой выбор');
+        await expect.soft(convPoints).toContainText('Оплата баллами Ozon');
+        await expect.soft(convPoints).toContainText('Постоянная поддержка 24/7');
+        await expect.soft(convPoints).toContainText('Удобный и быстрый поиск');
+        await expect.soft(convPoints).toContainText('Билеты от 800+ авиакомпаний');
     });
 
     test('All stories', async ({ page }) => {
