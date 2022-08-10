@@ -5,7 +5,8 @@ import { Homepage } from '../../pageObjects/homepage';
 import { SearchResults } from '../../pageObjects/searchResults';
 import { Header } from '../../pageObjects/header';
 
-test('Search history', async ({ page }) => {
+
+test.skip('Search history', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'iphone 13');
     await Header.clearSearch(page);
@@ -13,7 +14,7 @@ test('Search history', async ({ page }) => {
     await Header.clearHistory(page);
     await expect(page.locator(Header.SEARCH_HISTORY)).toHaveCount(0);
 });
-test('Pagination', async ({ page }) => {
+test.skip('Pagination', async ({ page }) => {
     await Homepage.open(page);
     await Header.searchProduct(page, 'iphone 13');
     const initialTopResult = await SearchResults.getFirstItemName(page);

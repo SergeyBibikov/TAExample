@@ -112,18 +112,6 @@ test.describe('Header links', () => {
         }
     });
 
-    test.skip('LIVE', async ({ page }) => {
-        await Homepage.open(page);
-        await Header.goToNavbarLink(page, 'LIVE');
-        await expect(page.locator('[data-widget="webTopStreams"]')).toHaveCount(1);
-    });
-    test.skip('Акции', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Акции',
-            'Выгодные предложения'
-        );
-    });
     test.skip('Бренды', async ({ page }) => {
         await checkPageLoad(
             page,
@@ -131,13 +119,7 @@ test.describe('Header links', () => {
             'Популярные бренды'
         );
     });
-    test.skip('Магазины', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Магазины',
-            'Все магазины'
-        );
-    });
+
     test.skip('Электроника', async ({ page }) => {
         await checkPageLoad(
             page,
