@@ -6,6 +6,8 @@ export default class Urls {
     static readonly WB_WORK = 'https://www.wildberries.ru/services/trudoustroystvo'
     static readonly WB_GIBBERISH_RESULTS = 'https://www.wildberries.ru/catalog/0/search.aspx?sort=popular&search=sdfasdf'
     static readonly WB_IPHONE_RESULTS = 'https://www.wildberries.ru/catalog/0/search.aspx?sort=popular&search=iphone'
+    static readonly WB_PRODUCT_CARD = 'https://www.wildberries.ru/catalog/94313913/detail.aspx?targetUrl=GP'
+
 
     static readonly OZON_CORPORATE_TRAVEL = 'https://www.ozon.ru/travel/corporate/'
     static readonly OZON_TRAVEL = 'https://www.ozon.ru/travel/'

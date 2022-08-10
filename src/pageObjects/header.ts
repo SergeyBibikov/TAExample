@@ -64,8 +64,6 @@ export class Header {
         await page.locator(this.SEARCH_INPUT).fill(searchItem);
         await page.locator(this.SEARCH_BUTTON).click();
         await page.waitForLoadState();
-        //TODO: delete if tests pass
-        // await page.waitForResponse('https://ozon-api.exponea.com/managed-tags/show');   
     }
 
     static async clearSearch(page: Page) {
