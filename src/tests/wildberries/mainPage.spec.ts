@@ -1,7 +1,12 @@
 import { expect, test } from "@playwright/test";
 import Urls from "../../urls";
 
+const CHAT_ATTACH_FILE = '.chat__footer label span'
 const CHAT_BUTTON = '[class*="btn-chat-open"]'
+const CHAT_CLOSE_BUTTON = 'button:has-text("Закрыть")'
+const CHAT_INFO_HEADER = 'h2:has-text("Чат поддержки")'
+const CHAT_TEXT_FIELD = 'textarea[placeholder="Ваше сообщение..."]'
+const CHAT_WINDOW = 'section.chat'
 const CHOOSE_FILE_BUTTON = 'label.upload-photo-btn'
 const CLEAR_SEARCH = '//button[text()="Очистить поиск"]'
 const POPULAR_BRANDS = '//h2[text()="Популярные бренды"]'
@@ -25,6 +30,36 @@ test.afterEach(async ({ page }) => {
 test('Two chat buttons are present', async ({ page }) => {
     await expect(page.locator(CHAT_BUTTON)).toHaveCount(2);
 });
+
+test.describe('Chat window', () => {
+
+    test.beforeEach(async ({ page }) => {
+        await page.locator(CHAT_BUTTON).first().click();
+    })
+
+    test('Has welcoming message', async ({ page }) => {
+        const chat = page.locator(CHAT_WINDOW);
+        await expect.soft(chat).toContainText('Я Лина - виртуальный помощник службы поддержки. Если \
+        у Вас возник вопрос  - задайте его в этом чате, и я с удовольствием отвечу на него.');
+    });
+
+    test('Has the text input field', async ({ page }) => {
+        await page.waitForSelector(CHAT_WINDOW + ' >> ' + CHAT_TEXT_FIELD);
+    });
+
+    test('Has "support chat" info header', async ({ page }) => {
+        await page.waitForSelector(CHAT_INFO_HEADER);
+    });
+
+    test('Closes on "close" button click', async ({ page }) => {
+        await page.locator(CHAT_WINDOW + ' >> ' + CHAT_CLOSE_BUTTON).click();
+        await page.waitForSelector(CHAT_WINDOW, { state: "hidden" });
+    });
+
+    test('Attach file hint', async ({ page }) => {
+        await page.locator(CHAT_WINDOW + ' >> ' + CHAT_ATTACH_FILE).hover();
+    });
+})
 
 test('Main sections are present', async ({ page }) => {
     await page.evaluate(() => { window.scrollTo(0, document.body.scrollHeight / 3); });

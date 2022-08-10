@@ -26,15 +26,6 @@ test.describe('Top bar links', () => {
         }
     });
 
-    test.describe('Mobile app', () => {
-        test('Navigate from homepage', async ({ page }) => {
-            await Homepage.open(page);
-            await Homepage.clickTopBarLink(page, 'Мобильное приложение');
-            await expect(page.locator('#apps')).toContainText('OZON ещё лучше в приложении');
-        });
-    })
-
-
     test('Help on hover', async ({ page }) => {
         await Homepage.open(page);
         await page.hover('text=Помощь');
