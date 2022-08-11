@@ -20,15 +20,6 @@ const REPORT_BUTTON = 'button:has-text("Сообщить")'
 const SIMILAR_PRODUCTS_BUTTON = 'a span:has-text("Похожие")'
 const VIEW_ALL_REVIEWS = 'a:has-text("Смотреть все отзывы")'
 
-// //TODO: implement
-// test('Size validation on adding to cart', async ({ page }) => {
-
-// });
-// //TODO: implement
-// test('Product added to cart => Counter incresed, "add to cart" button text changed', async ({ page }) => {
-
-// });
-
 test('Similar products lead', async ({ page }) => {
     await page.locator(SIMILAR_PRODUCTS_BUTTON).click();
     expect.soft(page.url()).toContain('recommendation');
