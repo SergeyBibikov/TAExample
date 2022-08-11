@@ -53,7 +53,7 @@ test.describe('Header links', () => {
 
     test('Links list', async ({ page }) => {
         const expectedLinks = [
-            'TOP Fashion', 'Premium',
+            'Premium',
             'Ozon fresh',
             'Ozon Карта', 'Рассрочка',
             'Акции',
@@ -70,43 +70,6 @@ test.describe('Header links', () => {
         if (diff) {
             assert.fail(`The following links are missing: ${diff}`);
         }
-    });
-
-    test.skip('Бренды', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Бренды',
-            'Популярные бренды'
-        );
-    });
-
-    test.skip('Электроника', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Электроника',
-            'Бытовая техника'
-        );
-    });
-    test.skip('Одежда и обувь', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Одежда и обувь',
-            'Женская одежда, обувь и аксессуары'
-        );
-    });
-    test.skip('Детские товары', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Детские товары',
-            'Игрушки и игры'
-        );
-    });
-    test.skip('Дом и сад', async ({ page }) => {
-        await checkPageLoad(
-            page,
-            'Дом и сад',
-            'Товары для праздников'
-        );
     });
 })
 
