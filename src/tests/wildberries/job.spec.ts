@@ -29,7 +29,7 @@ test.describe('Job at WB page contents', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(Urls.WB_WORK);
     });
-    
+
     test('Two job place options are present', async ({ page }) => {
 
         const iFrame = page.frameLocator('#pageInfoIfr');
@@ -47,7 +47,7 @@ test.describe('Job at WB page contents', () => {
 
         await expect.soft(jobDescription).toContainText('Гибкий / свободный график');
         await expect.soft(jobDescription).toContainText('Бесплатный транспорт');
-        await expect.soft(jobDescription).toContainText('До 140 000 ₽ в месяц');
+        await expect.soft(jobDescription).toContainText('В среднем 8000 руб в сутки');
     });
 
     test('Pickup point worker responsibilities', async ({ page }) => {
