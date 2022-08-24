@@ -111,7 +111,6 @@ test.describe('Q&A answers', () => {
         const answer = await Bank.getAnswerCardContent(page, 'Как открыть')
 
         await expect.soft(answer).toContainText(text);
-        await expect.soft(answer).toContainText('4 цифр.');
     });
     test('Card refill', async ({ page }) => {
         const answer = await Bank.getAnswerCardContent(page, 'Пополнить')
