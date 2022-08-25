@@ -1,5 +1,4 @@
-import { expect, test } from "@playwright/test";
-import Urls from "../../urls";
+import { expect, test } from "@playwright/test"; import Urls from "../../urls";
 
 const CHAT_ATTACH_FILE = '.chat__footer label span'
 const CHAT_BUTTON = '[class*="btn-chat-open"]'
@@ -11,7 +10,7 @@ const CHOOSE_FILE_BUTTON = 'label.upload-photo-btn'
 const CLEAR_SEARCH = '//button[text()="Очистить поиск"]'
 const POPULAR_BRANDS = '//h2[text()="Популярные бренды"]'
 const SELL_HITS = '//h2[contains(., "Хиты продаж")]'
-const SEARCH_BY_PHOTO_HINT = '//div[@class="tooltipster-content" and text()="Поиск по фото"]'
+const SEARCH_BY_PHOTO_HINT = '//div[@class="tooltip__content" and text()="Поиск по фото"]'
 const SEARCH_BY_PHOTO_BUTTON = '//button[contains(text(),"Поиск по фото")]'
 const SEARCH_INPUT = 'input#searchInput'
 const RESULTS_FOUND = '//h1[contains(text(), "По запросу") and contains(text(), "найдено")]'
@@ -91,7 +90,7 @@ test('Search hints on input click', async ({ page }) => {
     expect.soft(await suggestions.allTextContents()).toEqual([""]);
     await page.locator(SEARCH_INPUT).click();
     await expect.soft(suggestions).toContainText('футболка женская');
-    await expect.soft(suggestions).toContainText('iphone');
+    await expect.soft(suggestions).toContainText('телефон');
 });
 
 test('Suitable search suggestions depending on the input text', async ({ page }) => {
