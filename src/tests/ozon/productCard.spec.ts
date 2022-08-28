@@ -1,14 +1,13 @@
 import { test, expect } from '@playwright/test';
 import Urls from '../../urls';
 
-const ASK_SELLER = '//div[text()="Спросить продавца о товаре"]'
 const BREAD_CRUMPS = '[data-widget="breadCrumbs"]'
 const BUYERS_PHOTOS = '(//div[contains(text(), "Фото и видео покупателей")])[1]/..//img'
 const FAQ = '#pdp-faq'
+const NOTIFY_ON_PRICE_CHANGE_BUTTON = '//button[span[span[text()="Узнать о снижении цены"]]]'
 const OZON_CARD_PRICE = '//div[contains(text(), "при оплате Ozon Картой")]'
 const POSSIBLE_ACTIONS = '(//div[div[@data-widget="webAddToFavorite"]])[1]'
 const PRODUCT_CODE = '//span[contains(., "Код") and contains(., "товара")]'
-const SELLER_CARD = '[data-widget="webCurrentSeller"]'
 
 test.beforeEach(async ({ page }) => {
     await page.goto(Urls.OZON_IPHONE_CARD);
@@ -47,10 +46,6 @@ test('FAQ presence and content', async ({ page }) => {
     await expect.soft(faq).toContainText('Возврат денег');
 });
 
-test('Seller card has "ask seller" button', async ({ page }) => {
-    await page.waitForSelector(`${SELLER_CARD} >> ${ASK_SELLER}`)
-});
-
 test('Buyers photo section has images', async ({ page }) => {
     expect.soft(await page.locator(BUYERS_PHOTOS).count()).toBeGreaterThan(0);
 });
@@ -69,4 +64,8 @@ test('Test that used phone price is lower', async ({ page }) => {
 
 test('Ozon card price promo is present', async ({ page }) => {
     await page.waitForSelector(OZON_CARD_PRICE);
+});
+
+test('"Notify on price change" button is present', async ({ page }) => {
+    await page.waitForSelector(NOTIFY_ON_PRICE_CHANGE_BUTTON);
 });
