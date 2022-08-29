@@ -5,6 +5,7 @@ import Urls from "../../urls";
 
 test.beforeEach(async ({ page }) => {
     await page.goto(Urls.WB_PRODUCT_CARD);
+    await page.waitForLoadState();
 })
 //Avoiding anti-bot threshold
 test.afterEach(async ({ page }) => {
@@ -27,9 +28,10 @@ test('Similar products lead', async ({ page }) => {
 });
 
 test('Ad section presence', async ({ page }) => {
-    const recommends = page.locator(RECOMMENDED_GOODS);
+    const recommends = page.locator(RECOMMENDED_GOODS).first();
 
     await scrollToBottom(page);
+
     await expect.soft(recommends).toContainText('Рекламный блок');
     await expect.soft(recommends).toContainText('Смотреть все');
 });
