@@ -46,7 +46,7 @@ test('Small viewport header shrinkage', async ({ page }) => {
     await expect.soft(page.locator(SEARCH_BUTTON)).not.toBeVisible();
     await expect.soft(page.locator(SEARCH_INPUT)).toBeVisible();
 
-    await page.setViewportSize({width: 800, height: 600});
+    await page.setViewportSize({ width: 800, height: 600 });
 
     await expect.soft(page.locator(CART_ICON)).not.toBeVisible();
     await expect.soft(page.locator(WbLocators.WORK_AT_WB_BUTTON)).not.toBeVisible();
@@ -71,11 +71,12 @@ test('Sign in button leads to the login page', async ({ page }) => {
 });
 
 test('Empty cart lead', async ({ page }) => {
+    const textToFind = 'Загляните на главную, чтобы выбрать товары или найдите нужное в поиске'
     await page.locator(CART_ICON).click();
 
     const main = page.locator('main');
 
-    await expect.soft(main).toContainText('В корзине пока ничего нет');
-    await expect.soft(main).toContainText('Начните с главной страницы или воспользуйтесь поиском, чтобы найти что-то конкретное');
+    await expect.soft(main).toContainText('В корзине пока пусто');
+    await expect.soft(main).toContainText(textToFind);
     await page.waitForSelector(GO_TO_MAIN_PAGE_BUTTON);
 });
