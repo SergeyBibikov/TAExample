@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { scrollToBottom } from '../../helpers/actions';
 import Urls from '../../urls';
 
 const BREAD_CRUMPS = '[data-widget="breadCrumbs"]'
@@ -47,6 +48,7 @@ test('FAQ presence and content', async ({ page }) => {
 });
 
 test('Buyers photo section has images', async ({ page }) => {
+    await page.waitForSelector(BUYERS_PHOTOS, { timeout: 30000 });
     expect.soft(await page.locator(BUYERS_PHOTOS).count()).toBeGreaterThan(0);
 });
 
