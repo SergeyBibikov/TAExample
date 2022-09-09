@@ -89,7 +89,7 @@ test('Search hints on input click', async ({ page }) => {
     const suggestions = page.locator(SEARCH_SUGGESTIONS);
     expect.soft(await suggestions.allTextContents()).toEqual([""]);
     await page.locator(SEARCH_INPUT).click();
-    await expect.soft(suggestions).toContainText('футболка женская');
+    await expect.soft(suggestions).toContainText('футболка');
     await expect.soft(suggestions).toContainText('телефон');
 });
 
