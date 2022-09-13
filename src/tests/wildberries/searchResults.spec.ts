@@ -8,7 +8,7 @@ const DISCOUNT_FILTER = '[data-filter-name="discount"]';
 const I_SEARCH_INPUT = 'input[placeholder="Я ищу..."]'
 const RAM_FILTER = '[data-filter-name="f4710"]';
 const ROM_FILTER = '[data-filter-name="f4424"]';
-const PROCESSOR_FILTER = '[data-filter-name="f4521"]'
+const ADDITIONAL_OPTIONS = '[data-filter-name="f61827"]'
 const SORT_OPTIONS_BLOCK = 'div#catalog_sorter'
 const NO_RESULTS_FOUND = '//p[text()="По Вашему запросу ничего не найдено."]'
 const PEOPLE_ALSO_SEARCH = '(//h2[text()="Вместе с этим запросом ищут"])[2]'
@@ -74,8 +74,9 @@ test('ROM filter options', async ({ page }) => {
     await expect.soft(romFilter).toContainText('256 ГБ');
 });
 
-test('Processor filter has input for text model search', async ({ page }) => {
-    const input = page.locator(FILTERS).locator(PROCESSOR_FILTER).locator(I_SEARCH_INPUT);
+test('Additional options filter has input for text model search', async ({ page }) => {
+    const input = page.locator(FILTERS).locator(ADDITIONAL_OPTIONS).locator(I_SEARCH_INPUT);
+
     await expect(input).toHaveCount(1);
 });
 
