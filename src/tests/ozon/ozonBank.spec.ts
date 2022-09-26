@@ -81,7 +81,7 @@ test.describe('For clients tab', () => {
 
         const archiveDocs = page.locator(ARCHIVE_DOCS_LIST);
 
-        await expect.soft(archiveDocs.locator('.doc')).toHaveCount(19);
+        await expect.soft(archiveDocs.locator('.doc')).toHaveCount(22);
         await expect.soft(archiveDocs).toContainText('Правила обслуживания клиентов (от 24.05.2022)');
         await expect.soft(archiveDocs).toContainText('Общие положения Клиентских правил (от 18.07.2022)');
         await expect.soft(archiveDocs).toContainText('Общие положения Клиентских правил (от 13.07.2022)');
