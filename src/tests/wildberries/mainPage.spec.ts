@@ -90,7 +90,7 @@ test('Search hints on input click', async ({ page }) => {
     expect.soft(await suggestions.allTextContents()).toEqual([""]);
     await page.locator(SEARCH_INPUT).click();
     await expect.soft(suggestions).toContainText('футболка');
-    await expect.soft(suggestions).toContainText('телефон');
+    await expect.soft(suggestions).toContainText('джинсы');
 });
 
 test('Suitable search suggestions depending on the input text', async ({ page }) => {
