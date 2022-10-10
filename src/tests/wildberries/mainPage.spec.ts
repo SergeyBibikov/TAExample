@@ -26,8 +26,8 @@ test.afterEach(async ({ page }) => {
     await page.waitForTimeout(1000);
 })
 
-test('Two chat buttons are present', async ({ page }) => {
-    await expect(page.locator(CHAT_BUTTON)).toHaveCount(2);
+test('Chat button is present', async ({ page }) => {
+    await expect(page.locator(CHAT_BUTTON)).toHaveCount(1);
 });
 
 test.describe('Chat window', () => {
