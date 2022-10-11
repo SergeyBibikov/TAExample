@@ -90,7 +90,7 @@ test('Sort order options', async ({ page }) => {
     await expect.soft(sortOptions).toContainText('популярности');
     await expect.soft(sortOptions).toContainText('рейтингу');
     await expect.soft(sortOptions).toContainText('цене');
-    await expect.soft(sortOptions).toContainText('скидке');
+    await expect.soft(sortOptions).toContainText('Сначала выгодные');
     await expect.soft(sortOptions).toContainText('обновлению');
 });
 
