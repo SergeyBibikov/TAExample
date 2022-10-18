@@ -8,7 +8,7 @@ test.describe(() => {
     test.beforeEach(async ({ page }) => {
         await page.goto(Urls.OZON_TRAVEL);
     })
-
+    //FIXME
     test('Avia tickets search form title text', async ({ page }) => {
         await expect.soft(page.locator(TRAVEL_TITLE)).toContainText('Поиск дешёвых авиабилетов');
     })
@@ -32,7 +32,7 @@ test.describe(() => {
 });
 
 
-
+//FIXME
 test('Railway tickets search form title text', async ({ page }) => {
     await page.goto(Urls.OZON_TRAVEL_RAILWAY);
     await expect.soft(page.locator(TRAVEL_TITLE)).toContainText('ЖД билеты на поезд');
