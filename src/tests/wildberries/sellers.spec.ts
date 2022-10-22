@@ -48,6 +48,7 @@ test.describe('Seller page', () => {
     });
 
     test('Send sms btn is blocked when phone is invalid', async ({ page }) => {
+        test.slow();
         await page.waitForSelector(PHONE_SIGN_IN_CARD);
         await page.locator(PHONE_INPUT).fill("1");
         await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveAttribute('disabled', '');
