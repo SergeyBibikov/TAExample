@@ -90,14 +90,17 @@ test.describe('Footer', () => {
         await expect.soft(infoLinksSection.locator('xpath=/div[4]/span')).toHaveText('Помощь');
     });
 
-    test('Ozon ecosystem links', async ({ page }) => {
+    test('Ozon job list', async ({ page }) => {
         await Homepage.open(page);
-        const ecoSection = page.locator(Footer.locators.ECOSYSTEM_SECTION);
-        await expect(ecoSection.locator('a')).toHaveCount(5);
-        await expect.soft(ecoSection).toContainText('Интернет-магазин');
-        await expect.soft(ecoSection).toContainText('Работа в Ozon');
-        await expect.soft(ecoSection).toContainText('Авиа- и ж/д билеты, Отели');
-        await expect.soft(ecoSection).toContainText('Курсы для middle-разработчиков');
-        await expect.soft(ecoSection).toContainText('Электронные книги');
+        const jobSection = page.locator(Footer.locators.JOBS_SECTION);
+        await expect.soft(jobSection.locator('a')).toHaveCount(9);
+        await expect.soft(jobSection).toContainText('IT');
+        await expect.soft(jobSection).toContainText('Офис');
+        await expect.soft(jobSection).toContainText('Финтех');
+        await expect.soft(jobSection).toContainText('Фулфилмент');
+        await expect.soft(jobSection).toContainText('Fresh');
+        await expect.soft(jobSection).toContainText('Логистика');
+        await expect.soft(jobSection).toContainText('Стажировки');
+        await expect.soft(jobSection).toContainText('События');
     });
 });
