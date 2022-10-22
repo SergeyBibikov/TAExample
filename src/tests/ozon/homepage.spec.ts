@@ -54,7 +54,6 @@ test.describe('Header links', () => {
     test('Links list', async ({ page }) => {
         const expectedLinks = [
             'Premium',
-            'Ozon fresh',
             'Ozon Карта', 'Рассрочка',
             'Акции',
             'Бренды',
