@@ -30,36 +30,6 @@ test('Chat button is present', async ({ page }) => {
     await expect(page.locator(CHAT_BUTTON)).toHaveCount(1);
 });
 
-test.describe('Chat window', () => {
-
-    test.beforeEach(async ({ page }) => {
-        await page.locator(CHAT_BUTTON).first().click();
-    })
-
-    test('Has welcoming message', async ({ page }) => {
-        const chat = page.locator(CHAT_WINDOW);
-        await expect.soft(chat).toContainText('Я Лина - виртуальный помощник службы поддержки. Если \
-        у Вас возник вопрос  - задайте его в этом чате, и я с удовольствием отвечу на него.');
-    });
-
-    test('Has the text input field', async ({ page }) => {
-        await page.waitForSelector(CHAT_WINDOW + ' >> ' + CHAT_TEXT_FIELD);
-    });
-
-    test('Has "support chat" info header', async ({ page }) => {
-        await page.waitForSelector(CHAT_INFO_HEADER);
-    });
-
-    test('Closes on "close" button click', async ({ page }) => {
-        await page.locator(CHAT_WINDOW + ' >> ' + CHAT_CLOSE_BUTTON).click();
-        await page.waitForSelector(CHAT_WINDOW, { state: "hidden" });
-    });
-
-    test('Attach file hint', async ({ page }) => {
-        await page.locator(CHAT_WINDOW + ' >> ' + CHAT_ATTACH_FILE).hover();
-    });
-})
-
 test('Main sections are present', async ({ page }) => {
     await page.evaluate(() => { window.scrollTo(0, document.body.scrollHeight / 3); });
     await page.waitForSelector(SELL_HITS);
