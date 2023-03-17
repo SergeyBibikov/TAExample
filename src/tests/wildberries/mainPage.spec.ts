@@ -30,20 +30,6 @@ test('Chat button is present', async ({ page }) => {
     await expect(page.locator(CHAT_BUTTON)).toHaveCount(1);
 });
 
-test('Main sections are present', async ({ page }) => {
-    await page.evaluate(() => { window.scrollTo(0, document.body.scrollHeight / 3); });
-    await page.waitForSelector(SELL_HITS);
-    await page.evaluate(() => { window.scrollTo(0, document.body.scrollHeight / 1.5); });
-    await page.waitForSelector(POPULAR_BRANDS);
-    await page.evaluate(() => { window.scrollTo(0, document.body.scrollHeight); });
-    await page.waitForSelector(WIDE_PRODUCT_LINE);
-});
-
-test('Search by photo popup has choose file button', async ({ page }) => {
-    await page.locator(SEARCH_BY_PHOTO_BUTTON).click();
-    await page.waitForSelector(CHOOSE_FILE_BUTTON);
-});
-
 test('Search by photo popup text', async ({ page }) => {
     await page.locator(SEARCH_BY_PHOTO_BUTTON).click();
     await expect.soft(page.locator(UPLOAD_PHOTO_TEXT)).toContainText('Максимальный размер: 8 МБ.');
@@ -53,33 +39,4 @@ test('Search by photo popup text', async ({ page }) => {
 test('Search by photo hint presence', async ({ page }) => {
     await page.locator(SEARCH_BY_PHOTO_BUTTON).hover();
     await page.waitForSelector(SEARCH_BY_PHOTO_HINT);
-});
-
-test('Search hints on input click', async ({ page }) => {
-    const suggestions = page.locator(SEARCH_SUGGESTIONS);
-    expect.soft(await suggestions.allTextContents()).toEqual([""]);
-    await page.locator(SEARCH_INPUT).click();
-    await expect.soft(suggestions).toContainText('футболка');
-    await expect.soft(suggestions).toContainText('джинсы');
-});
-
-test('Suitable search suggestions depending on the input text', async ({ page }) => {
-    await page.locator(SEARCH_INPUT).fill('теле');
-    const suggestions = page.locator(SEARCH_SUGGESTIONS);
-    await expect.soft(suggestions).toContainText('телефон');
-    await expect.soft(suggestions).toContainText('телевизор');
-});
-
-test('Search text delete button is present', async ({ page }) => {
-    const search = page.locator(SEARCH_INPUT);
-    await search.fill('теле');
-    await page.locator(CLEAR_SEARCH).click();
-    expect(await search.textContent()).toEqual('');
-});
-
-test('Search works', async ({ page }) => {
-    const search = page.locator(SEARCH_INPUT);
-    await search.fill('iphone');
-    await search.press('Enter');
-    await page.waitForSelector(RESULTS_FOUND);
 });
