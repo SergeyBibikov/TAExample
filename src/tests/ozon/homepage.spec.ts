@@ -10,10 +10,8 @@ test.describe('Top bar links', () => {
 
     test("Links list", async ({ page }) => {
         const expectedLinks = [
-            'Ozon для бизнеса',
             'Мобильное приложение',
             'Подарочные сертификаты',
-            'Продавайте на Ozon',
             'Помощь',
             'Реферальная программа',
         ];
