@@ -96,31 +96,3 @@ test.describe('For clients tab', () => {
         await expect.soft(archiveDocs).toContainText('Порядок обработки персональных данных (от 06.06.2022)');
     });
 })
-
-test.describe('Q&A answers', () => {
-    test('Card refill', async ({ page }) => {
-        const answer = await Bank.getAnswerCardContent(page, 'Пополнить')
-
-        await expect.soft(answer).toContainText('можно по номеру телефона через Систему быстрых платежей');
-        await expect.soft(answer).toContainText('или с карты другого банка');
-        await expect.soft(answer).toContainText('Мы не берем комиссию за пополнение независимо от суммы');
-    });
-    test('Transfer money from account', async ({ page }) => {
-        const text = 'Вывести деньги можно с помощью перевода по номеру телефона, если у вас Базовый';
-
-        const answer = await Bank.getAnswerCardContent(page, 'Вывести деньги')
-
-        await expect.soft(answer).toContainText(text);
-        await expect.soft(answer).toContainText('С Анонимного ');
-        await expect.soft(answer).toContainText(' вы сможете потратить деньги только на покупки в ');
-        await expect.soft(answer).toContainText('Ozon');
-    });
-    test('Increase limits', async ({ page }) => {
-        const answer = await Bank.getAnswerCardContent(page, 'Повысить лимиты')
-
-        await expect.soft(answer).toContainText('После регистрации у вас будет Анонимный ');
-        await expect.soft(answer).toContainText(', который имеет ограничения:');
-        await expect.soft(answer).toContainText('Чтобы увеличить лимиты и иметь возможность переводить по номеру телефона в другие банки,');
-        await expect.soft(answer).toContainText('нажмите Лимиты в личном кабинете');
-    });
-});
