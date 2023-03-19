@@ -62,7 +62,7 @@ test.describe('For clients tab', () => {
         await page.locator(CLIENT_INFO_DOCS_ARROW).click();
         const infoDocs = page.locator(CLIENT_INFO_DOCS_LIST);
 
-        await expect.soft(infoDocs.locator('.doc')).toHaveCount(5);
+        await expect.soft(infoDocs.locator('.doc')).toHaveCount(6);
         await expect.soft(infoDocs)
             .toContainText('Информация о праве потребителей финансовых услуг на направление обращения финансовому уполномоченному');
         await expect.soft(infoDocs)
