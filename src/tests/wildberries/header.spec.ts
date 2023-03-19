@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto(Urls.WB_MAIN_PAGE);
 })
 
-test.only('Currency dropdown should include 6 currencies', async ({ page }) => {
+test('Currency dropdown should include 6 currencies', async ({ page }) => {
     await page.locator(COUNTRY_SELECTION).hover();
 
     const countriesList = page.locator('fieldset', { hasText: "Выберите валюту" })
