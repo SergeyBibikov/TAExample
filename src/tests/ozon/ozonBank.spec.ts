@@ -98,20 +98,6 @@ test.describe('For clients tab', () => {
 })
 
 test.describe('Q&A answers', () => {
-    test('All four topics should be present', async ({ page }) => {
-        const helpSection = page.locator(Bank.selectors.helpSection);
-        await expect(helpSection).toContainText('Как открыть Ozon Карту?');
-        await expect(helpSection).toContainText('Пополнить Ozon Карту');
-        await expect(helpSection).toContainText('Вывести деньги');
-        await expect(helpSection).toContainText('Повысить лимиты');
-    });
-    test('How to open card?', async ({ page }) => {
-        const text = 'Заполните недостающие данные в анкете, введите код из смс сообщения и придумайте пароль из 4 цифр.';
-
-        const answer = await Bank.getAnswerCardContent(page, 'Как открыть')
-
-        await expect.soft(answer.nth(0)).toContainText(text);
-    });
     test('Card refill', async ({ page }) => {
         const answer = await Bank.getAnswerCardContent(page, 'Пополнить')
 

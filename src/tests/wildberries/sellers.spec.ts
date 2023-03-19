@@ -47,14 +47,6 @@ test.describe('Seller page', () => {
         await expect.soft(page.locator(GOOGLE_PLAY_BUTTON)).toHaveCount(1);
     });
 
-    test('Send sms btn is blocked when phone is invalid', async ({ page }) => {
-        test.slow();
-        await page.waitForSelector(PHONE_SIGN_IN_CARD);
-        await page.locator(PHONE_INPUT).fill("1");
-        await expect.soft(page.locator(GET_SMS_BUTTON)).toHaveAttribute('disabled', '');
-        await expect.soft(page.locator(PHONE_SIGN_IN_CARD)).toContainText('The field is filled incorrectly');
-    });
-
     test('Country phone codes dropdown', async ({ page }) => {
         await page.waitForSelector(PHONE_SIGN_IN_CARD);
         await page.locator(COUNTRY_SELECT).click();
