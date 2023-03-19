@@ -41,7 +41,7 @@ test.describe('Job at WB page contents', () => {
         await expect.soft(workPlace.locator('button:has-text("В пункт выдачи")')).toHaveCount(1);
     });
 
-    test.only('Warehouse job desc has three advantages', async ({ page }) => {
+    test('Warehouse job desc has three advantages', async ({ page }) => {
 
         const iFrame = page.frameLocator('#pageInfoIfr');
         const jobDescription = iFrame.locator(WAREHOUSE_JOB_DESC);
