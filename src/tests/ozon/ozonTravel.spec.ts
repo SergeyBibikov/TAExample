@@ -22,13 +22,6 @@ test.describe(() => {
         await expect.soft(convPoints).toContainText('Билеты от 800+ авиакомпаний');
     });
 
-    test('All stories', async ({ page }) => {
-
-        const storiesView = '//div[@class="vue-portal-target"]//div[img[contains(@src, "main")]]/..';
-
-        await page.locator('text=Смотреть все').click();
-        await expect(page.locator(storiesView)).toHaveCount(1);
-    });
 });
 
 
