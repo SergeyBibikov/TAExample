@@ -30,12 +30,13 @@ test.describe('Job at WB page contents', () => {
         await page.goto(Urls.WB_WORK);
     });
 
-    test('Two job place options are present', async ({ page }) => {
+    test.only('Three job place options are present', async ({ page }) => {
 
         const iFrame = page.frameLocator('#pageInfoIfr');
         const workPlace = iFrame.locator(WORK_PLACE_SECTION)
 
-        await expect.soft(workPlace.locator('button')).toHaveCount(2);
+        await expect.soft(workPlace.locator('button')).toHaveCount(3);
+        await expect.soft(workPlace.locator('button:has-text("Водителей со своим авто")')).toHaveCount(1);
         await expect.soft(workPlace.locator('button:has-text("В складской комплекс")')).toHaveCount(1);
         await expect.soft(workPlace.locator('button:has-text("В пункт выдачи")')).toHaveCount(1);
     });
