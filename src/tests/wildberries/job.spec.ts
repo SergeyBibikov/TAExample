@@ -30,7 +30,7 @@ test.describe('Job at WB page contents', () => {
         await page.goto(Urls.WB_WORK);
     });
 
-    test.only('Three job place options are present', async ({ page }) => {
+    test('Three job place options are present', async ({ page }) => {
 
         const iFrame = page.frameLocator('#pageInfoIfr');
         const workPlace = iFrame.locator(WORK_PLACE_SECTION)
@@ -41,14 +41,14 @@ test.describe('Job at WB page contents', () => {
         await expect.soft(workPlace.locator('button:has-text("В пункт выдачи")')).toHaveCount(1);
     });
 
-    test('Warehouse job desc has three advantages', async ({ page }) => {
+    test.only('Warehouse job desc has three advantages', async ({ page }) => {
 
         const iFrame = page.frameLocator('#pageInfoIfr');
         const jobDescription = iFrame.locator(WAREHOUSE_JOB_DESC);
 
-        await expect.soft(jobDescription).toContainText('Гибкий / свободный график');
-        await expect.soft(jobDescription).toContainText('Бесплатный транспорт');
-        await expect.soft(jobDescription).toContainText('В среднем 8000 руб в сутки');
+        await expect.soft(jobDescription).toContainText('Гибкий, свободный график');
+        await expect.soft(jobDescription).toContainText('Бесплатный транспорт до склада');
+        await expect.soft(jobDescription).toContainText('8 000 ₽ / сутки в среднем');
     });
 
     test('Pickup point worker responsibilities', async ({ page }) => {
